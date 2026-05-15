@@ -1,5 +1,5 @@
 package co.edu.unbosque.model;
 
-public class PuertosEnlace {
+public class PuertoEnlace {
 
 }
