@@ -5,14 +5,15 @@ import java.awt.event.ActionListener;
 import co.edu.unbosque.model.Dificultad;
 import co.edu.unbosque.view.Casilla;
 import co.edu.unbosque.view.VentanaPrincipal;
+import co.edu.unbosque.view.VistaJuego;
 
 public class Controlador implements ActionListener {
-	
 	private VentanaPrincipal ventana;
-
-	
+	private VistaJuego vistaj;
 	public Controlador() {
 		ventana = new VentanaPrincipal();
+		vistaj = new VistaJuego();
+		
 		Dificultad dificultad = new Dificultad();
 		for (String elem : dificultad.getElementos()) {
 			ventana.getVentanaBoton().getCbxDificultades().addItem(elem);
@@ -50,6 +51,11 @@ public class Controlador implements ActionListener {
 		String dificultadSeleccionada = ventana.getVentanaBoton().getCbxDificultades().getSelectedItem().toString();	
 		
 		if (command.equals("DIFICULTAD")) {
+
+	    	ventana.getVentanaBoton().getBtnJugar().setEnabled(true);
+		    		    
+		   }else if (command.equals("JUGAR")) {
+
 	    	ventana.getVentanaBoton().getBtnJugar().setEnabled(true);	    	
 		}
 		else if (command.equals("JUGAR")) {
