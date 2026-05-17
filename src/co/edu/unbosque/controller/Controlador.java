@@ -28,19 +28,32 @@ public class Controlador implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		String command = e.getActionCommand();
 		System.out.println(command);
-		
+		int posDificultad = ventana.getVentanaBoton().getCbxDificultades().getSelectedIndex();
+		String dificultadSeleccionada = ventana.getVentanaBoton().getCbxDificultades().getSelectedItem().toString();	
 		
 		if (command.equals("DIFICULTAD")) {
+
 	    	ventana.getVentanaBoton().getBtnJugar().setEnabled(true);
-		    int posDificultad = ventana.getVentanaBoton().getCbxDificultades().getSelectedIndex();
-		    String dificultadSeleccionada = ventana.getVentanaBoton().getCbxDificultades().getSelectedItem().toString();
-		    
+		    		    
 		   }else if (command.equals("JUGAR")) {
+
+	    	ventana.getVentanaBoton().getBtnJugar().setEnabled(true);	    	
+		}
+		else if (command.equals("JUGAR")) {
 	    		ventana.getVentanaBoton().getLblDificultad().setVisible(false);
 	    		ventana.getVentanaBoton().getLblTitulo().setVisible(false);
 	    		ventana.getVentanaBoton().getBtnJugar().setVisible(false);
 		    	ventana.getVentanaBoton().getCbxDificultades().setVisible(false);
-	    	}
+	    }
+		if (dificultadSeleccionada.equals("Facil")) {
+			
+	    } 
+		else if (dificultadSeleccionada.equals("Normal")) {
+
+	    } 
+	    else if (dificultadSeleccionada.equals("Dificil")) {
+	    }
+		
 		}
 		 
 }
