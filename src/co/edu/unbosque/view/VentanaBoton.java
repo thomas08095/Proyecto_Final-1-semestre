@@ -28,12 +28,12 @@ public class VentanaBoton extends JPanel{
 			gbc.insets = new Insets(10, 10, 10, 10);
 			gbc.gridx = 0;
 	    
-			JLabel lblTitulo = new JLabel("Cyber Infiltrator");
+			lblTitulo = new JLabel("Cyber Infiltrator");
 			lblTitulo.setFont(new Font("Arial", Font.BOLD, 36));
 			gbc.gridy = 1;
 			add(lblTitulo, gbc);
 
-			JLabel lblDificultad = new JLabel("Selecciona la dificultad:");
+			lblDificultad = new JLabel("Selecciona la dificultad:");
 			gbc.gridy = 2;
 			add(lblDificultad, gbc);
 	
@@ -84,7 +84,4 @@ public class VentanaBoton extends JPanel{
 		this.lblDificultad = lblDificultad;
 	}
 	
-	
-	
-
 }

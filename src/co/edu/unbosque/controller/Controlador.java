@@ -4,14 +4,15 @@ import java.awt.event.ActionListener;
 
 import co.edu.unbosque.model.Dificultad;
 import co.edu.unbosque.view.VentanaPrincipal;
+import co.edu.unbosque.view.VistaJuego;
 
 public class Controlador implements ActionListener {
-	
 	private VentanaPrincipal ventana;
-
-	
+	private VistaJuego vistaj;
 	public Controlador() {
 		ventana = new VentanaPrincipal();
+		vistaj = new VistaJuego();
+		
 		Dificultad dificultad = new Dificultad();
 		
 		    for (String elem : dificultad.getElementos()) {
@@ -31,8 +32,6 @@ public class Controlador implements ActionListener {
 		
 		if (command.equals("DIFICULTAD")) {
 	    	ventana.getVentanaBoton().getBtnJugar().setEnabled(true);
-	    	
-
 		    int posDificultad = ventana.getVentanaBoton().getCbxDificultades().getSelectedIndex();
 		    String dificultadSeleccionada = ventana.getVentanaBoton().getCbxDificultades().getSelectedItem().toString();
 		    
