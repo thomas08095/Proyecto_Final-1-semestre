@@ -15,6 +15,9 @@ import javax.swing.JLabel;
 public class VentanaPrincipal extends JFrame {
 
     private VentanaBoton ventanaBoton;
+    private VistaJuego vistaJuego;
+    private JPanel contenedor;
+    private CardLayout cardLayout;
 
     public VentanaPrincipal() {
         setTitle("Cyber Infiltrator");
@@ -29,9 +32,27 @@ public class VentanaPrincipal extends JFrame {
     }
 
     public void inicializarComponentes() {
+        cardLayout = new CardLayout();
+        contenedor = new JPanel(cardLayout);
+
         ventanaBoton = new VentanaBoton();
         ventanaBoton.inicializarComponentes();
-        add(ventanaBoton, BorderLayout.CENTER);
+        vistaJuego = new VistaJuego();
+
+        contenedor.add(ventanaBoton, "MENU");
+        contenedor.add(vistaJuego, "JUEGO");
+
+        add(contenedor, BorderLayout.CENTER);
+
+        cardLayout.show(contenedor, "MENU"); 
+    }
+
+    public void mostrarMenu() {
+        cardLayout.show(contenedor, "MENU");
+    }
+    
+    public void mostrarJuego() {
+        cardLayout.show(contenedor, "JUEGO");
     }
 
     public VentanaBoton getVentanaBoton() {
@@ -40,5 +61,13 @@ public class VentanaPrincipal extends JFrame {
 
     public void setVentanaBoton(VentanaBoton ventanaBoton) {
         this.ventanaBoton = ventanaBoton;
+    }
+    
+    public VistaJuego getVistaJuego() {
+    	return vistaJuego;
+    }
+    
+    public void setVistaJuego(VistaJuego vistajuego) {
+    	this.vistaJuego = vistaJuego;
     }
 }

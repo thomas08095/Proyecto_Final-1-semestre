@@ -3,6 +3,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import co.edu.unbosque.model.Dificultad;
+import co.edu.unbosque.view.Casilla;
 import co.edu.unbosque.view.VentanaPrincipal;
 
 public class Controlador implements ActionListener {
@@ -13,12 +14,30 @@ public class Controlador implements ActionListener {
 	public Controlador() {
 		ventana = new VentanaPrincipal();
 		Dificultad dificultad = new Dificultad();
-		
-		    for (String elem : dificultad.getElementos()) {
-		        ventana.getVentanaBoton().getCbxDificultades().addItem(elem);
-		    }
-		    asignarOyentes();
+		for (String elem : dificultad.getElementos()) {
+			ventana.getVentanaBoton().getCbxDificultades().addItem(elem);
 		}
+		asignarOyentes();
+	    ventana.getVistaJuego().setMatriz(poblarMatriz());
+
+	}
+	
+	private Casilla[][] poblarMatriz() {
+        Casilla[][] matrizCasillas = new Casilla[15][15];
+		
+        for(int i = 0; i < matrizCasillas.length; i++) {
+        	for(int j = 0; j < matrizCasillas[0].length; j++) {
+        		matrizCasillas[i][j] = new Casilla(); 
+        		Casilla casilla = matrizCasillas[i][j];
+        		if(i==14&&j==7) {
+        			casilla.setImagen("src/imagenes/tomoe-prueba.jpeg");
+        		}
+        	}
+        }
+        
+        return matrizCasillas;
+	}
+	
 	public void asignarOyentes() {
 		ventana.getVentanaBoton().getCbxDificultades().addActionListener(this);
 		ventana.getVentanaBoton().getBtnJugar().addActionListener(this);
@@ -34,10 +53,7 @@ public class Controlador implements ActionListener {
 	    	ventana.getVentanaBoton().getBtnJugar().setEnabled(true);	    	
 		}
 		else if (command.equals("JUGAR")) {
-	    		ventana.getVentanaBoton().getLblDificultad().setVisible(false);
-	    		ventana.getVentanaBoton().getLblTitulo().setVisible(false);
-	    		ventana.getVentanaBoton().getBtnJugar().setVisible(false);
-		    	ventana.getVentanaBoton().getCbxDificultades().setVisible(false);
+	    		ventana.mostrarJuego();
 	    }
 		if (dificultadSeleccionada.equals("Facil")) {
 			
@@ -48,6 +64,6 @@ public class Controlador implements ActionListener {
 	    else if (dificultadSeleccionada.equals("Dificil")) {
 	    }
 		
-		}
+	}
 		 
 }
