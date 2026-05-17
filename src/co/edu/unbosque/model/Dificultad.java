@@ -7,10 +7,11 @@ public class Dificultad {
 
 	public Dificultad() {
 		nombre = "";
-		elementos = new String[3];
-		elementos[0] = "Facil";
-		elementos[1] = "Normal";
-		elementos[2] = "Dificil";
+		elementos = new String[4];
+		elementos[0] = "";
+		elementos[1] = "Facil";
+		elementos[2] = "Normal";
+		elementos[3] = "Dificil";
 	}
 
 	public String getNombre() {

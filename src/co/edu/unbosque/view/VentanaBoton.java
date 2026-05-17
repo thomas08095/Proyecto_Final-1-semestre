@@ -29,7 +29,7 @@ public class VentanaBoton extends JPanel{
 			gbc.gridx = 0;
 	    
 			lblTitulo = new JLabel("Cyber Infiltrator");
-			lblTitulo.setFont(new Font("Arial", Font.BOLD, 36));
+			lblTitulo.setFont(new Font("Times New Roman", Font.BOLD, 80));
 			gbc.gridy = 1;
 			add(lblTitulo, gbc);
 

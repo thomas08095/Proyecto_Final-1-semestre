@@ -20,7 +20,7 @@ public class VentanaPrincipal extends JFrame {
         setTitle("Cyber Infiltrator");
         setSize(900, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        getContentPane().setBackground(Color.LIGHT_GRAY);
+        getContentPane().setBackground(new Color(255, 255, 255));
         getContentPane().setLayout(new BorderLayout(10, 10));
         setResizable(false);
         setLocationRelativeTo(null);
