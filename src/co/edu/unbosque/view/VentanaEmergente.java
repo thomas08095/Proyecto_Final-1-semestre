@@ -5,9 +5,7 @@ public class VentanaEmergente {
 	
 	
 	public VentanaEmergente() {
-		
 		}
-		
 		public void mostrarInformacion(String m) {
 			JOptionPane.showMessageDialog(null, m);
 		}
