@@ -25,7 +25,6 @@ public class Controlador implements ActionListener {
         }
 
         asignarOyentes();
-        actualizarVista();
     }
 
     private void actualizarVista() {
@@ -38,6 +37,9 @@ public class Controlador implements ActionListener {
                 matrizCasillas[i][j] = new Casilla();
             }
         }
+        
+        System.out.println(fachada.getScriptX());
+        System.out.println(fachada.getScriptY());
 
         matrizCasillas[fachada.getScriptX()][fachada.getScriptY()].setColor(Color.GREEN);
 

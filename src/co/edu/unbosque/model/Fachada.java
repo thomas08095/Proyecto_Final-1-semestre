@@ -10,7 +10,6 @@ public class Fachada {
 
     public Fachada() {
         dificultad = new Dificultad();
-        tablero = new Tablero(5, 5);
         movimiento = new Movimiento();
         antivirusP = new AntivirusProactivo();
         nodoE = new NodoEnergia();
