@@ -14,6 +14,7 @@ public class Controlador implements ActionListener {
     private VentanaEmergente ventanaE;
     private Fachada fachada;
     private Casilla[][] matrizCasillas;
+    private int movimiento;
 
     public Controlador() {
         fachada = new Fachada();
@@ -23,7 +24,9 @@ public class Controlador implements ActionListener {
         for (String elem : fachada.getDificultades()) {
             ventana.getVentanaBoton().getCbxDificultades().addItem(elem);
         }
-
+        for (String elem : fachada.getCasillas()) {
+            ventana.getVentanaBoton().getCbxCasillas().addItem(elem);
+        }
         asignarOyentes();
     }
 
@@ -46,15 +49,14 @@ public class Controlador implements ActionListener {
         for (int i = 0; i < fachada.getCantidadAntivirus(); i++) {
             int fila = fachada.getFilasAntivirus()[i];
             int col = fachada.getColumnasAntivirus()[i];
-            matrizCasillas[fila][col].setColor(Color.red);
+            matrizCasillas[fila][col].setColor(Color.RED);
         }
-        
-        for (int i = 0; i < fachada.getCantidadAntivirus(); i++) {
-            int fila = fachada.getFilasAntivirus()[i];
-            int col = fachada.getColumnasAntivirus()[i];
-            matrizCasillas[fila][col].setColor(Color.red);
+
+        for (int i = 0; i < fachada.getCantidadNodo(); i++) {
+            int fila = fachada.getFilasNodo()[i];
+            int col = fachada.getColumnasNodo()[i];
+            matrizCasillas[fila][col].setColor(Color.YELLOW);
         }
-        
 
         ventana.getVistaJuego().setMatriz(matrizCasillas, this);
     }
@@ -68,16 +70,31 @@ public class Controlador implements ActionListener {
         if (movioOk) {
             matrizCasillas[anteriorX][anteriorY].limpiar();
             matrizCasillas[fachada.getScriptX()][fachada.getScriptY()].setColor(Color.GREEN);
+            movimiento = movimiento + 1;
+            System.out.println(movimiento);
+
+            if (movimiento == fachada.numeroCasillas()) {
+                ventanaE.mostrarInformacion("Te quedaste sin movimientos!");
+                movimiento = 0;
+                ventana.mostrarMenu();
+            }
 
             if (fachada.detectarAntivirus()) {
-                ventanaE.mostrarInformacion("PERDISTE");
+                ventanaE.mostrarInformacion("Game Over");
+                movimiento = 0;
                 ventana.mostrarMenu();
+            }
+
+            if (fachada.detectarNodoEnergia()) {
+                ventanaE.mostrarInformacion("¡Encontraste un Nodo De Energía!");
+                matrizCasillas[fachada.getScriptX()][fachada.getScriptY()].setColor(Color.GREEN);
             }
         }
     }
 
     public void asignarOyentes() {
         ventana.getVentanaBoton().getCbxDificultades().addActionListener(this);
+        ventana.getVentanaBoton().getCbxCasillas().addActionListener(this);
         ventana.getVentanaBoton().getBtnJugar().addActionListener(this);
     }
 
@@ -85,12 +102,14 @@ public class Controlador implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
 
-        if (command.equals("DIFICULTAD")) {
+        if (command.equals("CASILLA") || command.equals("DIFICULTAD")) {
             ventana.getVentanaBoton().getBtnJugar().setEnabled(true);
 
         } else if (command.equals("JUGAR")) {
+            String cSeleccionada = ventana.getVentanaBoton().getCbxCasillas().getSelectedItem().toString();
             String dSeleccionada = ventana.getVentanaBoton().getCbxDificultades().getSelectedItem().toString();
-            fachada.configurarTablero(dSeleccionada);
+            fachada.configurarTablero(dSeleccionada, cSeleccionada);
+            movimiento = 0;
             actualizarVista();
             ventana.mostrarJuego();
         }

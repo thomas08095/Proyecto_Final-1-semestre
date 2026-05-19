@@ -8,21 +8,23 @@ public class AntivirusProactivo {
     private int[] columnaA;
     private int cantidad;
     private Random rand;
+    private int nCasillas;
 
     public AntivirusProactivo() {
         this.cantidad = 0;
+        this.nCasillas = 0;
         filaA = new int[0];
         columnaA = new int[0];
         rand = new Random();
     }
 
-    public void RandomAntivirus(int cantidad) {
+    public void RandomAntivirus(int cantidad,int nCasillas) {
         this.cantidad = cantidad;
         filaA = new int[cantidad];
         columnaA = new int[cantidad];
         for (int i = 0; i < cantidad; i++) {
-            filaA[i] = rand.nextInt(10);
-            columnaA[i] = rand.nextInt(10);
+            filaA[i] = rand.nextInt(nCasillas);
+            columnaA[i] = rand.nextInt(nCasillas);
             System.out.println("ANTIVIRUS " + (i+1) + ": " + filaA[i] + "," + columnaA[i]);
         }
     }
@@ -58,4 +60,13 @@ public class AntivirusProactivo {
     public void setRand(Random rand) {
         this.rand = rand;
     }
+
+	public int getnCasillas() {
+		return nCasillas;
+	}
+
+	public void setnCasillas(int nCasillas) {
+		this.nCasillas = nCasillas;
+	}
+    
 }

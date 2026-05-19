@@ -7,25 +7,25 @@ public class NodoEnergia {
 	private int[] columnaNE;
 	private int cantidad;
 	private Random rand;
+	private int nCasillas;
 
 	public NodoEnergia() {
 		this.cantidad = 0;
+		this.nCasillas = 0;
 		filaNE = new int[0];
 		columnaNE = new int[0];
 		rand = new Random();
 	}
-
-	public void RandomNodoEnergia(int cantidad) {
+	public void RandomNodoEnergia(int cantidad,int nCasillas) {
 		this.cantidad = cantidad;
 		filaNE = new int[cantidad];
 		columnaNE = new int[cantidad];
 		for (int i = 0; i < cantidad; i++) {
-			filaNE[i] = rand.nextInt(10);
-			columnaNE[i] = rand.nextInt(10);
+			filaNE[i] = rand.nextInt(nCasillas);
+			columnaNE[i] = rand.nextInt(nCasillas);
 			System.out.println("NODO DE ENERGÍA " + (i + 1) + ": " + filaNE[i] + "," + columnaNE[i]);
 		}
 	}
-
 	public int[] getFilaNE() {
 		return filaNE;
 	}
@@ -57,5 +57,12 @@ public class NodoEnergia {
 	public void setRand(Random rand) {
 		this.rand = rand;
 	}
-	
+
+	public int getnCasillas() {
+		return nCasillas;
+	}
+
+	public void setnCasillas(int nCasillas) {
+		this.nCasillas = nCasillas;
+	}
 }

@@ -10,23 +10,42 @@ public class Fachada {
 
     public Fachada() {
         dificultad = new Dificultad();
+        tablero = new Tablero(5, 5);
         movimiento = new Movimiento();
         antivirusP = new AntivirusProactivo();
         nodoE = new NodoEnergia();
     }
 
-    public void configurarTablero(String dificultadSeleccionada) {
-        if (dificultadSeleccionada.equalsIgnoreCase("Facil")) {
-            tablero = new Tablero(5, 5);
-            antivirusP.RandomAntivirus(2);
-        } else if (dificultadSeleccionada.equalsIgnoreCase("Normal")) {
-            tablero = new Tablero(10, 10);
-            antivirusP.RandomAntivirus(4);
-        } else if (dificultadSeleccionada.equalsIgnoreCase("Dificil")) {
-            tablero = new Tablero(15, 15);
-            antivirusP.RandomAntivirus(6);
+    public void configurarTablero(String dificultadSeleccionada, String casillaSeleccionada) {
+        if (casillaSeleccionada.equalsIgnoreCase("10x10")) {
+            tablero.setNumeroCasillas(10);
+            tablero = new Tablero(tablero.getNumeroCasillas(), tablero.getNumeroCasillas());
         }
+        else if (casillaSeleccionada.equalsIgnoreCase("15x15")) {
+            tablero.setNumeroCasillas(15);
+            tablero = new Tablero(tablero.getNumeroCasillas(), tablero.getNumeroCasillas());
+        }
+        else if (casillaSeleccionada.equalsIgnoreCase("20x20")) {
+            tablero.setNumeroCasillas(20);
+            tablero = new Tablero(tablero.getNumeroCasillas(), tablero.getNumeroCasillas());
+        }
+        
+        if (dificultadSeleccionada.equalsIgnoreCase("Facil")) {
+            antivirusP.RandomAntivirus(2, tablero.getNumeroCasillas());
+            nodoE.RandomNodoEnergia(3, tablero.getNumeroCasillas());
+        } else if (dificultadSeleccionada.equalsIgnoreCase("Normal")) {
+            antivirusP.RandomAntivirus(4, tablero.getNumeroCasillas());
+            nodoE.RandomNodoEnergia(2, tablero.getNumeroCasillas());
+        } else if (dificultadSeleccionada.equalsIgnoreCase("Dificil")) {
+            antivirusP.RandomAntivirus(6, tablero.getNumeroCasillas());
+            nodoE.RandomNodoEnergia(1, tablero.getNumeroCasillas());
+        }
+
         movimiento.resetPosicion();
+    }
+    public int numeroCasillas() {
+    	int n=tablero.getNumeroCasillas()*tablero.getNumeroCasillas();
+    	return n;
     }
 
     public boolean detectarAntivirus() {
@@ -45,6 +64,8 @@ public class Fachada {
         int nY = getScriptY();
         for (int i = 0; i < nodoE.getCantidad(); i++) {
             if (nX == nodoE.getFilaNE()[i] && nY == nodoE.getColumnaNE()[i]) {
+            	nodoE.getFilaNE()[i] = -1;
+            	nodoE.getColumnaNE()[i] = -1;
                 return true;
             }
         }
@@ -74,6 +95,10 @@ public class Fachada {
     public String[] getDificultades() {
         return dificultad.getElementos();
     }
+    
+    public String[] getCasillas() {
+        return tablero.getElementos();
+    }
 
     public int getCantidadAntivirus() {
         return antivirusP.getCantidad();
@@ -85,6 +110,18 @@ public class Fachada {
 
     public int[] getColumnasAntivirus() {
         return antivirusP.getColumnaA();
+    }
+    
+    public int getCantidadNodo() {
+        return nodoE.getCantidad();
+    }
+
+    public int[] getFilasNodo() {
+        return nodoE.getFilaNE();
+    }
+
+    public int[] getColumnasNodo() {
+        return nodoE.getColumnaNE();
     }
 
     public Tablero getTablero() {
