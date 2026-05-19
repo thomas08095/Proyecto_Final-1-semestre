@@ -1,27 +1,26 @@
 package co.edu.unbosque.view;
 
 import java.awt.*;
-
 import javax.swing.*;
 
-public class Casilla extends JPanel{
+public class Casilla extends JPanel {
     private ImageIcon imagen;
     private JLabel label;
     private String tipo;
-    
-	public Casilla() {
+
+    public Casilla() {
         setLayout(new BorderLayout());
         setBackground(Color.WHITE);
         setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         setPreferredSize(new Dimension(80, 80));
-        
+
         label = new JLabel();
         label.setHorizontalAlignment(SwingConstants.CENTER);
         label.setVerticalAlignment(SwingConstants.CENTER);
         add(label, BorderLayout.CENTER);
-	}
-	
-	public void setImagen(String rutaImagen) {
+    }
+
+    public void setImagen(String rutaImagen) {
         ImageIcon icon = new ImageIcon(rutaImagen);
         Image scaled = icon.getImage().getScaledInstance(
             getPreferredSize().width - 10,
@@ -32,10 +31,18 @@ public class Casilla extends JPanel{
         label.setIcon(this.imagen);
         repaint();
     }
-	
+
+    public void setColor(Color color) {
+        label.setIcon(null);
+        this.imagen = null;
+        setBackground(color);
+        repaint();
+    }
+
     public void limpiar() {
         this.imagen = null;
         label.setIcon(null);
+        setBackground(Color.WHITE);
         repaint();
     }
 }

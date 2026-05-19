@@ -4,8 +4,10 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -18,6 +20,7 @@ public class VentanaBoton extends JPanel {
 	private JLabel lblTitulo;
 	private JLabel lblSubTitulo;
 	private JLabel lblDificultad;
+	private JLabel lblImagen; 
 
 	public VentanaBoton() {
 		setLayout(new GridBagLayout());
@@ -38,23 +41,29 @@ public class VentanaBoton extends JPanel {
 		lblSubTitulo.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		gbc.gridy = 2;
 		add(lblSubTitulo, gbc);
+		
+		ImageIcon icon = new ImageIcon("src/imagenes/BugBusterIcon.png");
+		Image scaled = icon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+		lblImagen = new JLabel(new ImageIcon(scaled));
+		gbc.gridy = 3;
+		add(lblImagen, gbc);
 
 		lblDificultad = new JLabel("Selecciona la dificultad:");
-		gbc.gridy = 3;
+		gbc.gridy = 4;
 		add(lblDificultad, gbc);
 
 		btnJugar = new JButton("Jugar");
 		btnJugar.setActionCommand("JUGAR");
 		btnJugar.setPreferredSize(new Dimension(80, 30));
 		btnJugar.setEnabled(false);
-		gbc.gridy = 5;
+		gbc.gridy = 6;
 		add(btnJugar, gbc);
 
 		cbxDificultades = new JComboBox<String>();
 		cbxDificultades.setActionCommand("DIFICULTAD");
 		cbxDificultades.setPreferredSize(new Dimension(70, 30));
 		cbxDificultades.setEnabled(true);
-		gbc.gridy = 4;
+		gbc.gridy = 5;
 		add(cbxDificultades, gbc);
 	}
 
