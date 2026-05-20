@@ -7,6 +7,7 @@ public class Fachada {
     private Movimiento movimiento;
     private AntivirusProactivo antivirusP;
     private NodoEnergia nodoE;
+    private int movimientos;
 
     public Fachada() {
         dificultad = new Dificultad();
@@ -14,11 +15,13 @@ public class Fachada {
         movimiento = new Movimiento();
         antivirusP = new AntivirusProactivo();
         nodoE = new NodoEnergia();
+        movimientos = 0;
     }
 
     public void configurarTablero(String dificultadSeleccionada, String casillaSeleccionada) {
         if (casillaSeleccionada.equalsIgnoreCase("10x10")) {
             tablero.setNumeroCasillas(10);
+            setMovimientos(movimientos = tablero.getNumeroCasillas() *tablero.getNumeroCasillas());
             tablero = new Tablero(tablero.getNumeroCasillas(), tablero.getNumeroCasillas());
         }
         else if (casillaSeleccionada.equalsIgnoreCase("15x15")) {
@@ -126,5 +129,14 @@ public class Fachada {
     public Tablero getTablero() {
         return tablero;
     }
+
+	public int getMovimientos() {
+		return movimientos;
+	}
+
+	public void setMovimientos(int movimientos) {
+		this.movimientos = movimientos;
+	}
+    
     
 }

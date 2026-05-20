@@ -1,73 +1,94 @@
 package co.edu.unbosque.view;
-import javax.swing.*;
 
+import javax.swing.*;
 import java.awt.*;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.event.ActionEvent;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
+// Contenedor principal de la aplicación (La ventana del sistema operativo)
 public class VentanaPrincipal extends JFrame {
 
-    private VentanaBoton ventanaBoton;
-    private VistaJuego vistaJuego;
-    private JPanel contenedor;
-    private CardLayout cardLayout;
+	// Paneles que representan las diferentes "pantallas" del juego
+	private MenuPrincipal menuPrincipal;
+	private VistaJuego vistaJuego;
 
-    public VentanaPrincipal() {
-        setTitle("Cyber Infiltrator");
-        setSize(1700, 850);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        getContentPane().setBackground(new Color(255, 255, 255));
-        getContentPane().setLayout(new BorderLayout(10, 10));
-        setResizable(false);
-        setLocationRelativeTo(null);
-        setVisible(true);
-        inicializarComponentes();
-    }
+	// Contenedor dinámico y gestor de pantallas
+	private JPanel contenedor;
+	private CardLayout cardLayout; // Permite alternar entre menús y el juego como si fueran cartas
 
-    public void inicializarComponentes() {
-        cardLayout = new CardLayout();
-        contenedor = new JPanel(cardLayout);
+	// Constructor: Configura la ventana base
+	public VentanaPrincipal() {
+		setTitle("Cyber Infiltrator");
+		setSize(1700, 850);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		getContentPane().setBackground(new Color(255, 255, 255));
+		getContentPane().setLayout(new BorderLayout(10, 10));
+		setResizable(false);
+		setLocationRelativeTo(null); // Centra la ventana en el monitor
+		inicializarComponentes();
+		setVisible(true); // Hace visible la ventana al final de la carga
+	}
 
-        ventanaBoton = new VentanaBoton();
-        ventanaBoton.inicializarComponentes();
-        vistaJuego = new VistaJuego();
+	// Prepara las pantallas y las introduce en el gestor (CardLayout)
+	public void inicializarComponentes() {
+		cardLayout = new CardLayout();
+		contenedor = new JPanel(cardLayout);
 
-        contenedor.add(ventanaBoton, "MENU");
-        contenedor.add(vistaJuego, "JUEGO");
+		// Instancia de la pantalla de inicio
+		menuPrincipal = new MenuPrincipal();
+		menuPrincipal.inicializarComponentes();
 
-        add(contenedor, BorderLayout.CENTER);
+		// Instancia de la pantalla donde se desarrolla la partida
+		vistaJuego = new VistaJuego();
 
-        cardLayout.show(contenedor, "MENU"); 
-    }
+		// Se añaden al contenedor con una etiqueta identificadora
+		contenedor.add(menuPrincipal, "MENU");
+		contenedor.add(vistaJuego, "JUEGO");
 
-    public void mostrarMenu() {
-        cardLayout.show(contenedor, "MENU");
-    }
-    
-    public void mostrarJuego() {
-        cardLayout.show(contenedor, "JUEGO");
-    }
+		add(contenedor, BorderLayout.CENTER);
 
-    public VentanaBoton getVentanaBoton() {
-        return ventanaBoton;
-    }
+		// Define cuál pantalla se mostrará primero por defecto al abrir el programa
+		cardLayout.show(contenedor, "MENU");
+	}
 
-    public void setVentanaBoton(VentanaBoton ventanaBoton) {
-        this.ventanaBoton = ventanaBoton;
-    }
-    
-    public VistaJuego getVistaJuego() {
-    	return vistaJuego;
-    }
-    
-    public void setVistaJuego(VistaJuego vistajuego) {
-    	this.vistaJuego = vistaJuego;
-    }
+	// Métodos utilitarios para cambiar de pantalla durante la ejecución
+
+	public void mostrarMenu() {
+		cardLayout.show(contenedor, "MENU");
+	}
+
+	public void mostrarJuego() {
+		cardLayout.show(contenedor, "JUEGO");
+	}
+
+	public MenuPrincipal getMenuPrincipal() {
+		return menuPrincipal;
+	}
+
+	public void setMenuPrincipal(MenuPrincipal menuPrincipal) {
+		this.menuPrincipal = menuPrincipal;
+	}
+
+	public VistaJuego getVistaJuego() {
+		return vistaJuego;
+	}
+
+	// Getters y Setters para que el controlador acceda a ambas vistas
+	public void setVistaJuego(VistaJuego vistaJuego) {
+		this.vistaJuego = vistaJuego;
+	}
+
+	public JPanel getContenedor() {
+		return contenedor;
+	}
+
+	public void setContenedor(JPanel contenedor) {
+		this.contenedor = contenedor;
+	}
+
+	public CardLayout getCardLayout() {
+		return cardLayout;
+	}
+
+	public void setCardLayout(CardLayout cardLayout) {
+		this.cardLayout = cardLayout;
+	}
 }

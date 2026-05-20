@@ -3,36 +3,38 @@ package co.edu.unbosque.view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.util.Map;
-import javax.swing.AbstractAction;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.KeyStroke;
 import co.edu.unbosque.controller.Controlador;
-import co.edu.unbosque.model.Movimiento;
 
+// Contenedor principal de la pantalla de juego en ejecución
 public class VistaJuego extends JPanel {
-
-    private JPanel[][] matrizCasillas;
-    private Controlador controlador;
-    private JPanel contenedorPrincipal;
+    
+    // Panel central que contendrá la cuadrícula jugable
+    private PanelTablero panelTablero; 
+    
+    // Panel lateral/superior con la información y estadísticas de la partida
     private JPanel contenedorLabels;
-    private JPanel tablero;
-    private LabelActualizable nodosRecolectados; // diff - nodos - firewall - movimientos
+    private LabelActualizable nodosRecolectados;
     private LabelActualizable dificultad;
     private LabelActualizable cantFirewalls;
     private LabelActualizable movimientosRestantes;
 
+    // Constructor: Prepara el esqueleto general de la interfaz
     public VistaJuego() {
-        setLayout(new BorderLayout());
+        setLayout(new BorderLayout()); // Layout ideal para dividir el tablero en el centro y datos a los costados
         setBackground(Color.WHITE);
+        panelTablero = new PanelTablero(); 
     }
     
+    // Construye la zona de estadísticas (Score, movimientos, dificultad)
     private void llenarPanelLabels() {
+        if (contenedorLabels != null) {
+            remove(contenedorLabels); // Evita duplicados al reiniciar la partida
+        }
         contenedorLabels = new JPanel();
-        contenedorLabels.setLayout(new GridLayout(1, 4));
+        contenedorLabels.setLayout(new GridLayout(1, 4)); // 1 fila, 4 columnas para los labels
 
+        // Inicializa las etiquetas con valores por defecto
         nodosRecolectados = new LabelActualizable("0");
         contenedorLabels.add(nodosRecolectados);
 
@@ -44,54 +46,29 @@ public class VistaJuego extends JPanel {
 
         movimientosRestantes = new LabelActualizable("30");
         contenedorLabels.add(movimientosRestantes);
-
-        add(contenedorLabels, BorderLayout.NORTH);
+        
+        // Coloca la barra de información en el borde derecho de la pantalla
+        add(contenedorLabels, BorderLayout.EAST); 
     }
 
-    private void inicializarMatrizVisual() {
-    	removeAll();
-    	llenarPanelLabels();
-        tablero = new JPanel(new GridLayout(matrizCasillas.length, matrizCasillas[0].length));
-        for (int i = 0; i < matrizCasillas.length; i++) {
-            for (int j = 0; j < matrizCasillas[0].length; j++) {
-                tablero.add(matrizCasillas[i][j]);
-            }
-        }
-        add(tablero, BorderLayout.CENTER);
+    // Método invocado por el controlador al presionar el botón "Jugar"
+    public void inicializarVistaTablero(Controlador controlador, int filas, int columnas) {
+        removeAll();
+        llenarPanelLabels(); // Dibuja la zona de estadísticas
+        
+        // Le indica al panel especialista que fabrique la cuadrícula interactiva
+        panelTablero.inicializarTablero(filas, columnas, controlador);
+        
+        // Añade el mapa de casillas al centro de la pantalla
+        add(panelTablero, BorderLayout.CENTER);
+        
+        // Fuerza el refresco gráfico
+        revalidate();
+        repaint();
     }
 
-    public void setMatriz(JPanel[][] matriz, Controlador controlador) {
-        this.matrizCasillas = matriz;
-        this.controlador = controlador;
-        inicializarMatrizVisual();
-        configurarMovimientoTeclado();
-    }
-
-    private void configurarMovimientoTeclado() {
-        Map<String, int[]> movimientos = Movimiento.obtenerMovimientos();
-        for (Map.Entry<String, int[]> entry : movimientos.entrySet()) {
-            String tecla = entry.getKey();
-            int[] delta = entry.getValue();
-            getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(tecla), tecla);
-            getActionMap().put(tecla, new AccionMover(delta[0], delta[1]));
-        }
-    }
-
-    private class AccionMover extends AbstractAction {
-
-        private int deltaX;
-        private int deltaY;
-
-        public AccionMover(int deltaX, int deltaY) {
-            this.deltaX = deltaX;
-            this.deltaY = deltaY;
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            if (controlador != null) {
-                controlador.solicitarMovimiento(deltaX, deltaY);
-            }
-        }
+    // Permite al controlador obtener acceso indirecto a la matriz visual
+    public PanelTablero getPanelTablero() {
+        return panelTablero;
     }
 }
