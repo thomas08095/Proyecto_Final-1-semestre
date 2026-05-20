@@ -14,7 +14,7 @@ public class Controlador implements ActionListener {
     private VentanaPrincipal ventana;
     private VentanaEmergente ventanaE;
     private Fachada fachada;
-    private Casilla[][] matrizCasillas;
+    private Casilla[][] matrizCasillas; // Mantenido como Casilla[][] para la lógica del juego
     private int movimiento;
 
     // Constructor: Configura las instancias base e inicializa los selectores del menú
@@ -70,8 +70,8 @@ public class Controlador implements ActionListener {
             if (fila != -1 && col != -1) {
                 matrizCasillas[fila][col].setColor(Color.YELLOW);
             }
-        }
-    }
+        }}
+
 
     // Gestiona las solicitudes de movimiento enviadas desde los KeyBindings del panel
     public void solicitarMovimiento(int deltaX, int deltaY) {
