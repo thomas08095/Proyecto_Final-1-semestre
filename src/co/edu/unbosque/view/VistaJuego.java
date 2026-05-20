@@ -25,9 +25,11 @@ public class VistaJuego extends JPanel {
     private LabelActualizable movimientosRestantes;
 
     public VistaJuego() {
-        setLayout(new BorderLayout()); // use BorderLayout for the main panel
+        setLayout(new BorderLayout());
         setBackground(Color.WHITE);
-
+    }
+    
+    private void llenarPanelLabels() {
         contenedorLabels = new JPanel();
         contenedorLabels.setLayout(new GridLayout(1, 4));
 
@@ -43,10 +45,12 @@ public class VistaJuego extends JPanel {
         movimientosRestantes = new LabelActualizable("30");
         contenedorLabels.add(movimientosRestantes);
 
-        add(contenedorLabels, BorderLayout.NORTH); // labels at the top
+        add(contenedorLabels, BorderLayout.NORTH);
     }
 
     private void inicializarMatrizVisual() {
+    	removeAll();
+    	llenarPanelLabels();
         tablero = new JPanel(new GridLayout(matrizCasillas.length, matrizCasillas[0].length));
         for (int i = 0; i < matrizCasillas.length; i++) {
             for (int j = 0; j < matrizCasillas[0].length; j++) {

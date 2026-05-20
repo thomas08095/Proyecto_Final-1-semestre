@@ -3,13 +3,13 @@ package co.edu.unbosque.model;
 import java.util.Random;
 
 public class AntivirusProactivo {
-
+//Atributos
     private int[] filaA;
     private int[] columnaA;
     private int cantidad;
     private Random rand;
     private int nCasillas;
-
+//Clase Creadora
     public AntivirusProactivo() {
         this.cantidad = 0;
         this.nCasillas = 0;
@@ -17,18 +17,7 @@ public class AntivirusProactivo {
         columnaA = new int[0];
         rand = new Random();
     }
-
-    public void RandomAntivirus(int cantidad,int nCasillas) {
-        this.cantidad = cantidad;
-        filaA = new int[cantidad];
-        columnaA = new int[cantidad];
-        for (int i = 0; i < cantidad; i++) {
-            filaA[i] = rand.nextInt(nCasillas);
-            columnaA[i] = rand.nextInt(nCasillas);
-            System.out.println("ANTIVIRUS " + (i+1) + ": " + filaA[i] + "," + columnaA[i]);
-        }
-    }
-
+//Getters && Setters
     public int[] getFilaA() {
         return filaA;
     }
@@ -68,5 +57,16 @@ public class AntivirusProactivo {
 	public void setnCasillas(int nCasillas) {
 		this.nCasillas = nCasillas;
 	}
-    
+//Metodos
+	public void RandomAntivirus(int cantidad,int nCasillas) {
+        this.cantidad = cantidad;
+        filaA = new int[cantidad];
+        columnaA = new int[cantidad];
+        for (int i = 0; i < cantidad; i++) {
+            filaA[i] = rand.nextInt(nCasillas);
+            columnaA[i] = rand.nextInt(nCasillas);
+            System.out.println("ANTIVIRUS " + (i+1) + ": " + filaA[i] + "," + columnaA[i]);
+        }
+    }
+
 }

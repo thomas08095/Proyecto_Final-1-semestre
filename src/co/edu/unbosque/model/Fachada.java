@@ -40,11 +40,10 @@ public class Fachada {
             antivirusP.RandomAntivirus(6, tablero.getNumeroCasillas());
             nodoE.RandomNodoEnergia(1, tablero.getNumeroCasillas());
         }
-
         movimiento.resetPosicion();
     }
     public int numeroCasillas() {
-    	int n=tablero.getNumeroCasillas()*tablero.getNumeroCasillas();
+    	int n= tablero.getNumeroCasillas()*tablero.getNumeroCasillas();
     	return n;
     }
 

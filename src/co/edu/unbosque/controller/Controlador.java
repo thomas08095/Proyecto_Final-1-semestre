@@ -29,6 +29,8 @@ public class Controlador implements ActionListener {
         }
         asignarOyentes();
     }
+    
+    
 
     private void actualizarVista() {
         int filas = fachada.getFilas();
@@ -110,6 +112,7 @@ public class Controlador implements ActionListener {
             String dSeleccionada = ventana.getVentanaBoton().getCbxDificultades().getSelectedItem().toString();
             fachada.configurarTablero(dSeleccionada, cSeleccionada);
             movimiento = 0;
+            ventana.revalidate();
             actualizarVista();
             ventana.mostrarJuego();
         }

@@ -14,119 +14,121 @@ import javax.swing.JPanel;
 
 public class VentanaBoton extends JPanel {
 
-    private JComboBox<String> cbxDificultades;
-    private JComboBox<String> cbxCasillas;
-    private JButton btnJugar;
-    private JLabel lblTitulo;
-    private JLabel lblSubTitulo;
-    private JLabel lblDificultad;
-    private JLabel lblImagen;
+	 private JComboBox<String> cbxDificultades;
+	    private JComboBox<String> cbxCasillas;
+	    private JButton btnJugar;
+	    private JLabel lblTitulo;
+	    private JLabel lblSubTitulo;
+	    private JLabel lblDificultad;
+	    private JLabel lblImagen;
 
-    public VentanaBoton() {
-        setLayout(new GridBagLayout());
-        setOpaque(false);
-    }
+	    public VentanaBoton() {
+	        setLayout(new GridBagLayout());
+	        setOpaque(false);
+	    }
 
-    public void inicializarComponentes() {
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10);
-        gbc.gridx = 0;
+	    public void inicializarComponentes() {
+	        GridBagConstraints gbc = new GridBagConstraints();
+	        gbc.insets = new Insets(10, 10, 10, 10);
+	        gbc.gridx = 0;
 
-        lblTitulo = new JLabel("Cyber Infiltrator");
-        lblTitulo.setFont(new Font("Times New Roman", Font.BOLD, 80));
-        gbc.gridy = 1;
-        add(lblTitulo, gbc);
+	        lblTitulo = new JLabel("Cyber Infiltrator");
+	        lblTitulo.setFont(new Font("Times New Roman", Font.BOLD, 80));
+	        gbc.gridy = 1;
+	        add(lblTitulo, gbc);
 
-        lblSubTitulo = new JLabel("By ©BugBusters");
-        lblSubTitulo.setFont(new Font("Times New Roman", Font.BOLD, 15));
-        gbc.gridy = 2;
-        add(lblSubTitulo, gbc);
+	        lblSubTitulo = new JLabel("By ©BugBusters");
+	        lblSubTitulo.setFont(new Font("Times New Roman", Font.BOLD, 15));
+	        gbc.gridy = 2;
+	        add(lblSubTitulo, gbc);
 
-        ImageIcon icon = new ImageIcon("src/imagenes/BugBusterIcon.png");
-        Image scaled = icon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
-        lblImagen = new JLabel(new ImageIcon(scaled));
-        gbc.gridy = 3;
-        add(lblImagen, gbc);
+	        ImageIcon icon = new ImageIcon("src/imagenes/BugBusterIcon.png");
+	        Image scaled = icon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+	        lblImagen = new JLabel(new ImageIcon(scaled));
+	        gbc.gridy = 3;
+	        add(lblImagen, gbc);
 
-        lblDificultad = new JLabel("Selecciona el tablero y la dificultad:");
-        gbc.gridy = 4;
-        add(lblDificultad, gbc);
-        
-        cbxCasillas = new JComboBox<String>();
-        cbxCasillas.setActionCommand("CASILLA");
-        cbxCasillas.setPreferredSize(new Dimension(70, 30));
-        cbxCasillas.setEnabled(true);
-        gbc.gridy = 5;
-        add(cbxCasillas, gbc);
+	        lblDificultad = new JLabel("Selecciona el tablero y la dificultad:");
+	        gbc.gridy = 4;
+	        add(lblDificultad, gbc);
+	        
+	        cbxCasillas = new JComboBox<String>();
+	        cbxCasillas.setActionCommand("CASILLA");
+	        cbxCasillas.setPreferredSize(new Dimension(70, 30));
+	        cbxCasillas.setEnabled(true);
+	        gbc.gridy = 5;
+	        add(cbxCasillas, gbc);
 
-        cbxDificultades = new JComboBox<String>();
-        cbxDificultades.setActionCommand("DIFICULTAD");
-        cbxDificultades.setPreferredSize(new Dimension(70, 30));
-        cbxDificultades.setEnabled(true);
-        gbc.gridy = 6;
-        add(cbxDificultades, gbc);
+	        cbxDificultades = new JComboBox<String>();
+	        cbxDificultades.setActionCommand("DIFICULTAD");
+	        cbxDificultades.setPreferredSize(new Dimension(70, 30));
+	        cbxDificultades.setEnabled(true);
+	        gbc.gridy = 6;
+	        add(cbxDificultades, gbc);
 
-        btnJugar = new JButton("Jugar");
-        btnJugar.setActionCommand("JUGAR");
-        btnJugar.setPreferredSize(new Dimension(80, 30));
-        btnJugar.setEnabled(false);
-        gbc.gridy = 7;
-        add(btnJugar, gbc);
-    }
+	        btnJugar = new JButton("Jugar");
+	        btnJugar.setActionCommand("JUGAR");
+	        btnJugar.setPreferredSize(new Dimension(80, 30));
+	        btnJugar.setEnabled(false);
+	        gbc.gridy = 7;
+	        add(btnJugar, gbc);
+	    }
 
-    public JComboBox<String> getCbxDificultades() {
-        return cbxDificultades;
-    }
+		public JComboBox<String> getCbxDificultades() {
+			return cbxDificultades;
+		}
 
-    public void setCbxDificultades(JComboBox<String> cbxDificultades) {
-        this.cbxDificultades = cbxDificultades;
-    }
+		public void setCbxDificultades(JComboBox<String> cbxDificultades) {
+			this.cbxDificultades = cbxDificultades;
+		}
 
-    public JComboBox<String> getCbxCasillas() {
-        return cbxCasillas;
-    }
+		public JComboBox<String> getCbxCasillas() {
+			return cbxCasillas;
+		}
 
-    public void setCbxCasillas(JComboBox<String> cbxCasillas) {
-        this.cbxCasillas = cbxCasillas;
-    }
+		public void setCbxCasillas(JComboBox<String> cbxCasillas) {
+			this.cbxCasillas = cbxCasillas;
+		}
 
-    public JButton getBtnJugar() {
-        return btnJugar;
-    }
+		public JButton getBtnJugar() {
+			return btnJugar;
+		}
 
-    public void setBtnJugar(JButton btnJugar) {
-        this.btnJugar = btnJugar;
-    }
+		public void setBtnJugar(JButton btnJugar) {
+			this.btnJugar = btnJugar;
+		}
 
-    public JLabel getLblTitulo() {
-        return lblTitulo;
-    }
+		public JLabel getLblTitulo() {
+			return lblTitulo;
+		}
 
-    public void setLblTitulo(JLabel lblTitulo) {
-        this.lblTitulo = lblTitulo;
-    }
+		public void setLblTitulo(JLabel lblTitulo) {
+			this.lblTitulo = lblTitulo;
+		}
 
-    public JLabel getLblDificultad() {
-        return lblDificultad;
-    }
+		public JLabel getLblSubTitulo() {
+			return lblSubTitulo;
+		}
 
-    public void setLblDificultad(JLabel lblDificultad) {
-        this.lblDificultad = lblDificultad;
-    }
+		public void setLblSubTitulo(JLabel lblSubTitulo) {
+			this.lblSubTitulo = lblSubTitulo;
+		}
 
-    public JLabel getLblSubTitulo() {
-        return lblSubTitulo;
-    }
+		public JLabel getLblDificultad() {
+			return lblDificultad;
+		}
 
-    public void setLblSubTitulo(JLabel lblSubTitulo) {
-        this.lblSubTitulo = lblSubTitulo;
-    }
+		public void setLblDificultad(JLabel lblDificultad) {
+			this.lblDificultad = lblDificultad;
+		}
 
-    public JLabel getLblImagen() {
-        return lblImagen;
-    }
+		public JLabel getLblImagen() {
+			return lblImagen;
+		}
 
-    public void setLblImagen(JLabel lblImagen) {
-        this.lblImagen = lblImagen;
-    }
+		public void setLblImagen(JLabel lblImagen) {
+			this.lblImagen = lblImagen;
+		}
+
+   
 }
