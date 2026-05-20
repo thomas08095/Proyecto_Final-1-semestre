@@ -13,7 +13,7 @@ public class Controlador implements ActionListener {
     private VentanaPrincipal ventana;
     private VentanaEmergente ventanaE;
     private Fachada fachada;
-    private Casilla[][] matrizCasillas;
+    private Casilla[][] matrizCasillas; // Mantenido como Casilla[][] para la lógica del juego
     private int movimiento;
 
     public Controlador() {
@@ -29,8 +29,6 @@ public class Controlador implements ActionListener {
         }
         asignarOyentes();
     }
-    
-    
 
     private void actualizarVista() {
         int filas = fachada.getFilas();
@@ -60,6 +58,7 @@ public class Controlador implements ActionListener {
             matrizCasillas[fila][col].setColor(Color.YELLOW);
         }
 
+        // CAMBIO EXCLUSIVO: Conecta perfectamente con tu nueva VistaJuego manual sin Maps
         ventana.getVistaJuego().setMatriz(matrizCasillas, this);
     }
 
