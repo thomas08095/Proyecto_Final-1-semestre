@@ -6,29 +6,29 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField; // Agregado para capturar la dimensión
 
 public class MenuPrincipal extends JPanel {
 
-    private JComboBox<String> cbxDificultades;
-    private JTextField txtTamanoTablero; // Reemplaza al JComboBox de casillas
-    private JButton btnJugar;
-    private JLabel lblTitulo;
-    private JLabel lblSubTitulo;
-    private JLabel lblDificultad;
-    private JLabel lblImagen;
+	private JComboBox<String> cbxDificultades;
+	private JComboBox<String> cbxCasillas;
+	private JButton btnJugar;
+	private JLabel lblTitulo;
+	private JLabel lblSubTitulo;
+	private JLabel lblDificultad;
+	private JLabel lblImagen;
 
-    public MenuPrincipal() {
-        setLayout(new GridBagLayout());
-        setOpaque(false);
-    }
+	public MenuPrincipal() {
+		setLayout(new GridBagLayout());
+		setOpaque(false);
+	}
 
-    public void inicializarComponentes() {
+	public void inicializarComponentes() {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.gridx = 0;
@@ -49,20 +49,20 @@ public class MenuPrincipal extends JPanel {
         gbc.gridy = 3;
         add(lblImagen, gbc);
 
-        lblDificultad = new JLabel("Ingresa el tamaño del tablero y selecciona dificultad:");
+        lblDificultad = new JLabel("Selecciona el tablero y la dificultad:");
         gbc.gridy = 4;
         add(lblDificultad, gbc);
-        
-        // Configuración del campo de texto numérico
-        txtTamanoTablero = new JTextField();
-        txtTamanoTablero.setPreferredSize(new Dimension(80, 30));
-        txtTamanoTablero.setToolTipText("Ej: 10 para un tablero de 10x10");
+
+        cbxCasillas = new JComboBox<String>();
+        cbxCasillas.setActionCommand("CASILLA");
+        cbxCasillas.setPreferredSize(new Dimension(70, 30));
+        cbxCasillas.setEnabled(true);
         gbc.gridy = 5;
-        add(txtTamanoTablero, gbc);
+        add(cbxCasillas, gbc);
 
         cbxDificultades = new JComboBox<String>();
         cbxDificultades.setActionCommand("DIFICULTAD");
-        cbxDificultades.setPreferredSize(new Dimension(100, 30));
+        cbxDificultades.setPreferredSize(new Dimension(70, 30));
         cbxDificultades.setEnabled(true);
         gbc.gridy = 6;
         add(cbxDificultades, gbc);
@@ -70,21 +70,64 @@ public class MenuPrincipal extends JPanel {
         btnJugar = new JButton("Jugar");
         btnJugar.setActionCommand("JUGAR");
         btnJugar.setPreferredSize(new Dimension(80, 30));
-        btnJugar.setEnabled(true); // Se deja activo por defecto para validar al dar click
+        btnJugar.setEnabled(false);
         gbc.gridy = 7;
         add(btnJugar, gbc);
     }
 
-    // Getter para obtener el campo de texto en el controlador
-    public JTextField getTxtTamanoTablero() {
-        return txtTamanoTablero;
-    }
+	public JComboBox<String> getCbxDificultades() {
+		return cbxDificultades;
+	}
 
-    public JComboBox<String> getCbxDificultades() {
-        return cbxDificultades;
-    }
+	public void setCbxDificultades(JComboBox<String> cbxDificultades) {
+		this.cbxDificultades = cbxDificultades;
+	}
 
-    public JButton getBtnJugar() {
-        return btnJugar;
-    }
+	public JComboBox<String> getCbxCasillas() {
+		return cbxCasillas;
+	}
+
+	public void setCbxCasillas(JComboBox<String> cbxCasillas) {
+		this.cbxCasillas = cbxCasillas;
+	}
+
+	public JButton getBtnJugar() {
+		return btnJugar;
+	}
+
+	public void setBtnJugar(JButton btnJugar) {
+		this.btnJugar = btnJugar;
+	}
+
+	public JLabel getLblTitulo() {
+		return lblTitulo;
+	}
+
+	public void setLblTitulo(JLabel lblTitulo) {
+		this.lblTitulo = lblTitulo;
+	}
+
+	public JLabel getLblSubTitulo() {
+		return lblSubTitulo;
+	}
+
+	public void setLblSubTitulo(JLabel lblSubTitulo) {
+		this.lblSubTitulo = lblSubTitulo;
+	}
+
+	public JLabel getLblDificultad() {
+		return lblDificultad;
+	}
+
+	public void setLblDificultad(JLabel lblDificultad) {
+		this.lblDificultad = lblDificultad;
+	}
+
+	public JLabel getLblImagen() {
+		return lblImagen;
+	}
+
+	public void setLblImagen(JLabel lblImagen) {
+		this.lblImagen = lblImagen;
+	}
 }

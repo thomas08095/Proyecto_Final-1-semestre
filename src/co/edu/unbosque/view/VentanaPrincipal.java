@@ -3,92 +3,72 @@ package co.edu.unbosque.view;
 import javax.swing.*;
 import java.awt.*;
 
-// Contenedor principal de la aplicación (La ventana del sistema operativo)
 public class VentanaPrincipal extends JFrame {
 
-	// Paneles que representan las diferentes "pantallas" del juego
-	private MenuPrincipal menuPrincipal;
-	private VistaJuego vistaJuego;
+    private MenuPrincipal menuPrincipal;
+    private PanelJuego panelJuego;
 
-	// Contenedor dinámico y gestor de pantallas
-	private JPanel contenedor;
-	private CardLayout cardLayout; // Permite alternar entre menús y el juego como si fueran cartas
+    private JPanel contenedor;
+    private CardLayout cardLayout;
 
-	// Constructor: Configura la ventana base
-	public VentanaPrincipal() {
-		setTitle("Cyber Infiltrator");
-		setSize(1700, 850);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		getContentPane().setBackground(new Color(241, 239, 253));
-		getContentPane().setLayout(new BorderLayout(10, 10));
-		setResizable(false);
-		setLocationRelativeTo(null); // Centra la ventana en el monitor
-		inicializarComponentes();
-		setVisible(true); // Hace visible la ventana al final de la carga
-	}
+    public VentanaPrincipal() {
+        setTitle("Cyber Infiltrator");
+        setSize(1700, 850);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        getContentPane().setBackground(Color.WHITE);
+        getContentPane().setLayout(new BorderLayout(10, 10));
+        setResizable(false);
+        setLocationRelativeTo(null);
+        inicializarComponentes();
+        setVisible(true);
+    }
 
-	// Prepara las pantallas y las introduce en el gestor (CardLayout)
-	public void inicializarComponentes() {
-		cardLayout = new CardLayout();
-		contenedor = new JPanel(cardLayout);
+    public void inicializarComponentes() {
+        cardLayout = new CardLayout();
+        contenedor = new JPanel(cardLayout);
 
-		// Instancia de la pantalla de inicio
-		menuPrincipal = new MenuPrincipal();
-		menuPrincipal.inicializarComponentes();
+        menuPrincipal = new MenuPrincipal();
+        menuPrincipal.inicializarComponentes();
 
-		// Instancia de la pantalla donde se desarrolla la partida
-		vistaJuego = new VistaJuego();
+        panelJuego = new PanelJuego();
 
-		// Se añaden al contenedor con una etiqueta identificadora
-		contenedor.add(menuPrincipal, "MENU");
-		contenedor.add(vistaJuego, "JUEGO");
+        contenedor.add(menuPrincipal, "MENU");
+        contenedor.add(panelJuego, "JUEGO");
 
-		add(contenedor, BorderLayout.CENTER);
+        add(contenedor, BorderLayout.CENTER);
 
-		// Define cuál pantalla se mostrará primero por defecto al abrir el programa
-		cardLayout.show(contenedor, "MENU");
-	}
+        cardLayout.show(contenedor, "MENU");
+    }
 
-	// Métodos utilitarios para cambiar de pantalla durante la ejecución
+    public void mostrarMenu() {
+        cardLayout.show(contenedor, "MENU");
+    }
 
-	public void mostrarMenu() {
-		cardLayout.show(contenedor, "MENU");
-	}
+    public void mostrarJuego() {
+        cardLayout.show(contenedor, "JUEGO");
+    }
 
-	public void mostrarJuego() {
-		cardLayout.show(contenedor, "JUEGO");
-	}
+    public MenuPrincipal getMenuPrincipal() {
+        return menuPrincipal;
+    }
 
-	public MenuPrincipal getMenuPrincipal() {
-		return menuPrincipal;
-	}
+    public void setMenuPrincipal(MenuPrincipal menuPrincipal) {
+        this.menuPrincipal = menuPrincipal;
+    }
 
-	public void setMenuPrincipal(MenuPrincipal menuPrincipal) {
-		this.menuPrincipal = menuPrincipal;
-	}
+    public PanelJuego getPanelJuego() {
+        return panelJuego;
+    }
 
-	public VistaJuego getVistaJuego() {
-		return vistaJuego;
-	}
+    public void setPanelJuego(PanelJuego panelJuego) {
+        this.panelJuego = panelJuego;
+    }
 
-	// Getters y Setters para que el controlador acceda a ambas vistas
-	public void setVistaJuego(VistaJuego vistaJuego) {
-		this.vistaJuego = vistaJuego;
-	}
+    public JPanel getContenedor() {
+        return contenedor;
+    }
 
-	public JPanel getContenedor() {
-		return contenedor;
-	}
-
-	public void setContenedor(JPanel contenedor) {
-		this.contenedor = contenedor;
-	}
-
-	public CardLayout getCardLayout() {
-		return cardLayout;
-	}
-
-	public void setCardLayout(CardLayout cardLayout) {
-		this.cardLayout = cardLayout;
-	}
+    public CardLayout getCardLayout() {
+        return cardLayout;
+    }
 }
