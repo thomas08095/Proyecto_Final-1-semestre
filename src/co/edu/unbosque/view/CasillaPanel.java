@@ -6,31 +6,36 @@ import java.awt.*;
 
 public class CasillaPanel extends JPanel {
 
-    private Casilla casilla;
+	private Casilla casilla;
 
-    public CasillaPanel(Casilla casilla) {
-        this.casilla = casilla;
-        setPreferredSize(new Dimension(60, 60));
-        setBorder(BorderFactory.createLineBorder(Color.GRAY));
-        setLayout(new BorderLayout());
-        actualizarImagen();
-        
-    }
+	public CasillaPanel(Casilla casilla) {
+		this.casilla = casilla;
+		setPreferredSize(new Dimension(60, 60));
+		setBorder(BorderFactory.createLineBorder(new Color(100, 200, 255)));
+		setBackground(new Color(10, 20, 40));
+		setLayout(new BorderLayout());
+		actualizarImagen();
+	}
 
-    private void actualizarImagen() {
-        removeAll();
-        if (casilla.isEstaOcupada() && casilla.getContenido() != null) {
-            String rutaImagen = casilla.getContenido().getRutaImagen();
-            if (rutaImagen != null && !rutaImagen.isEmpty()) {
-                ImageIcon icon = new ImageIcon(
-                    new ImageIcon(rutaImagen).getImage()
-                        .getScaledInstance(60, 60, Image.SCALE_SMOOTH)
-                );
-                add(new JLabel(icon), BorderLayout.CENTER);
-            }
-        }
-    }
+	private void actualizarImagen() {
+		removeAll();
+		if (casilla.isEstaOcupada() && casilla.getContenido() != null) {
+			String rutaImagen = casilla.getContenido().getRutaImagen();
+			if (rutaImagen != null && !rutaImagen.isEmpty()) {
+				ImageIcon icon = new ImageIcon(
+						new ImageIcon(rutaImagen).getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH));
+				add(new JLabel(icon), BorderLayout.CENTER);
+			}
+		}
+		revalidate();
+		repaint();
+	}
 
-    public Casilla getCasilla() { return casilla; }
-    public void setCasilla(Casilla casilla) { this.casilla = casilla; }
+	public Casilla getCasilla() {
+		return casilla;
+	}
+
+	public void setCasilla(Casilla casilla) {
+		this.casilla = casilla;
+	}
 }

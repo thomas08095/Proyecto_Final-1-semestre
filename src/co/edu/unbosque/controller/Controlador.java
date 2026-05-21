@@ -15,6 +15,7 @@ public class Controlador implements ActionListener {
 
 	private int movimientosRealizados;
 	private int nodosRecolectados;
+	private int puertosRecolectados;
 	private int maxMovimientos;
 
 	public Controlador() {
@@ -38,9 +39,12 @@ public class Controlador implements ActionListener {
 
 		int restantes = maxMovimientos - movimientosRealizados;
 		ventana.getPanelJuego().actualizarMovimientos(restantes);
-		ventana.getPanelJuego().actualizarNodos(nodosRecolectados);
-		ventana.getPanelJuego().actualizarFirewalls(fachada.getCantidadAntivirus());
-	}
+        ventana.getPanelJuego().actualizarNodos(fachada.getCantidadNodo() - nodosRecolectados);
+        ventana.getPanelJuego().actualizarFirewalls(fachada.getMatriz().getListaFirewall().length);
+        ventana.getPanelJuego().actualizarPuertos(fachada.getMatriz().getListaPuertosEnlace().length - puertosRecolectados);
+        ventana.getPanelJuego().actualizarEscaneres(fachada.getMatriz().getListaEscaners().length);
+        ventana.getPanelJuego().actualizarAntivirus(fachada.getMatriz().getListaAntivirus().length);
+    }
 
 	public void asignarOyentes() {
 		ventana.getMenuPrincipal().getCbxDificultades().addActionListener(this);
@@ -74,6 +78,7 @@ public class Controlador implements ActionListener {
 	private void reiniciarPartida() {
 		movimientosRealizados = 0;
 		nodosRecolectados = 0;
+		puertosRecolectados = 0;
 		maxMovimientos = 0;
 		ventana.mostrarMenu();
 	}
@@ -102,9 +107,10 @@ public class Controlador implements ActionListener {
 			reiniciarPartida();
 			return;
 		}
-		
 		if (fachada.detectarEscanerL()) {
-			ventanaE.mostrarInformacion("¡Encontraste un Escaner de Latencia!");
+			int penalizacion = (int) (restantes * 0.05);
+			maxMovimientos -= penalizacion;
+			ventanaE.mostrarInformacion("¡Encontraste un Escáner de Latencia!\n  -" + penalizacion + " movimientos menos.");
 			return;
 		}
 
@@ -112,11 +118,15 @@ public class Controlador implements ActionListener {
 			int bonus = (int) (restantes * 0.10);
 			maxMovimientos += bonus;
 			nodosRecolectados++;
-			ventanaE.mostrarInformacion("¡Encontraste un Nodo de Energía!\n+" + bonus + " movimientos extra.");
-			actualizarVista();
+			ventanaE.mostrarInformacion("¡Encontraste un Nodo de Energía!\n  +" + bonus + " movimientos extra.");
 		}
 		if (fachada.detectarPuertoEnlace()) {
 			ventanaE.mostrarInformacion("¡Llevaste un paquete al Puerto de Enlace!");
+			puertosRecolectados++;
+			if (fachada.getMatriz().getListaPuertosEnlace().length==puertosRecolectados) {
+				ventanaE.mostrarInformacion("¡Encontraste Todos los Puertos de Enlace!");
+				reiniciarPartida();
+			}
 			actualizarVista();
 		}
 	}

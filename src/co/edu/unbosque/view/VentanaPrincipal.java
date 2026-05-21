@@ -15,8 +15,8 @@ public class VentanaPrincipal extends JFrame {
         setTitle("Cyber Infiltrator");
         setSize(1000, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        getContentPane().setBackground(Color.WHITE);
-        getContentPane().setLayout(new BorderLayout(10, 10));
+        getContentPane().setBackground(new Color(56, 22, 64));
+        getContentPane().setLayout(new BorderLayout());
         setResizable(false);
         setLocationRelativeTo(null);
         inicializarComponentes();
@@ -26,6 +26,7 @@ public class VentanaPrincipal extends JFrame {
     public void inicializarComponentes() {
         cardLayout = new CardLayout();
         contenedor = new JPanel(cardLayout);
+        contenedor.setBackground(new Color(56, 22, 64));
 
         menuPrincipal = new MenuPrincipal();
         menuPrincipal.inicializarComponentes();

@@ -31,6 +31,7 @@ public class PuertoEnlace {
 
 //Metodos
 	public void RandomPuertoEnlace(int cantidad, int nCasillas) {
+
 		this.cantidad = cantidad;
 		fila = new int[cantidad];
 		columna = new int[cantidad];
@@ -42,6 +43,17 @@ public class PuertoEnlace {
 
 
 		}
+
+	    this.cantidad = cantidad;
+	    fila = new int[cantidad];
+	    columna = new int[cantidad];
+	    orden = new int[cantidad];
+	    //Logica para que nunca se pueda generar en los bordes
+	    for (int i = 0; i < cantidad; i++) {
+	        fila[i] = rand.nextInt(nCasillas - 2) + 1;
+	        columna[i] = rand.nextInt(nCasillas - 2) + 1;
+	        System.out.println("PUERTO ENLACE " + (i + 1) + ": " + fila[i] + "," + columna[i]);
+	    }
 	}
 //Getters && Setters
 	public int[] getFila() {
