@@ -9,110 +9,112 @@ import co.edu.unbosque.view.VentanaPrincipal;
 
 public class Controlador implements ActionListener {
 
-    private VentanaPrincipal ventana;
-    private VentanaEmergente ventanaE;
-    private Fachada fachada;
+	private VentanaPrincipal ventana;
+	private VentanaEmergente ventanaE;
+	private Fachada fachada;
 
-    private int movimientosRealizados;
-    private int nodosRecolectados;
-    private int maxMovimientos;
+	private int movimientosRealizados;
+	private int nodosRecolectados;
+	private int maxMovimientos;
 
-    public Controlador() {
-        fachada  = new Fachada();
-        ventana  = new VentanaPrincipal();
-        ventanaE = new VentanaEmergente();
+	public Controlador() {
+		fachada = new Fachada();
+		ventana = new VentanaPrincipal();
+		ventanaE = new VentanaEmergente();
 
-        for (String elem : fachada.getDificultades()) {
-            ventana.getMenuPrincipal().getCbxDificultades().addItem(elem);
-        }
-        for (String elem : fachada.getCasillas()) {
-            ventana.getMenuPrincipal().getCbxCasillas().addItem(elem);
-        }
+		for (String elem : fachada.getDificultades()) {
+			ventana.getMenuPrincipal().getCbxDificultades().addItem(elem);
+		}
+		for (String elem : fachada.getCasillas()) {
+			ventana.getMenuPrincipal().getCbxCasillas().addItem(elem);
+		}
 
-        asignarOyentes();
-    }
+		asignarOyentes();
+	}
 
-    private void actualizarVista() {
-        fachada.reconstruirMatriz();
-        ventana.getPanelJuego().actualizarMatriz(fachada.getMatriz());
+	private void actualizarVista() {
+		fachada.reconstruirMatriz();
+		ventana.getPanelJuego().actualizarMatriz(fachada.getMatriz());
 
-        int restantes = maxMovimientos - movimientosRealizados;
-        ventana.getPanelJuego().actualizarMovimientos(restantes);
-        ventana.getPanelJuego().actualizarNodos(nodosRecolectados);
-        ventana.getPanelJuego().actualizarFirewalls(fachada.getCantidadAntivirus());
-    }
+		int restantes = maxMovimientos - movimientosRealizados;
+		ventana.getPanelJuego().actualizarMovimientos(restantes);
+		ventana.getPanelJuego().actualizarNodos(nodosRecolectados);
+		ventana.getPanelJuego().actualizarFirewalls(fachada.getCantidadAntivirus());
+	}
 
-    public void solicitarMovimiento(int deltaX, int deltaY) {
-        boolean movioOk = fachada.solicitarMovimiento(deltaX, deltaY);
-        if (!movioOk) {
-            return;
-        }
+	public void asignarOyentes() {
+		ventana.getMenuPrincipal().getCbxDificultades().addActionListener(this);
+		ventana.getMenuPrincipal().getCbxCasillas().addActionListener(this);
+		ventana.getMenuPrincipal().getBtnJugar().addActionListener(this);
+	}
 
-        movimientosRealizados++;
-        int restantes = maxMovimientos - movimientosRealizados;
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		String command = e.getActionCommand();
 
-        actualizarVista();
+		if (command.equals("CASILLA") || command.equals("DIFICULTAD")) {
+			ventana.getMenuPrincipal().getBtnJugar().setEnabled(true);
 
-        if (restantes <= 0) {
-            ventanaE.mostrarInformacion("¡Te quedaste sin movimientos!");
-            reiniciarPartida();
-            return;
-        }
+		} else if (command.equals("JUGAR")) {
+			String cSeleccionada = ventana.getMenuPrincipal().getCbxCasillas().getSelectedItem().toString();
+			String dSeleccionada = ventana.getMenuPrincipal().getCbxDificultades().getSelectedItem().toString();
 
-        if (fachada.detectarAntivirus()) {
-            ventanaE.mostrarInformacion("¡Game Over!");
-            reiniciarPartida();
-            return;
-        }
+			fachada.configurarTablero(dSeleccionada, cSeleccionada);
+			movimientosRealizados = 0;
+			nodosRecolectados = 0;
+			maxMovimientos = fachada.numeroCasillas();
 
-        if (fachada.detectarNodoEnergia()) {
-            int bonus = (int) Math.ceil(restantes * 0.10);
-            maxMovimientos += bonus;
-            nodosRecolectados++;
-            ventanaE.mostrarInformacion("¡Encontraste un Nodo de Energía!\n+" + bonus + " movimientos extra.");
-            actualizarVista();
-        }
-    }
+			ventana.getPanelJuego().inicializar(this, fachada.getMatriz(), dSeleccionada, maxMovimientos,fachada.getCantidadAntivirus());
 
-    private void reiniciarPartida() {
-        movimientosRealizados = 0;
-        nodosRecolectados     = 0;
-        maxMovimientos        = 0;
-        ventana.mostrarMenu();
-    }
+			actualizarVista();
+			ventana.mostrarJuego();
+		}
+	}
 
-    public void asignarOyentes() {
-        ventana.getMenuPrincipal().getCbxDificultades().addActionListener(this);
-        ventana.getMenuPrincipal().getCbxCasillas().addActionListener(this);
-        ventana.getMenuPrincipal().getBtnJugar().addActionListener(this);
-    }
+	private void reiniciarPartida() {
+		movimientosRealizados = 0;
+		nodosRecolectados = 0;
+		maxMovimientos = 0;
+		ventana.mostrarMenu();
+	}
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        String command = e.getActionCommand();
+	public void solicitarMovimiento(int deltaX, int deltaY) {
+		boolean movioOk = fachada.solicitarMovimiento(deltaX, deltaY);
+		if (!movioOk) {
+			return;
+		}
 
-        if (command.equals("CASILLA") || command.equals("DIFICULTAD")) {
-            ventana.getMenuPrincipal().getBtnJugar().setEnabled(true);
+		movimientosRealizados++;
+		int restantes = maxMovimientos - movimientosRealizados;
 
-        } else if (command.equals("JUGAR")) {
-            String cSeleccionada = ventana.getMenuPrincipal().getCbxCasillas().getSelectedItem().toString();
-            String dSeleccionada = ventana.getMenuPrincipal().getCbxDificultades().getSelectedItem().toString();
+		fachada.moverAntivirus();
+		fachada.moverEscanerL();
+		actualizarVista();
 
-            fachada.configurarTablero(dSeleccionada, cSeleccionada);
-            movimientosRealizados = 0;
-            nodosRecolectados     = 0;
-            maxMovimientos        = fachada.numeroCasillas();
+		if (restantes <= 0) {
+			ventanaE.mostrarInformacion("¡Te quedaste sin movimientos!");
+			reiniciarPartida();
+			return;
+		}
 
-            ventana.getPanelJuego().inicializar(
-                    this,
-                    fachada.getMatriz(),
-                    dSeleccionada,
-                    maxMovimientos,
-                    fachada.getCantidadAntivirus()
-            );
+		if (fachada.detectarAntivirus()) {
+			ventanaE.mostrarInformacion("¡Game Over!");
+			reiniciarPartida();
+			return;
+		}
+		
+		if (fachada.detectarEscanerL()) {
+			ventanaE.mostrarInformacion("¡Encontraste un Escaner de Latencia!");
+			return;
+		}
 
-            actualizarVista();
-            ventana.mostrarJuego();
-        }
-    }
+		if (fachada.detectarNodoEnergia()) {
+			int bonus = (int) (restantes * 0.10);
+			maxMovimientos += bonus;
+			nodosRecolectados++;
+			ventanaE.mostrarInformacion("¡Encontraste un Nodo de Energía!\n+" + bonus + " movimientos extra.");
+			actualizarVista();
+		}
+	}
+
 }

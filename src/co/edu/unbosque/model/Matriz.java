@@ -6,22 +6,20 @@ public class Matriz {
 	private int columnas;
 	private Casilla[][] casillas;
 	private Jugador jugador;
-	private PaqueteDato paquete; 
-	private Antivirus[] listaAntivirus;
+	private PaqueteDato paquete;
+	private AntivirusProactivo[] listaAntivirus;
 	private Firewall[] listaFirewall;
 	private EscanerLatencia[] listaEscaners;
 	private NodoEnergia[] listaNodos;
 	private PuertoEnlace[] listaPuertosEnlace;
 
-	
-	public Matriz(int filas, int columnas, Jugador jugador, PaqueteDato paquete, Antivirus[] listaAntivirus,
-			EscanerLatencia[] listaEscaners, NodoEnergia[] listaNodos,
-			PuertoEnlace[] listaPuertosEnlace, Firewall[] listaFirewall) {
-
+	public Matriz(int filas, int columnas, Jugador jugador, PaqueteDato paquete, AntivirusProactivo[] listaAntivirus,
+			EscanerLatencia[] listaEscaners, NodoEnergia[] listaNodos, PuertoEnlace[] listaPuertosEnlace,
+			Firewall[] listaFirewall) {
 		this.filas = filas;
 		this.columnas = columnas;
 		this.jugador = jugador;
-		this.paquete = paquete; // <- NUEVO
+		this.paquete = paquete;
 		this.listaAntivirus = listaAntivirus;
 		this.listaEscaners = listaEscaners;
 		this.listaNodos = listaNodos;
@@ -33,34 +31,39 @@ public class Matriz {
 			for (int j = 0; j < columnas; j++) {
 				casillas[i][j] = new Casilla(i, j);
 
+				// 1. Jugador
 				if (jugador != null && jugador.getFila() == i && jugador.getColumna() == j) {
 					casillas[i][j].setContenido(new Entidad(i, j, jugador.getRutaImagen()));
 					casillas[i][j].setEstaOcupada(true);
 				}
 
+				// 2. Paquete
 				if (paquete != null && paquete.getFila() == i && paquete.getColumna() == j) {
 					casillas[i][j].setContenido(new Entidad(i, j, paquete.getRutaImagen()));
 					casillas[i][j].setEstaOcupada(true);
 				}
 
+				// 3. AntivirusProactivo
 				if (listaAntivirus != null) {
-					for (Antivirus antivirus : listaAntivirus) {
-						if (antivirus.getFila() == i && antivirus.getColumna() == j) {
+					for (AntivirusProactivo antivirus : listaAntivirus) {
+						if (antivirus.getFila()[0] == i && antivirus.getColumna()[0] == j) {
 							casillas[i][j].setContenido(new Entidad(i, j, antivirus.getRutaImagen()));
 							casillas[i][j].setEstaOcupada(true);
 						}
 					}
 				}
 
+				// 4. EscanerLatencia
 				if (listaEscaners != null) {
 					for (EscanerLatencia escaner : listaEscaners) {
-						if (escaner.getFila() == i && escaner.getColumna() == j) {
+						if (escaner.getFila()[0] == i && escaner.getColumna()[0] == j) {
 							casillas[i][j].setContenido(new Entidad(i, j, escaner.getRutaImagen()));
 							casillas[i][j].setEstaOcupada(true);
 						}
 					}
 				}
 
+				// 5. NodoEnergia
 				if (listaNodos != null) {
 					for (NodoEnergia nodo : listaNodos) {
 						if (nodo.getFila() == i && nodo.getColumna() == j) {
@@ -70,6 +73,7 @@ public class Matriz {
 					}
 				}
 
+				// 6. PuertoEnlace
 				if (listaPuertosEnlace != null) {
 					for (PuertoEnlace puerto : listaPuertosEnlace) {
 						if (puerto.getFila() == i && puerto.getColumna() == j) {
@@ -79,6 +83,7 @@ public class Matriz {
 					}
 				}
 
+				// 7. Firewall
 				if (listaFirewall != null) {
 					for (Firewall firewall : listaFirewall) {
 						if (firewall.getFila() == i && firewall.getColumna() == j) {
@@ -91,26 +96,84 @@ public class Matriz {
 		}
 	}
 
+	// Getters y Setters
+	public int getFilas() {
+		return filas;
+	}
 
-	public PaqueteDato getPaquete() { return paquete; }
-	public void setPaquete(PaqueteDato paquete) { this.paquete = paquete; }
+	public void setFilas(int filas) {
+		this.filas = filas;
+	}
 
-	public int getFilas() { return filas; }
-	public void setFilas(int filas) { this.filas = filas; }
-	public int getColumnas() { return columnas; }
-	public void setColumnas(int columnas) { this.columnas = columnas; }
-	public Casilla[][] getCasillas() { return casillas; }
-	public void setCasillas(Casilla[][] casillas) { this.casillas = casillas; }
-	public Jugador getJugador() { return jugador; }
-	public void setJugador(Jugador jugador) { this.jugador = jugador; }
-	public Antivirus[] getListaAntivirus() { return listaAntivirus; }
-	public void setListaAntivirus(Antivirus[] listaAntivirus) { this.listaAntivirus = listaAntivirus; }
-	public Firewall[] getListaFirewall() { return listaFirewall; }
-	public void setListaFirewall(Firewall[] listaFirewall) { this.listaFirewall = listaFirewall; }
-	public EscanerLatencia[] getListaEscaners() { return listaEscaners; }
-	public void setListaEscaners(EscanerLatencia[] listaEscaners) { this.listaEscaners = listaEscaners; }
-	public NodoEnergia[] getListaNodos() { return listaNodos; }
-	public void setListaNodos(NodoEnergia[] listaNodos) { this.listaNodos = listaNodos; }
-	public PuertoEnlace[] getListaPuertosEnlace() { return listaPuertosEnlace; }
-	public void setListaPuertosEnlace(PuertoEnlace[] listaPuertosEnlace) { this.listaPuertosEnlace = listaPuertosEnlace; }
+	public int getColumnas() {
+		return columnas;
+	}
+
+	public void setColumnas(int columnas) {
+		this.columnas = columnas;
+	}
+
+	public Casilla[][] getCasillas() {
+		return casillas;
+	}
+
+	public void setCasillas(Casilla[][] casillas) {
+		this.casillas = casillas;
+	}
+
+	public Jugador getJugador() {
+		return jugador;
+	}
+
+	public void setJugador(Jugador jugador) {
+		this.jugador = jugador;
+	}
+
+	public PaqueteDato getPaquete() {
+		return paquete;
+	}
+
+	public void setPaquete(PaqueteDato paquete) {
+		this.paquete = paquete;
+	}
+
+	public AntivirusProactivo[] getListaAntivirus() {
+		return listaAntivirus;
+	}
+
+	public void setListaAntivirus(AntivirusProactivo[] listaAntivirus) {
+		this.listaAntivirus = listaAntivirus;
+	}
+
+	public Firewall[] getListaFirewall() {
+		return listaFirewall;
+	}
+
+	public void setListaFirewall(Firewall[] listaFirewall) {
+		this.listaFirewall = listaFirewall;
+	}
+
+	public EscanerLatencia[] getListaEscaners() {
+		return listaEscaners;
+	}
+
+	public void setListaEscaners(EscanerLatencia[] listaEscaners) {
+		this.listaEscaners = listaEscaners;
+	}
+
+	public NodoEnergia[] getListaNodos() {
+		return listaNodos;
+	}
+
+	public void setListaNodos(NodoEnergia[] listaNodos) {
+		this.listaNodos = listaNodos;
+	}
+
+	public PuertoEnlace[] getListaPuertosEnlace() {
+		return listaPuertosEnlace;
+	}
+
+	public void setListaPuertosEnlace(PuertoEnlace[] listaPuertosEnlace) {
+		this.listaPuertosEnlace = listaPuertosEnlace;
+	}
 }
