@@ -50,21 +50,21 @@ public class Fachada {
             nodoE.RandomNodoEnergia(3, nCasillas);
             escanerL.RandomEscanerL(2, nCasillas);
             puertoE.RandomPuertoEnlace(2, nCasillas);
-            firewall.RandomFirewall(2, nCasillas);
+            firewall.RandomFirewall(4, nCasillas);
 
         } else if (dificultadSeleccionada.equalsIgnoreCase("Normal")) {
             antivirusP.RandomAntivirus(4, nCasillas);
             nodoE.RandomNodoEnergia(2, nCasillas);
             escanerL.RandomEscanerL(3, nCasillas);
             puertoE.RandomPuertoEnlace(3, nCasillas);
-            firewall.RandomFirewall(2, nCasillas);
+            firewall.RandomFirewall(6, nCasillas);
 
         } else if (dificultadSeleccionada.equalsIgnoreCase("Dificil")) {
             antivirusP.RandomAntivirus(6, nCasillas);
             nodoE.RandomNodoEnergia(1, nCasillas);
             escanerL.RandomEscanerL(4, nCasillas);
             puertoE.RandomPuertoEnlace(5, nCasillas);
-            firewall.RandomFirewall(2, nCasillas);
+            firewall.RandomFirewall(8, nCasillas);
 
         }
 

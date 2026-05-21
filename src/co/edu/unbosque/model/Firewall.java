@@ -26,15 +26,13 @@ public class Firewall {
 	}
 
 	public void RandomFirewall(int cantidad, int nCasillas) {
-		int columnaFija = 1 + rand.nextInt(nCasillas - 2);
-		int filaInicio = 1 + rand.nextInt(nCasillas - cantidad - 1);
 		this.cantidad = cantidad;
 		this.nCasillas = nCasillas;
 		this.fila = new int[cantidad];
 		this.columna = new int[cantidad];
 		for (int i = 0; i < cantidad; i++) {
-			fila[i] = filaInicio + i;
-			columna[i] = columnaFija;
+			fila[i] = rand.nextInt(nCasillas);
+			columna[i] = rand.nextInt(nCasillas);
 			System.out.println("FIREWALL " + (i + 1) + ": " + fila[i] + "," + columna[i]);
 		}
 	}

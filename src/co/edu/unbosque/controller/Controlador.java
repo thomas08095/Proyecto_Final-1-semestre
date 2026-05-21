@@ -118,11 +118,13 @@ public class Controlador implements ActionListener {
 			int bonus = (int) (restantes * 0.10);
 			maxMovimientos += bonus;
 			nodosRecolectados++;
-			ventanaE.mostrarInformacion("¡Encontraste un Nodo de Energía!\n  +" + bonus + " movimientos extra.");
+			ventanaE.mostrarInformacion("¡Encontraste un Nodo de Energía!\n  +"
+			+ bonus + " movimientos extra.");
 		}
 		if (fachada.detectarPuertoEnlace()) {
-			ventanaE.mostrarInformacion("¡Llevaste un paquete al Puerto de Enlace!");
 			puertosRecolectados++;
+			ventanaE.mostrarInformacion("¡Llevaste un paquete al Puerto de Enlace!\n                               "
+					+ +puertosRecolectados+"/"+fachada.getMatriz().getListaPuertosEnlace().length);
 			if (fachada.getMatriz().getListaPuertosEnlace().length==puertosRecolectados) {
 				ventanaE.mostrarInformacion("¡Encontraste Todos los Puertos de Enlace!");
 				reiniciarPartida();
