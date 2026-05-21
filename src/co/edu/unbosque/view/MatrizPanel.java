@@ -1,6 +1,8 @@
 package co.edu.unbosque.view;
 
 import co.edu.unbosque.model.Matriz;
+import co.edu.unbosque.model.Movimiento;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -8,6 +10,7 @@ public class MatrizPanel extends JPanel {
 
     private CasillaPanel[][] casillaPanels;
     private Matriz matriz;
+    
 
     public MatrizPanel(Matriz matriz) {
         this.matriz = matriz;
