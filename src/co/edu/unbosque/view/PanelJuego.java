@@ -81,7 +81,9 @@ public class PanelJuego extends JPanel {
     }
 
     public void actualizarMatriz(Matriz matriz) {
-        if (matrizPanel != null) remove(matrizPanel);
+        if (matrizPanel != null) {
+        	remove(matrizPanel);
+        }
         matrizPanel = new MatrizPanel(matriz);
         add(matrizPanel, BorderLayout.CENTER);
         revalidate();

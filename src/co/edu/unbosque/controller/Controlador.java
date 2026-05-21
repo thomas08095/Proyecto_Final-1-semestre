@@ -44,7 +44,9 @@ public class Controlador implements ActionListener {
 
     public void solicitarMovimiento(int deltaX, int deltaY) {
         boolean movioOk = fachada.solicitarMovimiento(deltaX, deltaY);
-        if (!movioOk) return;
+        if (!movioOk) {
+            return;
+        }
 
         movimientosRealizados++;
         int restantes = maxMovimientos - movimientosRealizados;
@@ -52,15 +54,13 @@ public class Controlador implements ActionListener {
         actualizarVista();
 
         if (restantes <= 0) {
-            ventanaE.mostrarInformacion("¡Te quedaste sin movimientos!\nPuntuación: "
-                    + nodosRecolectados + " nodos recolectados.");
+            ventanaE.mostrarInformacion("¡Te quedaste sin movimientos!");
             reiniciarPartida();
             return;
         }
 
         if (fachada.detectarAntivirus()) {
-            ventanaE.mostrarInformacion("¡Game Over! Chocaste con un Antivirus.\nPuntuación: "
-                    + nodosRecolectados + " nodos recolectados.");
+            ventanaE.mostrarInformacion("¡Game Over!");
             reiniciarPartida();
             return;
         }
@@ -69,8 +69,7 @@ public class Controlador implements ActionListener {
             int bonus = (int) Math.ceil(restantes * 0.10);
             maxMovimientos += bonus;
             nodosRecolectados++;
-            ventanaE.mostrarInformacion("¡Encontraste un Nodo de Energía!\n+"
-                    + bonus + " movimientos extra.");
+            ventanaE.mostrarInformacion("¡Encontraste un Nodo de Energía!\n+" + bonus + " movimientos extra.");
             actualizarVista();
         }
     }
