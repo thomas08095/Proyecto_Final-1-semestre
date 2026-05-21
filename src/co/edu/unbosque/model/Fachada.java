@@ -100,7 +100,7 @@ public class Fachada {
         	listaPuertoEnlace[i].setRutaImagen("src/imagenes/puerto_enlace.png"); // Recuerda poner la ruta correcta
         }
         Firewall[] listaFirewall = new Firewall[firewall.getCantidad()];
-        for (int i = 0; i < puertoE.getCantidad(); i++) {
+        for (int i = 0; i < firewall.getCantidad(); i++) {
         	listaFirewall[i] = new Firewall(firewall.getFila()[i], firewall.getColumna()[i]);
         	listaFirewall[i].setRutaImagen("src/imagenes/firewall.png"); // Recuerda poner la ruta correcta
         }
@@ -241,7 +241,7 @@ public class Fachada {
         	listaPuertoEnlace[i].setRutaImagen("src/imagenes/puerto_enlace.png"); // Recuerda poner la ruta correcta
         }
         Firewall[] listaFirewall = new Firewall[firewall.getCantidad()];
-        for (int i = 0; i < puertoE.getCantidad(); i++) {
+        for (int i = 0; i < firewall.getCantidad(); i++) {
         	listaFirewall[i] = new Firewall(firewall.getFila()[i], firewall.getColumna()[i]);
         	listaFirewall[i].setRutaImagen("src/imagenes/firewall.png"); // Recuerda poner la ruta correcta
         }
