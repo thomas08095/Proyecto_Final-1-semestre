@@ -43,27 +43,28 @@ public class Fachada {
         setMovimientos(movimientos = tablero.getNumeroCasillas() * tablero.getNumeroCasillas());
         tablero = new Tablero(tablero.getNumeroCasillas(), tablero.getNumeroCasillas());
 
+        int nCasillas = tablero.getNumeroCasillas();
+
         if (dificultadSeleccionada.equalsIgnoreCase("Facil")) {
-            antivirusP.RandomAntivirus(2, tablero.getNumeroCasillas());
-            nodoE.RandomNodoEnergia(3, tablero.getNumeroCasillas());
-            escanerL.RandomEscanerL(2, tablero.getNumeroCasillas());
-            puertoE.RandomPuertoEnlace(2, tablero.getNumeroCasillas());
-            firewall.RandomFirewall(2, tablero.getNumeroCasillas());
-            
+            antivirusP.RandomAntivirus(2, nCasillas);
+            nodoE.RandomNodoEnergia(3, nCasillas);
+            escanerL.RandomEscanerL(2, nCasillas);
+            puertoE.RandomPuertoEnlace(2, nCasillas);
+            firewall.RandomFirewall(2, nCasillas);
+
         } else if (dificultadSeleccionada.equalsIgnoreCase("Normal")) {
-            antivirusP.RandomAntivirus(4, tablero.getNumeroCasillas());
-            nodoE.RandomNodoEnergia(2, tablero.getNumeroCasillas());
-            escanerL.RandomEscanerL(3, tablero.getNumeroCasillas());
-            puertoE.RandomPuertoEnlace(3, tablero.getNumeroCasillas());
-            firewall.RandomFirewall(2, tablero.getNumeroCasillas());
+            antivirusP.RandomAntivirus(4, nCasillas);
+            nodoE.RandomNodoEnergia(2, nCasillas);
+            escanerL.RandomEscanerL(3, nCasillas);
+            puertoE.RandomPuertoEnlace(3, nCasillas);
+            firewall.RandomFirewall(2, nCasillas);
 
         } else if (dificultadSeleccionada.equalsIgnoreCase("Dificil")) {
-            antivirusP.RandomAntivirus(6, tablero.getNumeroCasillas());
-            nodoE.RandomNodoEnergia(1, tablero.getNumeroCasillas());
-            escanerL.RandomEscanerL(4, tablero.getNumeroCasillas());
-            puertoE.RandomPuertoEnlace(5, tablero.getNumeroCasillas());
-            firewall.RandomFirewall(2, tablero.getNumeroCasillas());
-
+            antivirusP.RandomAntivirus(6, nCasillas);
+            nodoE.RandomNodoEnergia(1, nCasillas);
+            escanerL.RandomEscanerL(4, nCasillas);
+            puertoE.RandomPuertoEnlace(5, nCasillas);
+            firewall.RandomFirewall(2, nCasillas);
 
         }
 
@@ -73,7 +74,8 @@ public class Fachada {
         jugador.setRutaImagen("src/imagenes/jugador.png");
 
         // Inicializamos el paquete en la posición inicial deseada (por ejemplo, 1, 1)
-        paquete = new PaqueteDato(1, 1, movimientos);
+        int centro = nCasillas / 2;
+        paquete = new PaqueteDato(centro, centro, movimientos);
         paquete.setRutaImagen("src/imagenes/paquete_datos.png");
 
         // CORRECCIÓN: Se usa AntivirusProactivo en lugar de Antivirus
@@ -104,7 +106,6 @@ public class Fachada {
         	listaFirewall[i] = new Firewall(firewall.getFila()[i], firewall.getColumna()[i]);
         	listaFirewall[i].setRutaImagen("src/imagenes/firewall.png"); // Recuerda poner la ruta correcta
         }
-        
 
         matriz = new Matriz(tablero.getFilas(), tablero.getColumnas(), jugador, paquete, listaAntivirus, listaEscanerLatencia,
                 listaNodos, listaPuertoEnlace, listaFirewall);
@@ -114,16 +115,81 @@ public class Fachada {
         return tablero.getNumeroCasillas() * tablero.getNumeroCasillas();
     }
 
+    private boolean celdaOcupada(int fila, int columna) {
+        for (int i = 0; i < firewall.getCantidad(); i++) {
+            if (fila == firewall.getFila()[i] && columna == firewall.getColumna()[i]) {
+                return true;
+            }
+        }
+        for (int i = 0; i < antivirusP.getCantidad(); i++) {
+            if (fila == antivirusP.getFila()[i] && columna == antivirusP.getColumna()[i]) {
+                return true;
+            }
+        }
+        for (int i = 0; i < escanerL.getCantidad(); i++) {
+            if (fila == escanerL.getFila()[i] && columna == escanerL.getColumna()[i]) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void moverAntivirus() {
-        antivirusP.moverAleatoriamente(tablero.getFilas(), tablero.getColumnas());
+        for (int i = 0; i < antivirusP.getCantidad(); i++) {
+            boolean movido = false;
+            int intentos = 0;
+            while (!movido && intentos < 4) {
+                int direccion = antivirusP.getRand().nextInt(4);
+                int nuevaFila = antivirusP.getFila()[i];
+                int nuevaCol = antivirusP.getColumna()[i];
+                switch (direccion) {
+                    case 0: { nuevaFila--; break; }
+                    case 1: { nuevaFila++; break; }
+                    case 2: { nuevaCol--; break; }
+                    case 3: { nuevaCol++; break; }
+                }
+                if (nuevaFila >= 0 && nuevaFila < tablero.getFilas()
+                        && nuevaCol >= 0 && nuevaCol < tablero.getColumnas()
+                        && !celdaOcupada(nuevaFila, nuevaCol)) {
+                    antivirusP.getFila()[i] = nuevaFila;
+                    antivirusP.getColumna()[i] = nuevaCol;
+                    movido = true;
+                }
+                intentos++;
+            }
+        }
     }
 
     public void moverEscanerL() {
-        escanerL.moverAleatoriamente(tablero.getFilas(), tablero.getColumnas());
+        for (int i = 0; i < escanerL.getCantidad(); i++) {
+            boolean movido = false;
+            int intentos = 0;
+            while (!movido && intentos < 4) {
+                int direccion = escanerL.getRand().nextInt(4);
+                int nuevaFila = escanerL.getFila()[i];
+                int nuevaCol = escanerL.getColumna()[i];
+                switch (direccion) {
+                    case 0: { nuevaFila--; break; }
+                    case 1: { nuevaFila++; break; }
+                    case 2: { nuevaCol--; break; }
+                    case 3: { nuevaCol++; break; }
+                }
+                if (nuevaFila >= 0 && nuevaFila < tablero.getFilas()
+                        && nuevaCol >= 0 && nuevaCol < tablero.getColumnas()
+                        && !celdaOcupada(nuevaFila, nuevaCol)) {
+                    escanerL.getFila()[i] = nuevaFila;
+                    escanerL.getColumna()[i] = nuevaCol;
+                    movido = true;
+                }
+                intentos++;
+            }
+        }
     }
 
     public boolean detectarAntivirus() {
         for (int i = 0; i < antivirusP.getCantidad(); i++) {
+            boolean mismaPosticion = (movimiento.getInfiltradoX() == antivirusP.getFila()[i]
+                    && movimiento.getInfiltradoY() == antivirusP.getColumna()[i]);
             boolean enArriba = (movimiento.getInfiltradoX() == antivirusP.getFila()[i] - 1
                     && movimiento.getInfiltradoY() == antivirusP.getColumna()[i]);
             boolean enAbajo = (movimiento.getInfiltradoX() == antivirusP.getFila()[i] + 1
@@ -133,7 +199,7 @@ public class Fachada {
             boolean enDerecha = (movimiento.getInfiltradoX() == antivirusP.getFila()[i]
                     && movimiento.getInfiltradoY() == antivirusP.getColumna()[i] + 1);
 
-            if (enArriba || enAbajo || enIzquierda || enDerecha) {
+            if (mismaPosticion || enArriba || enAbajo || enIzquierda || enDerecha) {
                 return true;
             }
         }
@@ -171,7 +237,7 @@ public class Fachada {
         }
         return false;
     }
-    
+
     public boolean detectarPuertoEnlace() {
         for (int i = 0; i < puertoE.getCantidad(); i++) {
             if (paquete.getFila() == puertoE.getFila()[i]
@@ -190,24 +256,30 @@ public class Fachada {
         int proximaFilaJugador = movimiento.getInfiltradoX() + deltaX;
         int proximaColumnaJugador = movimiento.getInfiltradoY() + deltaY;
 
-        // 2. ¿En esa casilla contigua está el paquete de datos?
+        // 2. ¿La celda destino está bloqueada por un obstáculo?
+        if (celdaOcupada(proximaFilaJugador, proximaColumnaJugador)) {
+            return false;
+        }
+
+        // 3. ¿En esa casilla contigua está el paquete de datos?
         if (paquete != null && proximaFilaJugador == paquete.getFila() && proximaColumnaJugador == paquete.getColumna()) {
 
             // 3. Calculamos la casilla destino a la que se moverá el paquete
             int destinoFilaPaquete = paquete.getFila() + deltaX;
             int destinoColumnaPaquete = paquete.getColumna() + deltaY;
 
-            // 4. Validamos que el paquete no se salga de los límites del tablero
-            if (destinoFilaPaquete >= 0 && destinoFilaPaquete < tablero.getFilas() &&
-                    destinoColumnaPaquete >= 0 && destinoColumnaPaquete < tablero.getColumnas()) {
+            // 4. Validamos que el paquete no se salga ni quede en una banda
+            boolean fueraDelTablero = destinoFilaPaquete < 0 || destinoFilaPaquete >= tablero.getFilas()
+                    || destinoColumnaPaquete < 0 || destinoColumnaPaquete >= tablero.getColumnas();
+            boolean enBanda = destinoFilaPaquete == 0 || destinoFilaPaquete == tablero.getFilas() - 1
+                    || destinoColumnaPaquete == 0 || destinoColumnaPaquete == tablero.getColumnas() - 1;
 
-                // El paquete se desplaza de forma válida en el modelo
-                paquete.setFila(destinoFilaPaquete);
-                paquete.setColumna(destinoColumnaPaquete);
-            } else {
-                // Si el paquete fuera a salirse de los servidores, bloqueamos todo el paso
+            if (fueraDelTablero || enBanda) {
                 return false;
             }
+
+            paquete.setFila(destinoFilaPaquete);
+            paquete.setColumna(destinoColumnaPaquete);
         }
 
         // 5. El jugador realiza su movimiento físico si es válido
@@ -245,12 +317,11 @@ public class Fachada {
         	listaFirewall[i] = new Firewall(firewall.getFila()[i], firewall.getColumna()[i]);
         	listaFirewall[i].setRutaImagen("src/imagenes/firewall.png"); // Recuerda poner la ruta correcta
         }
-        
 
         matriz = new Matriz(tablero.getFilas(), tablero.getColumnas(), jugador, paquete, listaAntivirus, listaEscanerLatencia,
                 listaNodos, listaPuertoEnlace, listaFirewall);
     }
-    
+
 
     public int getInfiltradoX() {
         return movimiento.getInfiltradoX();
@@ -318,7 +389,7 @@ public class Fachada {
 
     public EscanerLatencia getEscanerL() {
         return escanerL;
-        
+
     }
 
     public void setEscanerL(EscanerLatencia escanerL) {
@@ -332,6 +403,6 @@ public class Fachada {
 	public void setPuertoE(PuertoEnlace puertoE) {
 		this.puertoE = puertoE;
 	}
-    
+
 
 }

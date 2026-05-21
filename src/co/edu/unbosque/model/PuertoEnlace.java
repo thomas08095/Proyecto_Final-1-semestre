@@ -36,8 +36,8 @@ public class PuertoEnlace {
 		columna = new int[cantidad];
 		orden = new int[cantidad];
 		for (int i = 0; i < cantidad; i++) {
-			fila[i] = rand.nextInt(nCasillas);
-			columna[i] = rand.nextInt(nCasillas);
+			fila[i] = 1 + rand.nextInt(nCasillas - 2);
+			columna[i] = 1 + rand.nextInt(nCasillas - 2);
 			System.out.println("PUERTO ENLACE " + (i + 1) + ": " + fila[i] + "," + columna[i]);
 
 
