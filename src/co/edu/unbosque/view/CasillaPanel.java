@@ -30,15 +30,6 @@ public class CasillaPanel extends JPanel {
             }
         }
     }
-    private boolean rastro = false;
-
-    public boolean TieneRastro() {
-        return rastro;
-    }
-
-    public void setTieneRastro(boolean tieneRastro) {
-        this.rastro = tieneRastro;
-    }
 
     public Casilla getCasilla() { return casilla; }
     public void setCasilla(Casilla casilla) { this.casilla = casilla; }
