@@ -8,6 +8,8 @@ public class Fachada {
     private AntivirusProactivo antivirusP;
     private EscanerLatencia escanerL;
     private NodoEnergia nodoE;
+    private PuertoEnlace puertoE;
+    private Firewall firewall;
     private Matriz matriz;
     private PaqueteDato paquete; // <- Atributo global para el paquete de datos
     private int movimientos;
@@ -19,6 +21,8 @@ public class Fachada {
         antivirusP = new AntivirusProactivo();
         escanerL = new EscanerLatencia();
         nodoE = new NodoEnergia();
+        puertoE = new PuertoEnlace();
+        firewall = new Firewall();
         movimientos = 0;
     }
 
@@ -43,14 +47,24 @@ public class Fachada {
             antivirusP.RandomAntivirus(2, tablero.getNumeroCasillas());
             nodoE.RandomNodoEnergia(3, tablero.getNumeroCasillas());
             escanerL.RandomEscanerL(2, tablero.getNumeroCasillas());
+            puertoE.RandomPuertoEnlace(2, tablero.getNumeroCasillas());
+            firewall.RandomFirewall(2, tablero.getNumeroCasillas());
+            
         } else if (dificultadSeleccionada.equalsIgnoreCase("Normal")) {
             antivirusP.RandomAntivirus(4, tablero.getNumeroCasillas());
             nodoE.RandomNodoEnergia(2, tablero.getNumeroCasillas());
             escanerL.RandomEscanerL(3, tablero.getNumeroCasillas());
+            puertoE.RandomPuertoEnlace(3, tablero.getNumeroCasillas());
+            firewall.RandomFirewall(2, tablero.getNumeroCasillas());
+
         } else if (dificultadSeleccionada.equalsIgnoreCase("Dificil")) {
             antivirusP.RandomAntivirus(6, tablero.getNumeroCasillas());
             nodoE.RandomNodoEnergia(1, tablero.getNumeroCasillas());
             escanerL.RandomEscanerL(4, tablero.getNumeroCasillas());
+            puertoE.RandomPuertoEnlace(5, tablero.getNumeroCasillas());
+            firewall.RandomFirewall(2, tablero.getNumeroCasillas());
+
+
         }
 
         movimiento.resetPosicion();
@@ -78,11 +92,22 @@ public class Fachada {
         EscanerLatencia[] listaEscanerLatencia = new EscanerLatencia[escanerL.getCantidad()];
         for (int i = 0; i < escanerL.getCantidad(); i++) {
             listaEscanerLatencia[i] = new EscanerLatencia(escanerL.getFila()[i], escanerL.getColumna()[i]);
-            listaEscanerLatencia[i].setRutaImagen("src/imagenes/nodo_energia.png"); // Recuerda poner la ruta correcta
+            listaEscanerLatencia[i].setRutaImagen("src/imagenes/escaner_latencia.png"); // Recuerda poner la ruta correcta
         }
+        PuertoEnlace[] listaPuertoEnlace = new PuertoEnlace[puertoE.getCantidad()];
+        for (int i = 0; i < puertoE.getCantidad(); i++) {
+        	listaPuertoEnlace[i] = new PuertoEnlace(puertoE.getFila()[i], puertoE.getColumna()[i]);
+        	listaPuertoEnlace[i].setRutaImagen("src/imagenes/puerto_enlace.png"); // Recuerda poner la ruta correcta
+        }
+        Firewall[] listaFirewall = new Firewall[firewall.getCantidad()];
+        for (int i = 0; i < puertoE.getCantidad(); i++) {
+        	listaFirewall[i] = new Firewall(firewall.getFila()[i], firewall.getColumna()[i]);
+        	listaFirewall[i].setRutaImagen("src/imagenes/firewall.png"); // Recuerda poner la ruta correcta
+        }
+        
 
         matriz = new Matriz(tablero.getFilas(), tablero.getColumnas(), jugador, paquete, listaAntivirus, listaEscanerLatencia,
-                listaNodos, null, null);
+                listaNodos, listaPuertoEnlace, listaFirewall);
     }
 
     public int numeroCasillas() {
@@ -127,6 +152,8 @@ public class Fachada {
                     && movimiento.getInfiltradoY() == escanerL.getColumna()[i] + 1);
 
             if (enArriba || enAbajo || enIzquierda || enDerecha) {
+            	escanerL.getFila()[i] = -1000;
+            	escanerL.getColumna()[i] = -100;
                 return true;
             }
         }
@@ -139,6 +166,18 @@ public class Fachada {
                     && movimiento.getInfiltradoY() == nodoE.getColumnaNE()[i]) {
                 nodoE.getFilaNE()[i] = -1;
                 nodoE.getColumnaNE()[i] = -1;
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public boolean detectarPuertoEnlace() {
+        for (int i = 0; i < puertoE.getCantidad(); i++) {
+            if (paquete.getFila() == puertoE.getFila()[i]
+                    && paquete.getColumna() == puertoE.getColumna()[i]) {
+                puertoE.getFila()[i] = -1;
+                puertoE.getColumna()[i] = -1;
                 return true;
             }
         }
@@ -194,12 +233,24 @@ public class Fachada {
         EscanerLatencia[] listaEscanerLatencia = new EscanerLatencia[escanerL.getCantidad()];
         for (int i = 0; i < escanerL.getCantidad(); i++) {
             listaEscanerLatencia[i] = new EscanerLatencia(escanerL.getFila()[i], escanerL.getColumna()[i]);
-            listaEscanerLatencia[i].setRutaImagen("src/imagenes/escaner_latencia.png");
+            listaEscanerLatencia[i].setRutaImagen("src/imagenes/escaner_latencia.png"); // Recuerda poner la ruta correcta
         }
+        PuertoEnlace[] listaPuertoEnlace = new PuertoEnlace[puertoE.getCantidad()];
+        for (int i = 0; i < puertoE.getCantidad(); i++) {
+        	listaPuertoEnlace[i] = new PuertoEnlace(puertoE.getFila()[i], puertoE.getColumna()[i]);
+        	listaPuertoEnlace[i].setRutaImagen("src/imagenes/puerto_enlace.png"); // Recuerda poner la ruta correcta
+        }
+        Firewall[] listaFirewall = new Firewall[firewall.getCantidad()];
+        for (int i = 0; i < puertoE.getCantidad(); i++) {
+        	listaFirewall[i] = new Firewall(firewall.getFila()[i], firewall.getColumna()[i]);
+        	listaFirewall[i].setRutaImagen("src/imagenes/firewall.png"); // Recuerda poner la ruta correcta
+        }
+        
 
         matriz = new Matriz(tablero.getFilas(), tablero.getColumnas(), jugador, paquete, listaAntivirus, listaEscanerLatencia,
-                listaNodos, null, null);
+                listaNodos, listaPuertoEnlace, listaFirewall);
     }
+    
 
     public int getInfiltradoX() {
         return movimiento.getInfiltradoX();
@@ -267,10 +318,20 @@ public class Fachada {
 
     public EscanerLatencia getEscanerL() {
         return escanerL;
+        
     }
 
     public void setEscanerL(EscanerLatencia escanerL) {
         this.escanerL = escanerL;
     }
+
+	public PuertoEnlace getPuertoE() {
+		return puertoE;
+	}
+
+	public void setPuertoE(PuertoEnlace puertoE) {
+		this.puertoE = puertoE;
+	}
+    
 
 }

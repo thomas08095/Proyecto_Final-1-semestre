@@ -73,6 +73,7 @@ public class MenuPrincipal extends JPanel {
         btnJugar.setEnabled(false);
         gbc.gridy = 7;
         add(btnJugar, gbc);
+        
     }
 
 	public JComboBox<String> getCbxDificultades() {

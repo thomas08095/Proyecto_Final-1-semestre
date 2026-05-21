@@ -5,72 +5,59 @@ import java.util.Random;
 public class PuertoEnlace {
 
 //Atributos
-	private int fila;
-	private int columna;
-	private String rutaImagen;
-
-	private int[] filaP;
-	private int[] columnaP;
+	
+	private int[] fila;
+	private int[] columna;
 	private int cantidad;
 	private Random rand;
 	private int nCasillas;
 	private int[] orden;
+	private String rutaImagen;
 
 //Clase Creadora
 	public PuertoEnlace() {
 		this.cantidad = 0;
 		this.nCasillas = 0;
-		filaP = new int[0];
-		columnaP = new int[0];
+		fila = new int[0];
+		columna = new int[0];
 		orden = new int[0];
 		rand = new Random();
 	}
 
 	public PuertoEnlace(int fila, int columna) {
-		this.fila = fila;
-		this.columna = columna;
-		rand = new Random();
+		this.fila = new int[] { fila };
+		this.columna = new int[] { columna };
 	}
 
+//Metodos
+	public void RandomPuertoEnlace(int cantidad, int nCasillas) {
+		this.cantidad = cantidad;
+		fila = new int[cantidad];
+		columna = new int[cantidad];
+		orden = new int[cantidad];
+		for (int i = 0; i < cantidad; i++) {
+			fila[i] = rand.nextInt(nCasillas);
+			columna[i] = rand.nextInt(nCasillas);
+			System.out.println("PUERTO ENLACE " + (i + 1) + ": " + fila[i] + "," + columna[i]);
+
+
+		}
+	}
 //Getters && Setters
-	public int getFila() {
+	public int[] getFila() {
 		return fila;
 	}
 
-	public void setFila(int fila) {
+	public void setFila(int[] fila) {
 		this.fila = fila;
 	}
 
-	public int getColumna() {
+	public int[] getColumna() {
 		return columna;
 	}
 
-	public void setColumna(int columna) {
+	public void setColumna(int[] columna) {
 		this.columna = columna;
-	}
-
-	public String getRutaImagen() {
-		return rutaImagen;
-	}
-
-	public void setRutaImagen(String rutaImagen) {
-		this.rutaImagen = rutaImagen;
-	}
-
-	public int[] getFilaP() {
-		return filaP;
-	}
-
-	public void setFilaP(int[] filaP) {
-		this.filaP = filaP;
-	}
-
-	public int[] getColumnaP() {
-		return columnaP;
-	}
-
-	public void setColumnaP(int[] columnaP) {
-		this.columnaP = columnaP;
 	}
 
 	public int getCantidad() {
@@ -105,21 +92,12 @@ public class PuertoEnlace {
 		this.orden = orden;
 	}
 
-//Metodos
-	public void RandomPuertoEnlace(int cantidad, int nCasillas) {
-		this.cantidad = cantidad;
-		filaP = new int[cantidad];
-		columnaP = new int[cantidad];
-		orden = new int[cantidad];
-		for (int i = 0; i < cantidad; i++) {
-			filaP[i] = rand.nextInt(nCasillas);
-			columnaP[i] = rand.nextInt(nCasillas);
-			orden[i] = i + 1;
-		}
+	public String getRutaImagen() {
+		return rutaImagen;
 	}
 
-	public void OrdenCorrecto() {
-
+	public void setRutaImagen(String rutaImagen) {
+		this.rutaImagen = rutaImagen;
 	}
 
 }

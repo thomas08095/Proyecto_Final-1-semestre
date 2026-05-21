@@ -76,7 +76,7 @@ public class Matriz {
 				// 6. PuertoEnlace
 				if (listaPuertosEnlace != null) {
 					for (PuertoEnlace puerto : listaPuertosEnlace) {
-						if (puerto.getFila() == i && puerto.getColumna() == j) {
+						if (puerto.getFila()[0] == i && puerto.getColumna()[0] == j) {
 							casillas[i][j].setContenido(new Entidad(i, j, puerto.getRutaImagen()));
 							casillas[i][j].setEstaOcupada(true);
 						}
@@ -86,7 +86,7 @@ public class Matriz {
 				// 7. Firewall
 				if (listaFirewall != null) {
 					for (Firewall firewall : listaFirewall) {
-						if (firewall.getFila() == i && firewall.getColumna() == j) {
+						if (firewall.getFila()[0] == i && firewall.getColumna()[0] == j) {
 							casillas[i][j].setContenido(new Entidad(i, j, firewall.getRutaImagen()));
 							casillas[i][j].setEstaOcupada(true);
 						}

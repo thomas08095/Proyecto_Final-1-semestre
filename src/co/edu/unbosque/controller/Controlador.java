@@ -115,6 +115,10 @@ public class Controlador implements ActionListener {
 			ventanaE.mostrarInformacion("¡Encontraste un Nodo de Energía!\n+" + bonus + " movimientos extra.");
 			actualizarVista();
 		}
+		if (fachada.detectarPuertoEnlace()) {
+			ventanaE.mostrarInformacion("¡Llevaste un paquete al Puerto de Enlace!");
+			actualizarVista();
+		}
 	}
 
 }

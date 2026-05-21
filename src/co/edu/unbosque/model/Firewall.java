@@ -1,36 +1,80 @@
 package co.edu.unbosque.model;
 
+import java.util.Random;
+
 public class Firewall {
 
-	private int fila;
-	private int columna;
+	private int[] fila;
+	private int[] columna;
+	private int cantidad;
+	private Random rand;
+	private int nCasillas;
 	private String rutaImagen;
-	private int longitud;
-	private boolean esHorizontal;
-	private Casilla[] casillasOcupadas;
 
-	public Firewall(int fila, int columna, int longitud, boolean esHorizontal) {
-		this.fila = fila;
-		this.columna = columna;
-		this.longitud = longitud;
-		this.esHorizontal = esHorizontal;
-		this.casillasOcupadas = new Casilla[longitud];
+	public Firewall() {
+		this.cantidad = 0;
+		this.nCasillas = 0;
+		this.fila = new int[0];
+		this.columna= new int[0];
+		this.rand = new Random();
 	}
 
-	public int getFila() {
+	// Constructor con parámetros (Actúa como un objeto individual para la Matriz)
+	public Firewall(int fila, int columna) {
+		this.fila = new int[] { fila };
+		this.columna = new int[] { columna };
+	}
+
+	public void RandomFirewall(int cantidad, int nCasillas) {
+		this.cantidad = cantidad;
+		this.nCasillas = nCasillas;
+		this.fila = new int[cantidad];
+		this.columna = new int[cantidad];
+		for (int i = 0; i < cantidad; i++) {
+			fila[i] = rand.nextInt(nCasillas);
+			columna[i] = rand.nextInt(nCasillas);
+			System.out.println("FIREWALL " + (i + 1) + ": " + fila[i] + "," + columna[i]);
+		}
+	}
+
+	public int[] getFila() {
 		return fila;
 	}
 
-	public void setFila(int fila) {
+	public void setFila(int[] fila) {
 		this.fila = fila;
 	}
 
-	public int getColumna() {
+	public int[] getColumna() {
 		return columna;
 	}
 
-	public void setColumna(int columna) {
+	public void setColumna(int[] columna) {
 		this.columna = columna;
+	}
+
+	public int getCantidad() {
+		return cantidad;
+	}
+
+	public void setCantidad(int cantidad) {
+		this.cantidad = cantidad;
+	}
+
+	public Random getRand() {
+		return rand;
+	}
+
+	public void setRand(Random rand) {
+		this.rand = rand;
+	}
+
+	public int getnCasillas() {
+		return nCasillas;
+	}
+
+	public void setnCasillas(int nCasillas) {
+		this.nCasillas = nCasillas;
 	}
 
 	public String getRutaImagen() {
@@ -41,27 +85,4 @@ public class Firewall {
 		this.rutaImagen = rutaImagen;
 	}
 
-	public int getLongitud() {
-		return longitud;
-	}
-
-	public void setLongitud(int longitud) {
-		this.longitud = longitud;
-	}
-
-	public boolean isEsHorizontal() {
-		return esHorizontal;
-	}
-
-	public void setEsHorizontal(boolean esHorizontal) {
-		this.esHorizontal = esHorizontal;
-	}
-
-	public Casilla[] getCasillasOcupadas() {
-		return casillasOcupadas;
-	}
-
-	public void setCasillasOcupadas(Casilla[] casillasOcupadas) {
-		this.casillasOcupadas = casillasOcupadas;
-	}
 }
