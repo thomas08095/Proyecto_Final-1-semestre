@@ -1,6 +1,5 @@
 package co.edu.unbosque.controller;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -34,33 +33,8 @@ public class Controlador implements ActionListener {
     }
 
     private void actualizarVista() {
-        int filas    = fachada.getFilas();
-        int columnas = fachada.getColumnas();
-
-        for (int i = 0; i < filas; i++) {
-            for (int j = 0; j < columnas; j++) {
-                ventana.getPanelJuego().limpiarCelda(i, j);
-            }
-        }
-
-        ventana.getPanelJuego().setColorCelda(
-                fachada.getScriptX(), fachada.getScriptY(), Color.GREEN);
-
-        for (int i = 0; i < fachada.getCantidadAntivirus(); i++) {
-            int fila = fachada.getFilasAntivirus()[i];
-            int col  = fachada.getColumnasAntivirus()[i];
-            if (fila != -1 && col != -1) {
-                ventana.getPanelJuego().setColorCelda(fila, col, Color.RED);
-            }
-        }
-
-        for (int i = 0; i < fachada.getCantidadNodo(); i++) {
-            int fila = fachada.getFilasNodo()[i];
-            int col  = fachada.getColumnasNodo()[i];
-            if (fila != -1 && col != -1) {
-                ventana.getPanelJuego().setColorCelda(fila, col, Color.YELLOW);
-            }
-        }
+        fachada.reconstruirMatriz();
+        ventana.getPanelJuego().actualizarMatriz(fachada.getMatriz());
 
         int restantes = maxMovimientos - movimientosRealizados;
         ventana.getPanelJuego().actualizarMovimientos(restantes);
@@ -132,8 +106,7 @@ public class Controlador implements ActionListener {
 
             ventana.getPanelJuego().inicializar(
                     this,
-                    fachada.getFilas(),
-                    fachada.getColumnas(),
+                    fachada.getMatriz(),
                     dSeleccionada,
                     maxMovimientos,
                     fachada.getCantidadAntivirus()

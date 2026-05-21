@@ -1,12 +1,12 @@
 package co.edu.unbosque.model;
 
-public class PuertoEnlace {
+public class Antivirus {
 
     private int fila;
     private int columna;
     private String rutaImagen;
 
-    public PuertoEnlace(int fila, int columna) {
+    public Antivirus(int fila, int columna) {
         this.fila = fila;
         this.columna = columna;
     }

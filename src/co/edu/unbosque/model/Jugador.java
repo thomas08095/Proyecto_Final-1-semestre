@@ -1,14 +1,16 @@
 package co.edu.unbosque.model;
 
-public class PuertoEnlace {
+public class Jugador {
 
     private int fila;
     private int columna;
     private String rutaImagen;
+    private int movimientosRestantes;
 
-    public PuertoEnlace(int fila, int columna) {
+    public Jugador(int fila, int columna, int movimientosIniciales) {
         this.fila = fila;
         this.columna = columna;
+        this.movimientosRestantes = movimientosIniciales;
     }
 
     public int getFila() { return fila; }
@@ -19,4 +21,7 @@ public class PuertoEnlace {
 
     public String getRutaImagen() { return rutaImagen; }
     public void setRutaImagen(String rutaImagen) { this.rutaImagen = rutaImagen; }
+
+    public int getMovimientosRestantes() { return movimientosRestantes; }
+    public void setMovimientosRestantes(int movimientosRestantes) { this.movimientosRestantes = movimientosRestantes; }
 }

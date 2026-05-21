@@ -1,14 +1,15 @@
 package co.edu.unbosque.model;
 
-public class PuertoEnlace {
+public class Entidad {
 
     private int fila;
     private int columna;
     private String rutaImagen;
 
-    public PuertoEnlace(int fila, int columna) {
+    public Entidad(int fila, int columna, String rutaImagen) {
         this.fila = fila;
         this.columna = columna;
+        this.rutaImagen = rutaImagen;
     }
 
     public int getFila() { return fila; }

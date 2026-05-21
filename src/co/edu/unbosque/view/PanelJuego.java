@@ -5,13 +5,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.util.Map;
 
 import javax.swing.AbstractAction;
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -19,6 +16,7 @@ import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 
 import co.edu.unbosque.controller.Controlador;
+import co.edu.unbosque.model.Matriz;
 import co.edu.unbosque.model.Movimiento;
 
 public class PanelJuego extends JPanel {
@@ -29,8 +27,7 @@ public class PanelJuego extends JPanel {
     private JLabel lblFirewalls;
     private JLabel lblMovimientos;
 
-    private JPanel[][] celdas;
-    private JPanel panelGrid;
+    private MatrizPanel matrizPanel;
 
     private Controlador controlador;
 
@@ -39,13 +36,13 @@ public class PanelJuego extends JPanel {
         setBackground(Color.WHITE);
     }
 
-    public void inicializar(Controlador controlador, int filas, int columnas,
+    public void inicializar(Controlador controlador, Matriz matriz,
                             String dificultad, int maxMovimientos, int cantFirewalls) {
         removeAll();
         this.controlador = controlador;
 
         construirPanelStats(dificultad, maxMovimientos, cantFirewalls);
-        construirGrid(filas, columnas);
+        construirMatrizPanel(matriz);
         configurarTeclado();
 
         revalidate();
@@ -78,61 +75,17 @@ public class PanelJuego extends JPanel {
         return lbl;
     }
 
-    private void construirGrid(int filas, int columnas) {
-        panelGrid = new JPanel(new GridLayout(filas, columnas));
-        panelGrid.setBackground(Color.BLACK);
-
-        celdas = new JPanel[filas][columnas];
-
-        for (int i = 0; i < filas; i++) {
-            for (int j = 0; j < columnas; j++) {
-                celdas[i][j] = crearCelda();
-                panelGrid.add(celdas[i][j]);
-            }
-        }
-
-        add(panelGrid, BorderLayout.CENTER);
+    private void construirMatrizPanel(Matriz matriz) {
+        matrizPanel = new MatrizPanel(matriz);
+        add(matrizPanel, BorderLayout.CENTER);
     }
 
-    private JPanel crearCelda() {
-        JPanel celda = new JPanel(new BorderLayout());
-        celda.setBackground(Color.WHITE);
-        celda.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        celda.setPreferredSize(new Dimension(80, 80));
-
-        JLabel lbl = new JLabel();
-        lbl.setHorizontalAlignment(SwingConstants.CENTER);
-        lbl.setVerticalAlignment(SwingConstants.CENTER);
-        celda.add(lbl, BorderLayout.CENTER);
-
-        return celda;
-    }
-
-    public void setColorCelda(int fila, int col, Color color) {
-        JPanel celda = celdas[fila][col];
-        getLabelDeCelda(celda).setIcon(null);
-        celda.setBackground(color);
-        celda.repaint();
-    }
-
-    public void setImagenCelda(int fila, int col, String rutaImagen) {
-        JPanel celda = celdas[fila][col];
-        JLabel lbl = getLabelDeCelda(celda);
-        ImageIcon icon = new ImageIcon(rutaImagen);
-        Image scaled = icon.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
-        lbl.setIcon(new ImageIcon(scaled));
-        celda.repaint();
-    }
-
-    public void limpiarCelda(int fila, int col) {
-        JPanel celda = celdas[fila][col];
-        getLabelDeCelda(celda).setIcon(null);
-        celda.setBackground(Color.WHITE);
-        celda.repaint();
-    }
-
-    private JLabel getLabelDeCelda(JPanel celda) {
-        return (JLabel) celda.getComponent(0);
+    public void actualizarMatriz(Matriz matriz) {
+        if (matrizPanel != null) remove(matrizPanel);
+        matrizPanel = new MatrizPanel(matriz);
+        add(matrizPanel, BorderLayout.CENTER);
+        revalidate();
+        repaint();
     }
 
     private void configurarTeclado() {
@@ -147,7 +100,7 @@ public class PanelJuego extends JPanel {
 
             getActionMap().put(tecla, new AbstractAction() {
                 @Override
-                public void actionPerformed(ActionEvent e) {
+                public void actionPerformed(ActionEvent evento) {
                     if (controlador != null) {
                         controlador.solicitarMovimiento(delta[0], delta[1]);
                     }
@@ -168,11 +121,7 @@ public class PanelJuego extends JPanel {
         lblFirewalls.setText("Firewalls: " + cantidad);
     }
 
-    public int getFilasCeldas() {
-        return celdas != null ? celdas.length : 0;
-    }
-
-    public int getColumnasCeldas() {
-        return celdas != null ? celdas[0].length : 0;
+    public MatrizPanel getMatrizPanel() {
+        return matrizPanel;
     }
 }

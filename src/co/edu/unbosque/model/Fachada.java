@@ -7,6 +7,7 @@ public class Fachada {
     private Movimiento movimiento;
     private AntivirusProactivo antivirusP;
     private NodoEnergia nodoE;
+    private Matriz matriz;
     private int movimientos;
 
     public Fachada() {
@@ -52,6 +53,23 @@ public class Fachada {
         
         // Reiniciamos al Script en la esquina superior izquierda (0,0) para la nueva partida
         movimiento.resetPosicion();
+
+        Jugador jugador = new Jugador(0, 0, movimientos);
+        jugador.setRutaImagen("src/imagenes/jugador.png");
+
+        Antivirus[] listaAntivirus = new Antivirus[antivirusP.getCantidad()];
+        for (int i = 0; i < antivirusP.getCantidad(); i++) {
+            listaAntivirus[i] = new Antivirus(antivirusP.getFilaA()[i], antivirusP.getColumnaA()[i]);
+            listaAntivirus[i].setRutaImagen("src/imagenes/antivirus.png");
+        }
+
+        NodoEnergia[] listaNodos = new NodoEnergia[nodoE.getCantidad()];
+        for (int i = 0; i < nodoE.getCantidad(); i++) {
+            listaNodos[i] = new NodoEnergia(nodoE.getFilaNE()[i], nodoE.getColumnaNE()[i]);
+            listaNodos[i].setRutaImagen("src/imagenes/nodo_energia.png");
+        }
+
+        matriz = new Matriz(tablero.getFilas(), tablero.getColumnas(), jugador, listaAntivirus, null, listaNodos, null, null);
     }
     
     public int numeroCasillas() {
@@ -145,5 +163,28 @@ public class Fachada {
 
 	public void setMovimientos(int movimientos) {
 		this.movimientos = movimientos;
+	}
+
+	public void reconstruirMatriz() {
+        Jugador jugador = new Jugador(movimiento.getScriptX(), movimiento.getScriptY(), movimientos);
+        jugador.setRutaImagen("src/imagenes/jugador.png");
+
+        Antivirus[] listaAntivirus = new Antivirus[antivirusP.getCantidad()];
+        for (int i = 0; i < antivirusP.getCantidad(); i++) {
+            listaAntivirus[i] = new Antivirus(antivirusP.getFilaA()[i], antivirusP.getColumnaA()[i]);
+            listaAntivirus[i].setRutaImagen("src/imagenes/antivirus.png");
+        }
+
+        NodoEnergia[] listaNodos = new NodoEnergia[nodoE.getCantidad()];
+        for (int i = 0; i < nodoE.getCantidad(); i++) {
+            listaNodos[i] = new NodoEnergia(nodoE.getFilaNE()[i], nodoE.getColumnaNE()[i]);
+            listaNodos[i].setRutaImagen("src/imagenes/nodo_energia.png");
+        }
+
+        matriz = new Matriz(tablero.getFilas(), tablero.getColumnas(), jugador, listaAntivirus, null, listaNodos, null, null);
+    }
+
+	public Matriz getMatriz() {
+		return matriz;
 	}
 }
