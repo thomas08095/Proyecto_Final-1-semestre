@@ -8,6 +8,7 @@ public class Fachada {
     private AntivirusProactivo antivirusP;
     private NodoEnergia nodoE;
     private Matriz matriz;
+    private PaqueteDato paquete; // <- Atributo global para el paquete de datos
     private int movimientos;
 
     public Fachada() {
@@ -22,9 +23,9 @@ public class Fachada {
     // ACTUALIZADO: Ahora recibe el tamaño ingresado como String y lo parsea internamente
     public void configurarTablero(String dificultadSeleccionada, String casillaSeleccionada) {
         
-    	if (casillaSeleccionada.equalsIgnoreCase("10x10")) {
+        if (casillaSeleccionada.equalsIgnoreCase("10x10")) {
             tablero.setNumeroCasillas(10);
-            setMovimientos(movimientos = tablero.getNumeroCasillas() *tablero.getNumeroCasillas());
+            setMovimientos(movimientos = tablero.getNumeroCasillas() * tablero.getNumeroCasillas());
             tablero = new Tablero(tablero.getNumeroCasillas(), tablero.getNumeroCasillas());
         }
         else if (casillaSeleccionada.equalsIgnoreCase("15x15")) {
@@ -34,7 +35,7 @@ public class Fachada {
         else if (casillaSeleccionada.equalsIgnoreCase("20x20")) {
             tablero.setNumeroCasillas(20);
             tablero = new Tablero(tablero.getNumeroCasillas(), tablero.getNumeroCasillas());
-}
+        }
         setMovimientos(movimientos = tablero.getNumeroCasillas() * tablero.getNumeroCasillas());
         tablero = new Tablero(tablero.getNumeroCasillas(), tablero.getNumeroCasillas());
         
@@ -55,6 +56,11 @@ public class Fachada {
 
         Jugador jugador = new Jugador(0, 0, movimientos);
         jugador.setRutaImagen("src/imagenes/jugador.png");
+        
+        // Inicializamos el paquete en la posición inicial deseada (por ejemplo, 1, 1)
+        paquete = new PaqueteDato(1, 1, movimientos);
+        paquete.setRutaImagen("src/imagenes/paquete_datos.png");
+        
 
         Antivirus[] listaAntivirus = new Antivirus[antivirusP.getCantidad()];
         for (int i = 0; i < antivirusP.getCantidad(); i++) {
@@ -68,16 +74,17 @@ public class Fachada {
             listaNodos[i].setRutaImagen("src/imagenes/nodo_energia.png");
         }
 
-        matriz = new Matriz(tablero.getFilas(), tablero.getColumnas(), jugador, listaAntivirus, null, listaNodos, null, null);
+        // Se envía el objeto 'paquete' en la cuarta posición del constructor de Matriz
+        matriz = new Matriz(tablero.getFilas(), tablero.getColumnas(), jugador, paquete, listaAntivirus, null, listaNodos, null, null);
     }
     
     public int numeroCasillas() {
-    	int n = tablero.getNumeroCasillas() * tablero.getNumeroCasillas();
-    	return n;
+        int n = tablero.getNumeroCasillas() * tablero.getNumeroCasillas();
+        return n;
     }
 
     public boolean detectarAntivirus() {
-           for (int i = 0; i < antivirusP.getCantidad(); i++) {
+        for (int i = 0; i < antivirusP.getCantidad(); i++) {
             if (movimiento.getInfiltradoX() == antivirusP.getFilaA()[i] && movimiento.getInfiltradoY() == antivirusP.getColumnaA()[i]) {
                 return true;
             }
@@ -86,18 +93,43 @@ public class Fachada {
     }
     
     public boolean detectarNodoEnergia() {
-       
         for (int i = 0; i < nodoE.getCantidad(); i++) {
             if (movimiento.getInfiltradoX() == nodoE.getFilaNE()[i] && movimiento.getInfiltradoY() == nodoE.getColumnaNE()[i]) {
-            	nodoE.getFilaNE()[i] = -1;
-            	nodoE.getColumnaNE()[i] = -1;
+                nodoE.getFilaNE()[i] = -1;
+                nodoE.getColumnaNE()[i] = -1;
                 return true;
             }
         }
         return false;
     }
 
+    // LÓGICA DE MOVIMIENTO INTEGRADA Y CORREGIDA (Mecánica Sokoban)
     public boolean solicitarMovimiento(int deltaX, int deltaY) {
+        // 1. Calculamos a dónde quiere ir el Script
+        int proximaFilaJugador = movimiento.getInfiltradoX() + deltaX;
+        int proximaColumnaJugador = movimiento.getInfiltradoY() + deltaY;
+
+        // 2. ¿En esa casilla contigua está el paquete de datos?
+        if (paquete != null && proximaFilaJugador == paquete.getFila() && proximaColumnaJugador == paquete.getColumna()) {
+            
+            // 3. Calculamos la casilla destino a la que se moverá el paquete
+            int destinoFilaPaquete = paquete.getFila() + deltaX;
+            int destinoColumnaPaquete = paquete.getColumna() + deltaY;
+
+            // 4. Validamos que el paquete no se salga de los límites del tablero
+            if (destinoFilaPaquete >= 0 && destinoFilaPaquete < tablero.getFilas() &&
+                destinoColumnaPaquete >= 0 && destinoColumnaPaquete < tablero.getColumnas()) {
+                
+                // El paquete se desplaza de forma válida en el modelo
+                paquete.setFila(destinoFilaPaquete);
+                paquete.setColumna(destinoColumnaPaquete);
+            } else {
+                // Si el paquete fuera a salirse de los servidores, bloqueamos todo el paso
+                return false; 
+            }
+        }
+
+        // 5. El jugador realiza su movimiento físico si es válido
         return movimiento.mover(deltaX, deltaY, tablero.getFilas(), tablero.getColumnas());
     }
 
@@ -153,15 +185,15 @@ public class Fachada {
         return tablero;
     }
 
-	public int getMovimientos() {
-		return movimientos;
-	}
+    public int getMovimientos() {
+        return movimientos;
+    }
 
-	public void setMovimientos(int movimientos) {
-		this.movimientos = movimientos;
-	}
+    public void setMovimientos(int movimientos) {
+        this.movimientos = movimientos;
+    }
 
-	public void reconstruirMatriz() {
+    public void reconstruirMatriz() {
         Jugador jugador = new Jugador(movimiento.getInfiltradoX(), movimiento.getInfiltradoY(), movimientos);
         jugador.setRutaImagen("src/imagenes/jugador.png");
 
@@ -177,10 +209,11 @@ public class Fachada {
             listaNodos[i].setRutaImagen("src/imagenes/nodo_energia.png");
         }
 
-        matriz = new Matriz(tablero.getFilas(), tablero.getColumnas(), jugador, listaAntivirus, null, listaNodos, null, null);
+        // Se mantiene el paso del paquete actualizado al reconstruir la matriz
+        matriz = new Matriz(tablero.getFilas(), tablero.getColumnas(), jugador, paquete, listaAntivirus, null, listaNodos, null, null);
     }
 
-	public Matriz getMatriz() {
-		return matriz;
-	}
+    public Matriz getMatriz() {
+        return matriz;
+    }
 }
