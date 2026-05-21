@@ -3,6 +3,7 @@ package co.edu.unbosque.view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.MultipleGradientPaint.ColorSpaceType;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
@@ -10,6 +11,8 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
+import javax.swing.colorchooser.ColorChooserComponentFactory;
+import javax.swing.text.AttributeSet.ColorAttribute;
 
 import co.edu.unbosque.controller.Controlador;
 
@@ -39,7 +42,7 @@ public class VistaJuego extends JPanel {
     // Constructor
     public VistaJuego() {
         setLayout(new BorderLayout());
-        setBackground(Color.WHITE);
+        setBackground(Color.decode("#F2EDFF"));
 
         panelTablero = new PanelTablero();
     }

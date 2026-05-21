@@ -11,28 +11,34 @@ public class Fachada {
 
     public Fachada() {
         dificultad = new Dificultad();
-        tablero = new Tablero(5, 5);
+        tablero = new Tablero(5, 5); // Inicialización por defecto antes de configurar
         movimiento = new Movimiento();
         antivirusP = new AntivirusProactivo();
         nodoE = new NodoEnergia();
         movimientos = 0;
     }
 
+    // ACTUALIZADO: Ahora recibe el tamaño ingresado como String y lo parsea internamente
     public void configurarTablero(String dificultadSeleccionada, String casillaSeleccionada) {
-        if (casillaSeleccionada.equalsIgnoreCase("10x10")) {
-            tablero.setNumeroCasillas(10);
-            setMovimientos(movimientos = tablero.getNumeroCasillas() *tablero.getNumeroCasillas());
-            tablero = new Tablero(tablero.getNumeroCasillas(), tablero.getNumeroCasillas());
-        }
-        else if (casillaSeleccionada.equalsIgnoreCase("15x15")) {
-            tablero.setNumeroCasillas(15);
-            tablero = new Tablero(tablero.getNumeroCasillas(), tablero.getNumeroCasillas());
-        }
-        else if (casillaSeleccionada.equalsIgnoreCase("20x20")) {
-            tablero.setNumeroCasillas(20);
-            tablero = new Tablero(tablero.getNumeroCasillas(), tablero.getNumeroCasillas());
-        }
         
+        int tamanoPersonalizado = 5; // Valor de respaldo por defecto
+        
+        // Convertimos el parámetro recibido en un número entero limpio
+        try {
+            tamanoPersonalizado = Integer.parseInt(casillaSeleccionada);
+        } catch (NumberFormatException e) {
+            // Si por alguna razón llega a fallar el parseo, se calcula con base en tus antiguos formatos
+            if (casillaSeleccionada.equalsIgnoreCase("10x10")) tamanoPersonalizado = 10;
+            else if (casillaSeleccionada.equalsIgnoreCase("15x15")) tamanoPersonalizado = 15;
+            else if (casillaSeleccionada.equalsIgnoreCase("20x20")) tamanoPersonalizado = 20;
+        }
+
+        // Asignamos el tamaño al tablero físico y creamos la nueva instancia simétrica
+        tablero.setNumeroCasillas(tamanoPersonalizado);
+        setMovimientos(movimientos = tablero.getNumeroCasillas() * tablero.getNumeroCasillas());
+        tablero = new Tablero(tablero.getNumeroCasillas(), tablero.getNumeroCasillas());
+        
+        // Distribución proactiva de amenazas según la dificultad elegida
         if (dificultadSeleccionada.equalsIgnoreCase("Facil")) {
             antivirusP.RandomAntivirus(2, tablero.getNumeroCasillas());
             nodoE.RandomNodoEnergia(3, tablero.getNumeroCasillas());
@@ -43,10 +49,13 @@ public class Fachada {
             antivirusP.RandomAntivirus(6, tablero.getNumeroCasillas());
             nodoE.RandomNodoEnergia(1, tablero.getNumeroCasillas());
         }
+        
+        // Reiniciamos al Script en la esquina superior izquierda (0,0) para la nueva partida
         movimiento.resetPosicion();
     }
+    
     public int numeroCasillas() {
-    	int n= tablero.getNumeroCasillas()*tablero.getNumeroCasillas();
+    	int n = tablero.getNumeroCasillas() * tablero.getNumeroCasillas();
     	return n;
     }
 
@@ -137,6 +146,4 @@ public class Fachada {
 	public void setMovimientos(int movimientos) {
 		this.movimientos = movimientos;
 	}
-    
-    
 }

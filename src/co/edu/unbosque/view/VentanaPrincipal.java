@@ -19,7 +19,7 @@ public class VentanaPrincipal extends JFrame {
 		setTitle("Cyber Infiltrator");
 		setSize(1700, 850);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		getContentPane().setBackground(new Color(255, 255, 255));
+		getContentPane().setBackground(new Color(241, 239, 253));
 		getContentPane().setLayout(new BorderLayout(10, 10));
 		setResizable(false);
 		setLocationRelativeTo(null); // Centra la ventana en el monitor

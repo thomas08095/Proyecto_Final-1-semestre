@@ -10,8 +10,8 @@ public class Casilla extends JPanel {
 
     public Casilla() {
         setLayout(new BorderLayout());
-        setBackground(Color.WHITE);
-        setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        setBackground(Color.decode("#F2EDFF"));
+        setBorder(BorderFactory.createLineBorder(Color.decode("#FAF0FC")));
         setPreferredSize(new Dimension(80, 80));
 
         label = new JLabel();
