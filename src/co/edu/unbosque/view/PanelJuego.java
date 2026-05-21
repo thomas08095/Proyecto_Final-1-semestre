@@ -90,26 +90,50 @@ public class PanelJuego extends JPanel {
         repaint();
     }
 
-    private void configurarTeclado() {
-        Map<String, int[]> movimientos = Movimiento.obtenerMovimientos();
+      private void configurarTeclado() {
+        // 1. Vinculamos cada flecha física
+        this.getInputMap(javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW).put(javax.swing.KeyStroke.getKeyStroke("UP"), "Subir");
+        this.getInputMap(javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW).put(javax.swing.KeyStroke.getKeyStroke("DOWN"), "Bajar");
+        this.getInputMap(javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW).put(javax.swing.KeyStroke.getKeyStroke("LEFT"), "Izquierda");
+        this.getInputMap(javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW).put(javax.swing.KeyStroke.getKeyStroke("RIGHT"), "Derecha");
 
-        for (Map.Entry<String, int[]> entry : movimientos.entrySet()) {
-            String tecla = entry.getKey();
-            int[] delta = entry.getValue();
-
-            getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
-                    .put(KeyStroke.getKeyStroke(tecla), tecla);
-
-            getActionMap().put(tecla, new AbstractAction() {
-                @Override
-                public void actionPerformed(ActionEvent evento) {
-                    if (controlador != null) {
-                        controlador.solicitarMovimiento(delta[0], delta[1]);
-                    }
+        // 2. Definimos de forma lineal e individual los vectores de movimiento para el controlador
+        this.getActionMap().put("Subir", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent evento) {
+                if (controlador != null) {
+                    controlador.solicitarMovimiento(-1, 0); // Sube una fila
                 }
-            });
-        }
+            }
+        });
+        this.getActionMap().put("Bajar", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent evento) {
+                if (controlador != null) {
+                    controlador.solicitarMovimiento(1, 0);  // Baja una fila
+                }
+            }
+        });
+
+        this.getActionMap().put("Izquierda", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent evento) {
+                if (controlador != null) {
+                    controlador.solicitarMovimiento(0, -1); // Retrocede una columna
+                }
+            }
+        });
+
+        this.getActionMap().put("Derecha", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent evento) {
+                if (controlador != null) {
+                    controlador.solicitarMovimiento(0, 1);  // Avanza una columna
+                }
+            }
+        });
     }
+    
 
     public void actualizarNodos(int cantidad) {
         lblNodos.setText("Nodos: " + cantidad);

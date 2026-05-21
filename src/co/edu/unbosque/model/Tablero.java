@@ -46,13 +46,4 @@ public class Tablero {
     public void setElementos(String[] elementos) {
         this.elementos = elementos;
     }
-
-    public void imprimirMatriz() {
-        for (int i = 0; i < filas; i++) {
-            for (int j = 0; j < columnas; j++) {
-                System.out.print(matriz[i][j] + " ");
-            }
-            System.out.println();
-        }
-    }
 }
