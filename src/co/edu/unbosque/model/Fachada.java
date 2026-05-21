@@ -22,20 +22,19 @@ public class Fachada {
     // ACTUALIZADO: Ahora recibe el tamaño ingresado como String y lo parsea internamente
     public void configurarTablero(String dificultadSeleccionada, String casillaSeleccionada) {
         
-        int tamanoPersonalizado = 5; // Valor de respaldo por defecto
-        
-        // Convertimos el parámetro recibido en un número entero limpio
-        try {
-            tamanoPersonalizado = Integer.parseInt(casillaSeleccionada);
-        } catch (NumberFormatException e) {
-            // Si por alguna razón llega a fallar el parseo, se calcula con base en tus antiguos formatos
-            if (casillaSeleccionada.equalsIgnoreCase("10x10")) tamanoPersonalizado = 10;
-            else if (casillaSeleccionada.equalsIgnoreCase("15x15")) tamanoPersonalizado = 15;
-            else if (casillaSeleccionada.equalsIgnoreCase("20x20")) tamanoPersonalizado = 20;
+    	if (casillaSeleccionada.equalsIgnoreCase("10x10")) {
+            tablero.setNumeroCasillas(10);
+            setMovimientos(movimientos = tablero.getNumeroCasillas() *tablero.getNumeroCasillas());
+            tablero = new Tablero(tablero.getNumeroCasillas(), tablero.getNumeroCasillas());
         }
-
-        // Asignamos el tamaño al tablero físico y creamos la nueva instancia simétrica
-        tablero.setNumeroCasillas(tamanoPersonalizado);
+        else if (casillaSeleccionada.equalsIgnoreCase("15x15")) {
+            tablero.setNumeroCasillas(15);
+            tablero = new Tablero(tablero.getNumeroCasillas(), tablero.getNumeroCasillas());
+        }
+        else if (casillaSeleccionada.equalsIgnoreCase("20x20")) {
+            tablero.setNumeroCasillas(20);
+            tablero = new Tablero(tablero.getNumeroCasillas(), tablero.getNumeroCasillas());
+}
         setMovimientos(movimientos = tablero.getNumeroCasillas() * tablero.getNumeroCasillas());
         tablero = new Tablero(tablero.getNumeroCasillas(), tablero.getNumeroCasillas());
         
@@ -78,10 +77,8 @@ public class Fachada {
     }
 
     public boolean detectarAntivirus() {
-        int aX = getScriptX();
-        int aY = getScriptY();
-        for (int i = 0; i < antivirusP.getCantidad(); i++) {
-            if (aX == antivirusP.getFilaA()[i] && aY == antivirusP.getColumnaA()[i]) {
+           for (int i = 0; i < antivirusP.getCantidad(); i++) {
+            if (movimiento.getInfiltradoX() == antivirusP.getFilaA()[i] && movimiento.getInfiltradoY() == antivirusP.getColumnaA()[i]) {
                 return true;
             }
         }
@@ -89,10 +86,9 @@ public class Fachada {
     }
     
     public boolean detectarNodoEnergia() {
-        int nX = getScriptX();
-        int nY = getScriptY();
+       
         for (int i = 0; i < nodoE.getCantidad(); i++) {
-            if (nX == nodoE.getFilaNE()[i] && nY == nodoE.getColumnaNE()[i]) {
+            if (movimiento.getInfiltradoX() == nodoE.getFilaNE()[i] && movimiento.getInfiltradoY() == nodoE.getColumnaNE()[i]) {
             	nodoE.getFilaNE()[i] = -1;
             	nodoE.getColumnaNE()[i] = -1;
                 return true;
@@ -105,12 +101,12 @@ public class Fachada {
         return movimiento.mover(deltaX, deltaY, tablero.getFilas(), tablero.getColumnas());
     }
 
-    public int getScriptX() {
-        return movimiento.getScriptX();
+    public int getInfiltradoX() {
+        return movimiento.getInfiltradoX();
     }
 
-    public int getScriptY() {
-        return movimiento.getScriptY();
+    public int getInfiltradoY() {
+        return movimiento.getInfiltradoY();
     }
 
     public int getFilas() {
@@ -166,7 +162,7 @@ public class Fachada {
 	}
 
 	public void reconstruirMatriz() {
-        Jugador jugador = new Jugador(movimiento.getScriptX(), movimiento.getScriptY(), movimientos);
+        Jugador jugador = new Jugador(movimiento.getInfiltradoX(), movimiento.getInfiltradoY(), movimientos);
         jugador.setRutaImagen("src/imagenes/jugador.png");
 
         Antivirus[] listaAntivirus = new Antivirus[antivirusP.getCantidad()];
