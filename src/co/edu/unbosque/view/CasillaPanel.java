@@ -18,17 +18,34 @@ public class CasillaPanel extends JPanel {
 	}
 
 	private void actualizarImagen() {
-		removeAll();
-		if (casilla.isEstaOcupada() && casilla.getContenido() != null) {
-			String rutaImagen = casilla.getContenido().getRutaImagen();
-			if (rutaImagen != null && !rutaImagen.isEmpty()) {
-				ImageIcon icon = new ImageIcon(
-						new ImageIcon(rutaImagen).getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH));
-				add(new JLabel(icon), BorderLayout.CENTER);
-			}
-		}
-		revalidate();
-		repaint();
+	    removeAll();
+
+	    if (casilla.isEstaOcupada() && casilla.getContenido() != null) {
+	    
+	        if (casilla.getContenido().getRutaImagen().contains("jugador")) { 
+	            setBackground(new Color(20, 120, 80)); 
+	            casilla.setEsRastro(true); 
+	        }
+
+	        // Dibujamos el icono de la entidad encima (sea jugador, enemigo, nodo, etc.)
+	        String rutaImagen = casilla.getContenido().getRutaImagen();
+	        if (rutaImagen != null && !rutaImagen.isEmpty()) {
+	            ImageIcon icon = new ImageIcon(
+	                    new ImageIcon(rutaImagen).getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH));
+	            add(new JLabel(icon), BorderLayout.CENTER);
+	        }
+	    } 
+	    // 2. SI NO ESTÁ OCUPADA ACTUALMENTE, VERIFICAMOS SI YA FUE PISADA ANTES
+	    else {
+	        if (casilla.isEsRastro()) {
+	            setBackground(new Color(20, 120, 80)); // Mantiene el verde si ya pasó por aquí
+	        } else {
+	            setBackground(new Color(10, 20, 40)); // sino mantiene el antiguo 
+	        }
+	    }
+
+	    revalidate();
+	    repaint();
 	}
 
 	public Casilla getCasilla() {
@@ -37,5 +54,8 @@ public class CasillaPanel extends JPanel {
 
 	public void setCasilla(Casilla casilla) {
 		this.casilla = casilla;
+
+
+		actualizarImagen(); 
 	}
 }

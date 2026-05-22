@@ -6,6 +6,7 @@ public class Casilla {
     private int columna;
     private Entidad contenido;
     private boolean estaOcupada;
+    private boolean esRastro = false;
 
     public Casilla(int fila, int columna) {
         this.fila = fila;
@@ -14,7 +15,15 @@ public class Casilla {
         this.estaOcupada = false;
     }
 
-    public int getFila() { return fila; }
+    public boolean isEsRastro() {
+		return esRastro;
+	}
+
+	public void setEsRastro(boolean esRastro) {
+		this.esRastro = esRastro;
+	}
+
+	public int getFila() { return fila; }
     public void setFila(int fila) { this.fila = fila; }
 
     public int getColumna() { return columna; }

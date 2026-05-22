@@ -3,6 +3,7 @@ package co.edu.unbosque.model;
 import java.util.Random;
 
 public class AntivirusProactivo {
+	
 	private int[] fila;
 	private int[] columna;
 	private int cantidad;

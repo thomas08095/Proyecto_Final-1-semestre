@@ -94,17 +94,17 @@ public class Fachada {
         EscanerLatencia[] listaEscanerLatencia = new EscanerLatencia[escanerL.getCantidad()];
         for (int i = 0; i < escanerL.getCantidad(); i++) {
             listaEscanerLatencia[i] = new EscanerLatencia(escanerL.getFila()[i], escanerL.getColumna()[i]);
-            listaEscanerLatencia[i].setRutaImagen("src/imagenes/escaner_latencia.png"); // Recuerda poner la ruta correcta
+            listaEscanerLatencia[i].setRutaImagen("src/imagenes/escaner_latencia.png"); 
         }
         PuertoEnlace[] listaPuertoEnlace = new PuertoEnlace[puertoE.getCantidad()];
         for (int i = 0; i < puertoE.getCantidad(); i++) {
         	listaPuertoEnlace[i] = new PuertoEnlace(puertoE.getFila()[i], puertoE.getColumna()[i]);
-        	listaPuertoEnlace[i].setRutaImagen("src/imagenes/puerto_enlace.png"); // Recuerda poner la ruta correcta
+        	listaPuertoEnlace[i].setRutaImagen("src/imagenes/puerto_enlace.png"); 
         }
         Firewall[] listaFirewall = new Firewall[firewall.getCantidad()];
         for (int i = 0; i < firewall.getCantidad(); i++) {
         	listaFirewall[i] = new Firewall(firewall.getFila()[i], firewall.getColumna()[i]);
-        	listaFirewall[i].setRutaImagen("src/imagenes/firewall.png"); // Recuerda poner la ruta correcta
+        	listaFirewall[i].setRutaImagen("src/imagenes/firewall.png"); 
         }
 
         matriz = new Matriz(tablero.getFilas(), tablero.getColumnas(), jugador, paquete, listaAntivirus, listaEscanerLatencia,
@@ -287,6 +287,17 @@ public class Fachada {
     }
 
     public void reconstruirMatriz() {
+        // === NUEVO: RESPALDAR LOS RASTROS DE CASILLAS ANTES DE RECREAR EL OBJETO ===
+        boolean[][] rastrosAnteriores = null;
+        if (matriz != null && matriz.getCasillas() != null) {
+            rastrosAnteriores = new boolean[tablero.getFilas()][tablero.getColumnas()];
+            for (int i = 0; i < tablero.getFilas(); i++) {
+                for (int j = 0; j < tablero.getColumnas(); j++) {
+                    rastrosAnteriores[i][j] = matriz.getCasillas()[i][j].isEsRastro();
+                }
+            }
+        }
+
         Jugador jugador = new Jugador(movimiento.getInfiltradoX(), movimiento.getInfiltradoY(), movimientos);
         jugador.setRutaImagen("src/imagenes/jugador.png");
 
@@ -305,21 +316,37 @@ public class Fachada {
         EscanerLatencia[] listaEscanerLatencia = new EscanerLatencia[escanerL.getCantidad()];
         for (int i = 0; i < escanerL.getCantidad(); i++) {
             listaEscanerLatencia[i] = new EscanerLatencia(escanerL.getFila()[i], escanerL.getColumna()[i]);
-            listaEscanerLatencia[i].setRutaImagen("src/imagenes/escaner_latencia.png"); // Recuerda poner la ruta correcta
+            listaEscanerLatencia[i].setRutaImagen("src/imagenes/escaner_latencia.png"); 
         }
         PuertoEnlace[] listaPuertoEnlace = new PuertoEnlace[puertoE.getCantidad()];
         for (int i = 0; i < puertoE.getCantidad(); i++) {
         	listaPuertoEnlace[i] = new PuertoEnlace(puertoE.getFila()[i], puertoE.getColumna()[i]);
-        	listaPuertoEnlace[i].setRutaImagen("src/imagenes/puerto_enlace.png"); // Recuerda poner la ruta correcta
+        	listaPuertoEnlace[i].setRutaImagen("src/imagenes/puerto_enlace.png"); 
         }
         Firewall[] listaFirewall = new Firewall[firewall.getCantidad()];
         for (int i = 0; i < firewall.getCantidad(); i++) {
         	listaFirewall[i] = new Firewall(firewall.getFila()[i], firewall.getColumna()[i]);
-        	listaFirewall[i].setRutaImagen("src/imagenes/firewall.png"); // Recuerda poner la ruta correcta
+        	listaFirewall[i].setRutaImagen("src/imagenes/firewall.png"); 
         }
 
         matriz = new Matriz(tablero.getFilas(), tablero.getColumnas(), jugador, paquete, listaAntivirus, listaEscanerLatencia,
                 listaNodos, listaPuertoEnlace, listaFirewall);
+
+        // === NUEVO: RESTAURAR LOS RASTROS DE CASILLAS PISADAS ANTERIORMENTE ===
+        if (rastrosAnteriores != null) {
+            for (int i = 0; i < tablero.getFilas(); i++) {
+                for (int j = 0; j < tablero.getColumnas(); j++) {
+                    if (rastrosAnteriores[i][j]) {
+                        matriz.getCasillas()[i][j].setEsRastro(true);
+                    }
+                }
+            }
+        }
+
+      
+        if (jugador != null) {
+            matriz.getCasillas()[jugador.getFila()][jugador.getColumna()].setEsRastro(true);
+        }
     }
 
 
@@ -403,6 +430,4 @@ public class Fachada {
 	public void setPuertoE(PuertoEnlace puertoE) {
 		this.puertoE = puertoE;
 	}
-
-
 }

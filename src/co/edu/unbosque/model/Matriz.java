@@ -12,6 +12,7 @@ public class Matriz {
 	private EscanerLatencia[] listaEscaners;
 	private NodoEnergia[] listaNodos;
 	private PuertoEnlace[] listaPuertosEnlace;
+	private Movimiento mov;
 
 	public Matriz(int filas, int columnas, Jugador jugador, PaqueteDato paquete, AntivirusProactivo[] listaAntivirus,
 			EscanerLatencia[] listaEscaners, NodoEnergia[] listaNodos, PuertoEnlace[] listaPuertosEnlace,
@@ -26,10 +27,19 @@ public class Matriz {
 		this.listaPuertosEnlace = listaPuertosEnlace;
 		this.listaFirewall = listaFirewall;
 		this.casillas = new Casilla[filas][columnas];
+		this.mov = new Movimiento();
 
 		for (int i = 0; i < filas; i++) {
 			for (int j = 0; j < columnas; j++) {
 				casillas[i][j] = new Casilla(i, j);
+
+				if (jugador != null) {
+				    if (i == mov.getInfiltradoX() && j == mov.getInfiltradoY()) {
+				        casillas[i][j].setEsRastro(true);
+				    }
+				
+				    
+				}
 
 				// 1. Jugador
 				if (jugador != null && jugador.getFila() == i && jugador.getColumna() == j) {
@@ -96,84 +106,25 @@ public class Matriz {
 		}
 	}
 
-	// Getters y Setters
-	public int getFilas() {
-		return filas;
-	}
-
-	public void setFilas(int filas) {
-		this.filas = filas;
-	}
-
-	public int getColumnas() {
-		return columnas;
-	}
-
-	public void setColumnas(int columnas) {
-		this.columnas = columnas;
-	}
-
-	public Casilla[][] getCasillas() {
-		return casillas;
-	}
-
-	public void setCasillas(Casilla[][] casillas) {
-		this.casillas = casillas;
-	}
-
-	public Jugador getJugador() {
-		return jugador;
-	}
-
-	public void setJugador(Jugador jugador) {
-		this.jugador = jugador;
-	}
-
-	public PaqueteDato getPaquete() {
-		return paquete;
-	}
-
-	public void setPaquete(PaqueteDato paquete) {
-		this.paquete = paquete;
-	}
-
-	public AntivirusProactivo[] getListaAntivirus() {
-		return listaAntivirus;
-	}
-
-	public void setListaAntivirus(AntivirusProactivo[] listaAntivirus) {
-		this.listaAntivirus = listaAntivirus;
-	}
-
-	public Firewall[] getListaFirewall() {
-		return listaFirewall;
-	}
-
-	public void setListaFirewall(Firewall[] listaFirewall) {
-		this.listaFirewall = listaFirewall;
-	}
-
-	public EscanerLatencia[] getListaEscaners() {
-		return listaEscaners;
-	}
-
-	public void setListaEscaners(EscanerLatencia[] listaEscaners) {
-		this.listaEscaners = listaEscaners;
-	}
-
-	public NodoEnergia[] getListaNodos() {
-		return listaNodos;
-	}
-
-	public void setListaNodos(NodoEnergia[] listaNodos) {
-		this.listaNodos = listaNodos;
-	}
-
-	public PuertoEnlace[] getListaPuertosEnlace() {
-		return listaPuertosEnlace;
-	}
-
-	public void setListaPuertosEnlace(PuertoEnlace[] listaPuertosEnlace) {
-		this.listaPuertosEnlace = listaPuertosEnlace;
-	}
+	// (Tus Getters y Setters se mantienen exactamente iguales bajo esta línea...)
+	public int getFilas() { return filas; }
+	public void setFilas(int filas) { this.filas = filas; }
+	public int getColumnas() { return columnas; }
+	public void setColumnas(int columnas) { this.columnas = columnas; }
+	public Casilla[][] getCasillas() { return casillas; }
+	public void setCasillas(Casilla[][] casillas) { this.casillas = casillas; }
+	public Jugador getJugador() { return jugador; }
+	public void setJugador(Jugador jugador) { this.jugador = jugador; }
+	public PaqueteDato getPaquete() { return paquete; }
+	public void setPaquete(PaqueteDato paquete) { this.paquete = paquete; }
+	public AntivirusProactivo[] getListaAntivirus() { return listaAntivirus; }
+	public void setListaAntivirus(AntivirusProactivo[] listaAntivirus) { this.listaAntivirus = listaAntivirus; }
+	public Firewall[] getListaFirewall() { return listaFirewall; }
+	public void setListaFirewall(Firewall[] listaFirewall) { this.listaFirewall = listaFirewall; }
+	public EscanerLatencia[] getListaEscaners() { return listaEscaners; }
+	public void setListaEscaners(EscanerLatencia[] listaEscaners) { this.listaEscaners = listaEscaners; }
+	public NodoEnergia[] getListaNodos() { return listaNodos; }
+	public void setListaNodos(NodoEnergia[] listaNodos) { this.listaNodos = listaNodos; }
+	public PuertoEnlace[] getListaPuertosEnlace() { return listaPuertosEnlace; }
+	public void setListaPuertosEnlace(PuertoEnlace[] listaPuertosEnlace) { this.listaPuertosEnlace = listaPuertosEnlace; }
 }
