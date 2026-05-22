@@ -13,6 +13,11 @@ public class Fachada {
     private Matriz matriz;
     private PaqueteDato paquete; // <- Atributo global para el paquete de datos
     private int movimientos;
+    
+    // Variables para el control de los Puertos de Enlace
+    private boolean ordenInverso = false;
+    private int ultPuertoIncFila = -1;
+    private int ultPuertoIncCol = -1;
 
     public Fachada() {
         dificultad = new Dificultad();
@@ -24,6 +29,9 @@ public class Fachada {
         puertoE = new PuertoEnlace();
         firewall = new Firewall();
         movimientos = 0;
+        ordenInverso = false;
+        ultPuertoIncFila = -1;
+        ultPuertoIncCol = -1;
     }
 
     // ACTUALIZADO: Ahora recibe el tamaño ingresado como String y lo parsea internamente
@@ -109,6 +117,11 @@ public class Fachada {
 
         matriz = new Matriz(tablero.getFilas(), tablero.getColumnas(), jugador, paquete, listaAntivirus, listaEscanerLatencia,
                 listaNodos, listaPuertoEnlace, listaFirewall);
+                
+        // Resetear variables de control de puertos al iniciar
+        ordenInverso = false;
+        ultPuertoIncFila = -1;
+        ultPuertoIncCol = -1;
     }
 
     public int numeroCasillas() {
@@ -238,16 +251,35 @@ public class Fachada {
         return false;
     }
 
-    public boolean detectarPuertoEnlace() {
+    // Devuelve 1 si es el correcto, -1 si es incorrecto, y 0 si no hay puerto
+    public int detectarPuertoEnlace(int puertosRecolectados) {
+        // Determinamos qué puerto toca dependiendo de si el orden está invertido
+        int indexEsperado = ordenInverso ? (puertoE.getCantidad() - 1 - puertosRecolectados) : puertosRecolectados;
+        
         for (int i = 0; i < puertoE.getCantidad(); i++) {
-            if (paquete.getFila() == puertoE.getFila()[i]
-                    && paquete.getColumna() == puertoE.getColumna()[i]) {
-                puertoE.getFila()[i] = -1;
-                puertoE.getColumna()[i] = -1;
-                return true;
+            if (paquete.getFila() == puertoE.getFila()[i] && paquete.getColumna() == puertoE.getColumna()[i]) {
+                if (i == indexEsperado) {
+                    puertoE.getFila()[i] = -1;
+                    puertoE.getColumna()[i] = -1;
+                    // Reseteamos el anti-spam de mensajes
+                    ultPuertoIncFila = -1;
+                    ultPuertoIncCol = -1;
+                    return 1; // Correcto
+                } else {
+                    // Evitamos que salte la ventana cada vez que el jugador dé un paso y deje el paquete ahí
+                    if (paquete.getFila() != ultPuertoIncFila || paquete.getColumna() != ultPuertoIncCol) {
+                        ultPuertoIncFila = paquete.getFila();
+                        ultPuertoIncCol = paquete.getColumna();
+                        return -1; // Orden incorrecto
+                    }
+                    return 0; // Es incorrecto, pero ya mostramos el mensaje
+                }
             }
         }
-        return false;
+        // Si el paquete ya no está sobre ningún puerto incorrecto, reseteamos las coordenadas
+        ultPuertoIncFila = -1;
+        ultPuertoIncCol = -1;
+        return 0; 
     }
 
     // LÓGICA DE MOVIMIENTO INTEGRADA Y CORREGIDA (Mecánica Sokoban)
@@ -429,5 +461,10 @@ public class Fachada {
 
 	public void setPuertoE(PuertoEnlace puertoE) {
 		this.puertoE = puertoE;
+	}
+	
+	public void setOrdenInverso(boolean ordenInverso) {
+	    this.ordenInverso = ordenInverso;
+		puertoE.setOrdenInverso(ordenInverso);
 	}
 }

@@ -4,24 +4,23 @@ import java.util.Random;
 
 public class PuertoEnlace {
 
-//Atributos
-	
 	private int[] fila;
 	private int[] columna;
 	private int cantidad;
 	private Random rand;
 	private int nCasillas;
-	private int[] orden;
+	private int[] aorden;
 	private String rutaImagen;
+	private boolean ordenInverso;
 
-//Clase Creadora
 	public PuertoEnlace() {
 		this.cantidad = 0;
 		this.nCasillas = 0;
 		fila = new int[0];
 		columna = new int[0];
-		orden = new int[0];
+		aorden = new int[0];
 		rand = new Random();
+		this.ordenInverso = false;
 	}
 
 	public PuertoEnlace(int fila, int columna) {
@@ -29,33 +28,30 @@ public class PuertoEnlace {
 		this.columna = new int[] { columna };
 	}
 
-//Metodos
+	/*
+	 * Los puertos de enlace están dispuestos en el servidor en un orden determinado. El Script de Infiltración debe 
+	 * recorrer los puertos en ese orden a menos que el usuario, al inicio del juego, elija recorrerlos en orden inverso
+	 */
 	public void RandomPuertoEnlace(int cantidad, int nCasillas) {
-
 		this.cantidad = cantidad;
 		fila = new int[cantidad];
 		columna = new int[cantidad];
-		orden = new int[cantidad];
+		aorden = new int[cantidad];
+
 		for (int i = 0; i < cantidad; i++) {
-			fila[i] = 1 + rand.nextInt(nCasillas - 2);
-			columna[i] = 1 + rand.nextInt(nCasillas - 2);
-			System.out.println("PUERTO ENLACE " + (i + 1) + ": " + fila[i] + "," + columna[i]);
-
-
+			fila[i] = rand.nextInt(nCasillas - 2) + 1;
+			columna[i] = rand.nextInt(nCasillas - 2) + 1;
+			
+			if (ordenInverso) {
+				aorden[i] = cantidad - i;
+			} else {
+				aorden[i] = i + 1;
+			}
+			
+			System.out.println("PUERTO ENLACE " + aorden[i] + ": " + fila[i] + "," + columna[i]);
 		}
-
-	    this.cantidad = cantidad;
-	    fila = new int[cantidad];
-	    columna = new int[cantidad];
-	    orden = new int[cantidad];
-	    //Logica para que nunca se pueda generar en los bordes
-	    for (int i = 0; i < cantidad; i++) {
-	        fila[i] = rand.nextInt(nCasillas - 2) + 1;
-	        columna[i] = rand.nextInt(nCasillas - 2) + 1;
-	        System.out.println("PUERTO ENLACE " + (i + 1) + ": " + fila[i] + "," + columna[i]);
-	    }
 	}
-//Getters && Setters
+
 	public int[] getFila() {
 		return fila;
 	}
@@ -95,13 +91,12 @@ public class PuertoEnlace {
 	public void setnCasillas(int nCasillas) {
 		this.nCasillas = nCasillas;
 	}
-
-	public int[] getOrden() {
-		return orden;
+	public int[] getAorden() {
+		return aorden;
 	}
 
-	public void setOrden(int[] orden) {
-		this.orden = orden;
+	public void setAorden(int[] aorden) {
+		this.aorden = aorden;
 	}
 
 	public String getRutaImagen() {
@@ -112,4 +107,11 @@ public class PuertoEnlace {
 		this.rutaImagen = rutaImagen;
 	}
 
+	public boolean isOrdenInverso() {
+		return ordenInverso;
+	}
+
+	public void setOrdenInverso(boolean ordenInverso) {
+		this.ordenInverso = ordenInverso;
+	}
 }

@@ -31,6 +31,7 @@ public class PanelJuego extends JPanel {
     private JLabel lblPuertos;
     private JLabel lblEscaneres;
     private JLabel lblAntivirus;
+    private JButton btnInstrucciones;
     private JButton btnExit;
 
     private MatrizPanel matrizPanel;
@@ -63,10 +64,24 @@ public class PanelJuego extends JPanel {
             BorderFactory.createEmptyBorder(20, 20, 20, 20)
         ));
 
+        JPanel panelNorth = new JPanel(new BorderLayout(0, 20));
+        panelNorth.setBackground(new Color(15, 30, 60));
+
+        btnInstrucciones = new JButton("INSTRUCCIONES");
+        btnInstrucciones.setActionCommand("INSTRUCCIONES");
+        btnInstrucciones.setForeground(new Color(100, 200, 255));
+        btnInstrucciones.setBackground(new Color(10, 20, 40));
+        btnInstrucciones.setFont(new Font("Consolas", Font.BOLD, 16));
+        btnInstrucciones.setFocusPainted(false);
+        btnInstrucciones.setBorder(BorderFactory.createLineBorder(new Color(100, 200, 255), 2));
+        btnInstrucciones.setPreferredSize(new Dimension(0, 40));
+
+        panelNorth.add(btnInstrucciones, BorderLayout.NORTH);
+
         JPanel panelLabels = new JPanel(new GridLayout(8, 1, 0, 4));
         panelLabels.setBackground(new Color(15, 30, 60));
 
-        lblTituloStats = new JLabel("INFORMACIÓN", SwingConstants.LEFT);
+        lblTituloStats = new JLabel("Datos Del Juego", SwingConstants.LEFT);
         lblTituloStats.setForeground(new Color(100, 200, 255));
         lblTituloStats.setFont(new Font("Consolas", Font.BOLD, 20));
 
@@ -87,7 +102,8 @@ public class PanelJuego extends JPanel {
         panelLabels.add(lblEscaneres);
         panelLabels.add(lblAntivirus);
 
-        panelStats.add(panelLabels, BorderLayout.NORTH);
+        panelNorth.add(panelLabels, BorderLayout.CENTER);
+        panelStats.add(panelNorth, BorderLayout.NORTH);
 
         btnExit = new JButton("SALIR");
         btnExit.setForeground(new Color(100, 200, 255));
@@ -206,6 +222,10 @@ public class PanelJuego extends JPanel {
         construirMatrizPanel(matriz);
         revalidate();
         repaint();
+    }
+
+    public JButton getBtnInstrucciones() {
+        return btnInstrucciones;
     }
 
     public JButton getBtnExit() {

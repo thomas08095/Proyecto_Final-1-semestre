@@ -20,6 +20,7 @@ public class MenuPrincipal extends JPanel {
 	private JComboBox<String> cbxDificultades;
 	private JComboBox<String> cbxCasillas;
 	private JButton btnJugar;
+	private JButton btnOrdenInverso;
 	private JLabel lblTitulo;
 	private JLabel lblSubTitulo;
 	private JLabel lblDificultad;
@@ -79,6 +80,18 @@ public class MenuPrincipal extends JPanel {
 		cbxDificultades.setEnabled(true);
 		gbc.gridy = 6;
 		add(cbxDificultades, gbc);
+		
+		btnOrdenInverso = new JButton("ORDEN INVERSO");
+		btnOrdenInverso.setActionCommand("ORDENINVERSO");
+		btnOrdenInverso.setPreferredSize(new Dimension(170, 40));
+		btnOrdenInverso.setBackground(new Color(10, 20, 40));
+		btnOrdenInverso.setForeground(new Color(100, 200, 255));
+		btnOrdenInverso.setFont(new Font("Consolas", Font.BOLD, 16));
+		btnOrdenInverso.setFocusPainted(false);
+		btnOrdenInverso.setBorder(BorderFactory.createLineBorder(new Color(100, 200, 255), 2));
+		btnOrdenInverso.setEnabled(true);
+		gbc.gridy = 7;
+		add(btnOrdenInverso, gbc);
 
 		btnJugar = new JButton("JUGAR");
 		btnJugar.setActionCommand("JUGAR");
@@ -89,8 +102,10 @@ public class MenuPrincipal extends JPanel {
 		btnJugar.setFocusPainted(false);
 		btnJugar.setBorder(BorderFactory.createLineBorder(new Color(100, 200, 255), 2));
 		btnJugar.setEnabled(false);
-		gbc.gridy = 7;
+		gbc.gridy = 8;
 		add(btnJugar, gbc);
+		
+		
 	}
 
 	public JComboBox<String> getCbxDificultades() {
@@ -148,4 +163,13 @@ public class MenuPrincipal extends JPanel {
 	public void setLblImagen(JLabel lblImagen) {
 		this.lblImagen = lblImagen;
 	}
+
+	public JButton getBtnOrdenInverso() {
+		return btnOrdenInverso;
+	}
+
+	public void setBtnOrdenInverso(JButton btnOrdenInverso) {
+		this.btnOrdenInverso = btnOrdenInverso;
+	}
+	
 }
