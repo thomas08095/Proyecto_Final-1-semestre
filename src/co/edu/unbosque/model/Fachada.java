@@ -21,11 +21,6 @@ public class Fachada {
     private boolean modoSigiloActivo = false;
     private HistorialPartida historial;
 
-	// Variables para el control de los Puertos de Enlace
-	private boolean ordenInverso = false;
-	private int ultPuertoIncFila = -1;
-	private int ultPuertoIncCol = -1;
-	private boolean modoSigiloActivo = false;
 
 	public Fachada() {
 		dificultad = new Dificultad();
