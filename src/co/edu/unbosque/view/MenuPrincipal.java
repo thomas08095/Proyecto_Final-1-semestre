@@ -14,23 +14,54 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
+/**
+ * Panel que representa la interfaz del Menú Principal del juego.
+ * utiliza un diseño basado en gridLayout para posicionar de manera simétrica los componentes
+ *  de personalización de la partida, como la selección de dificultad, la dimensión del tablero,
+ * la inversión del orden de los puertos y el botón de inicio.
+ */
 public class MenuPrincipal extends JPanel {
-
+	/** boton desplegable para las dificultades disponibles en el juego. 
+	*/
 	private JComboBox<String> cbxDificultades;
+	/** boton desplegable  para las dimensiones del mapa 
+    */
 	private JComboBox<String> cbxCasillas;
+	/** Botón de acción encargado de iniciar la partida
+	*/
 	private JButton btnJugar;
+	/** Botón interactivo para alternar la regla del orden inverso de los Puertos de Enlace.
+    */
 	private JButton btnOrdenInverso;
+	/** Etiqueta que muestra el título principal de la aplicación ("Cyber Infiltrator").
+    */
 	private JLabel lblTitulo;
+	/** Etiqueta que presenta el nombre del equipo autor del juego.
+	 */
 	private JLabel lblSubTitulo;
+	/** Etiqueta de texto que indica la zona de configuración de dificultad.
+	 */
 	private JLabel lblDificultad;
+	/** logotipo o imagen representativa del juego
+	 * */
 	private JLabel lblImagen;
+	/**
+	 * Metodo constructor de la clase MenuPrincipal.
+	 * Configura el administrador de diseño en GridLayout, establece un color de fondo 
+	 * oscuro tecnológico azulado y activa la propiedad de opacidad para que se pinte.
+	 */
 
 	public MenuPrincipal() {
 		setLayout(new GridBagLayout());
 		setBackground(new Color(10, 20, 40));
 		setOpaque(true);
 	}
+	/**
+	 * Inicializa, estiliza y posiciona secuencialmente cada uno de los componentesdel menú.
+	 * Configura las restricciones de alineación, define las fuentes de tipo Consolas con 
+	 * estéticas neón, escala de forma suavizada el logotipo principal y restringe el 
+	 * disparo del botón de inicio hasta que las propiedades requeridas sean leídas.
+	 */
 
 	public void inicializarComponentes() {
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -107,67 +138,115 @@ public class MenuPrincipal extends JPanel {
 		
 		
 	}
-
+	/**
+	 * Obtiene el componente desplegable de las dificultades.
+	 * @return El JComboBox encargado de listar las dificultades del sistema.
+	 */
 	public JComboBox<String> getCbxDificultades() {
 		return cbxDificultades;
 	}
-
+	/**
+	 * Asigna un componente personalizado para el combo de dificultades.
+	 * @param cbxDificultades Instancia de JComboBox a establecer.
+	 */
 	public void setCbxDificultades(JComboBox<String> cbxDificultades) {
 		this.cbxDificultades = cbxDificultades;
 	}
-
+	/**
+	 * Obtiene el componente desplegable de los tamaños del tablero.
+	 * @return El JComboBox encargado de listar las dimensiones de las casillas.
+	 */
 	public JComboBox<String> getCbxCasillas() {
 		return cbxCasillas;
 	}
-
+	/**
+	 * Asigna un componente personalizado para el combo del tamaño del tablero.
+	 * @param cbxCasillas Instancia de JComboBox a establecer.
+	 */
 	public void setCbxCasillas(JComboBox<String> cbxCasillas) {
 		this.cbxCasillas = cbxCasillas;
 	}
-
+	/**
+	 * Obtiene el botón de acción para iniciar el juego.
+	 * @return El objeto JButton que ejecuta la acción "JUGAR".
+	 */
 	public JButton getBtnJugar() {
 		return btnJugar;
 	}
-
+	/**
+	 * Asigna o altera el estado del botón principal de juego.
+	 * @param btnJugar Instancia del botón de juego a establecer.
+	 */
 	public void setBtnJugar(JButton btnJugar) {
 		this.btnJugar = btnJugar;
 	}
-
+	/**
+	 * Obtiene la etiqueta del título principal.
+	 * @return El JLabel del título del juego.
+	 */
 	public JLabel getLblTitulo() {
 		return lblTitulo;
 	}
-
+	/**
+	 * Asigna una etiqueta de texto personalizada para el título.
+	 * @param lblTitulo Instancia de JLabel a establecer.
+	 */
 	public void setLblTitulo(JLabel lblTitulo) {
 		this.lblTitulo = lblTitulo;
 	}
-
+	/**
+	 * Obtiene la etiqueta del subtítulo de la consola.
+	 * @return El JLabel correspondiente al subtítulo.
+	 */
 	public JLabel getLblSubTitulo() {
 		return lblSubTitulo;
 	}
-
+	/**
+	 * Asigna una etiqueta de texto personalizada para el subtítulo.
+	 * @param lblSubTitulo Instancia de JLabel a establecer.
+	 */
 	public void setLblSubTitulo(JLabel lblSubTitulo) {
 		this.lblSubTitulo = lblSubTitulo;
 	}
-
+	/**
+	 * Obtiene la etiqueta indicadora de la zona de dificultad.
+	 * @return El JLabel de la sección de dificultades.
+	 */
 	public JLabel getLblDificultad() {
 		return lblDificultad;
 	}
-
+	/**
+	 * Asigna una etiqueta de texto personalizada para el texto de dificultad.
+	 * @param lblDificultad Instancia de JLabel a establecer.
+	 */
 	public void setLblDificultad(JLabel lblDificultad) {
 		this.lblDificultad = lblDificultad;
 	}
-
+	/**
+	 * Obtiene el contenedor de la imagen del menú.
+	 * @return El JLabel que almacena el icono gráfico escalado.
+	 */
 	public JLabel getLblImagen() {
 		return lblImagen;
 	}
-
+	/**
+	 * Asigna una imagen personalizada al menú principal.
+	 * @param lblImagen Instancia de JLabel con el icono a establecer.
+	 */
 	public void setLblImagen(JLabel lblImagen) {
 		this.lblImagen = lblImagen;
 	}
-
+	/**
+	 * Obtiene el botón encargado de alternar la secuencia de los Puertos de Enlace.
+	 * @return El objeto JButton con el comando de acción "ORDEN_INVERSO".
+	 */
 	public JButton getBtnOrdenInverso() {
 		return btnOrdenInverso;
 	}
-
+	/**
+	 * Asigna un botón de control personalizado para la mecánica de inversión del orden.
+	 * @param btnOrdenInverso Instancia de JButton a establecer.
+	 */
 	public void setBtnOrdenInverso(JButton btnOrdenInverso) {
 		this.btnOrdenInverso = btnOrdenInverso;
 	}
