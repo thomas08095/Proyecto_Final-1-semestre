@@ -1,0 +1,17 @@
+========================================
+       CYBER INFILTRATOR — HISTORIAL    
+========================================
+Fecha:       23/05/2026 17:28:16
+Dificultad:  Dificil
+Tablero:     10x10
+----------------------------------------
+
+Turno 1: Jugador se mueve a (1,0)
+Turno 2: Jugador se mueve a (2,0)
+Turno 3: Jugador se mueve a (3,0) — Contacto con Antivirus — Game Over
+
+----------------------------------------
+RESULTADO:           DERROTA — Antivirus
+Movimientos usados:  3
+Nodos recolectados:  0
+========================================

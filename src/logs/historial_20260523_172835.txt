@@ -1,0 +1,24 @@
+========================================
+       CYBER INFILTRATOR — HISTORIAL    
+========================================
+Fecha:       23/05/2026 17:28:35
+Dificultad:  Dificil
+Tablero:     10x10
+----------------------------------------
+
+Turno 1: Jugador se mueve a (0,1)
+Turno 2: Jugador se mueve a (0,2)
+Turno 3: Jugador se mueve a (0,3)
+Turno 4: Jugador se mueve a (0,4) — Escáner de Latencia — -4 movimientos
+Turno 5: Jugador se mueve a (1,4)
+Turno 6: Jugador se mueve a (2,4)
+Turno 7: Jugador se mueve a (2,3)
+Turno 8: Jugador se mueve a (2,2)
+Turno 9: Jugador se mueve a (3,2)
+Turno 10: Jugador se mueve a (4,2) — Contacto con Antivirus — Game Over
+
+----------------------------------------
+RESULTADO:           DERROTA — Antivirus
+Movimientos usados:  10
+Nodos recolectados:  0
+========================================

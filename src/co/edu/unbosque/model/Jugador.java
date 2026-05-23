@@ -26,7 +26,6 @@ public class Jugador {
 	 * @param columna Columna inicial en la que se posicionará el personaje.
 	 * @param movimientosIniciales Límite máximo de movimientos cargados para la sesión.
 	 */
-
 	public Jugador(int fila, int columna, int movimientosIniciales) {
 		this.fila = fila;
 		this.columna = columna;
