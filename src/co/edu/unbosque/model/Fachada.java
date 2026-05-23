@@ -1,26 +1,67 @@
 package co.edu.unbosque.model;
-
+/**
+ * Clase que representa el componente lógico de la Fachada.
+ * Centraliza e interconecta los subsistemas de juego, coordinando
+ * la configuración del tablero por dificultades, las validaciones perimetrales, el ciclo 
+ * de movimiento de las amenazas inteligentes (Antivirus y Escáneres), la interacción con 
+ * los ítems y la exportación de auditorías mediante el historial de partida.
+ */
 public class Fachada {
-
+	/** Instancia encargada de dimensionar el tamaño geométrico de la cuadrícula.
+    */
     private Tablero tablero;
+    /** Instancia que indexa los textos descriptivos de los niveles de dificultad.
+      */
     private Dificultad dificultad;
+    /** Gestor de las coordenadas cartesianas del agente infiltrado del usuario.
+      */
     private Movimiento movimiento;
+    /** Representa el pool y comportamiento de las amenazas móviles de Antivirus Proactivos.
+      */
     private AntivirusProactivo antivirusP;
+    /** Representa el pool y comportamiento de las amenazas de Escáner de Latencia. 
+     */
     private EscanerLatencia escanerL;
+    /** Componente lógico que administra la generación de fuentes de recarga de energía.
+     */
     private NodoEnergia nodoE;
+    /** Componente lógico que supervisa la secuencia de captura de los puntos de acceso. 
+     */
     private PuertoEnlace puertoE;
+    /** Obstáculo estático inamovible diseñado para bloquear celdas de la cuadrícula. 
+     */
     private Firewall firewall;
+    /** Matriz multicapa que unifica las entidades lógicas con sus representaciones visuales.
+     */
     private Matriz matriz;
+    /** Paquete de datos que el jugador debe empujar hacia los puertos de enlace.
+     */
     private PaqueteDato paquete;
+    /** Cantidad total de movimientos permitidos acumulados para la sesión activa. 
+     */
     private int movimientos;
     
     // Variables para el control de los Puertos de Enlace
+    /** Bandera que determina si se invierte el orden natural de recolección de los puertos.
+     */
     private boolean ordenInverso = false;
+    /** Almacena la última fila de un puerto donde se intentó una captura inválida. 
+     */
     private int ultPuertoIncFila = -1;
+    /** Almacena la última columna de un puerto donde se intentó una captura inválida. 
+     */
     private int ultPuertoIncCol = -1;
+    /** Estado del modificador que altera la visibilidad frente a los escáneres de red.
+     */
     private boolean modoSigiloActivo = false;
+    /** Registro estructurado interno encargado de transcribir los eventos del juego.
+     */
     private HistorialPartida historial;
-
+    /**
+     * Metodo constructor por defecto de la clase Fachada.
+     * Inicializa todas las instancias del subsistema del modelo y restablece las variables 
+     * de control posicional y banderas de juego a sus estados primitivos y neutros.
+     */
 
 	public Fachada() {
 		dificultad = new Dificultad();
@@ -37,9 +78,16 @@ public class Fachada {
 		ultPuertoIncFila = -1;
 		ultPuertoIncCol = -1;
 	}
-
-
 	// Recibe el tamaño ingresado como String y lo parsea internamente
+	
+	/**
+     * Configura y distribuye paramétricamente todos los elementos del mapa de juego.
+     * Parsea las dimensiones de la cuadrícula, calcula el total de movimientos permitidos, 
+     * esparce aleatoriamente las entidades según la dificultad seleccionada, inicializa 
+     * el spawn de los personajes y fija los primeros rastros del paquete de datos en la matriz.
+     * @param dificultadSeleccionada Nivel de complejidad ("Facil", "Normal", "Dificil").
+     * @param casillaSeleccionada Formato de dimensión de la matriz ("10x10", "15x15", "20x20").
+     */
 
 	public void configurarTablero(String dificultadSeleccionada, String casillaSeleccionada) {
 
@@ -135,11 +183,20 @@ public class Fachada {
 			matriz.getCasillas()[paquete.getFila()][paquete.getColumna()].setEsRastro(true);
 		}
 	}
-
+	/**
+     * Calcula el área geométrica total del tablero.
+     * @return El número de casillas totales que conforman la cuadrícula de juego.
+     */
 	public int numeroCasillas() {
 		return tablero.getNumeroCasillas() * tablero.getNumeroCasillas();
 	}
-
+	/**
+     * Evalúa si una coordenada específica se encuentra bloqueada por un elemento restrictivo.
+     * Analiza las colecciones de Firewalls, Antivirus y Escáneres para prevenir superposiciones.
+     * @param fila Índice de la fila a evaluar.
+     * @param columna Índice de la columna a evaluar.
+     * @return true si la casilla está ocupada por un obstáculo o amenaza; false en caso contrario.
+     */
 	private boolean celdaOcupada(int fila, int columna) {
 		for (int i = 0; i < firewall.getCantidad(); i++) {
 			if (fila == firewall.getFila()[i] && columna == firewall.getColumna()[i]) {
@@ -158,7 +215,11 @@ public class Fachada {
 		}
 		return false;
 	}
-
+	/**
+     * Desplaza de forma aleatoria a cada una de las unidades de Antivirus Proactivo.
+     * Cada antivirus selecciona una dirección al azar e intenta moverse a ella; la transición
+     * se efectúa únicamente si la casilla destino está dentro del rango y libre de otros obstáculos.
+     */
 	public void moverAntivirus() {
 		for (int i = 0; i < antivirusP.getCantidad(); i++) {
 			boolean movido = false;
@@ -184,7 +245,11 @@ public class Fachada {
 			}
 		}
 	}
-
+	/**
+     * Desplaza de forma aleatoria a cada uno de los Escáneres de Latencia.
+     * Realiza un cálculo de vecindad de 4 direcciones de forma aleatoria, consolidando el
+     * cambio posicional solo si respeta los perímetros y no genera colisiones con celdas ocupadas.
+     */
 	public void moverEscanerL() {
 		for (int i = 0; i < escanerL.getCantidad(); i++) {
 			boolean movido = false;
@@ -210,7 +275,11 @@ public class Fachada {
 			}
 		}
 	}
-
+	/**
+     * Verifica si el jugador ha ingresado al rango de intercepción de algún Antivirus.
+     * La detección se dispara si el infiltrado ocupa la misma casilla o está adyacente a uno.
+     * @return true si el jugador fue detectado en el perímetro de un antivirus; false de lo contrario.
+     */
 	public boolean detectarAntivirus() {
 		for (int i = 0; i < antivirusP.getCantidad(); i++) {
 			boolean mismaPosticion = (movimiento.getInfiltradoX() == antivirusP.getFila()[i]
@@ -230,7 +299,11 @@ public class Fachada {
 		}
 		return false;
 	}
-
+	/**
+     * Verifica si el jugador se encuentra en las proximidades directas de un Escáner de Latencia.
+     * Si se detecta proximidad cruzada, se eliminan las coordenadas del escáner enviándolo fuera del mapa.
+     * @return true si el jugador gatilló la alerta de proximidad de un escáner; false de lo contrario.
+     */
 	public boolean detectarEscanerL() {
 		for (int i = 0; i < escanerL.getCantidad(); i++) {
 			boolean enArriba = (movimiento.getInfiltradoX() == escanerL.getFila()[i] - 1
@@ -250,7 +323,11 @@ public class Fachada {
 		}
 		return false;
 	}
-
+	/**
+     * Evalúa la colisión exacta entre el infiltrado y un Nodo de Energía.
+     * Si coinciden en la misma celda, el nodo es consumido (coordenadas enviadas a -1).
+     * @return true si se procesó la recolección exitosa de energía; false en caso contrario.
+     */
 	public boolean detectarNodoEnergia() {
 		for (int i = 0; i < nodoE.getCantidad(); i++) {
 			if (movimiento.getInfiltradoX() == nodoE.getFilaNE()[i]
@@ -262,7 +339,14 @@ public class Fachada {
 		}
 		return false;
 	}
-
+	/**
+     * Controla la captura lógica y secuencial de los Puertos de Enlace por parte del Paquete de Datos.
+     * Calcula el índice esperado basándose en la bandera 'ordenInverso' y valida si el puerto colisionado 
+     * coincide con la secuencia. Si el orden es erróneo, maneja el reintento impidiendo ciclos infinitos de error.
+     * @param puertosRecolectados Cantidad total de puertos asegurados con éxito hasta el momento.
+     * @return 1 si el puerto fue capturado en el orden correcto; -1 si es incorrecto (primer intento); 
+     * 0 si no hay colisión o ya se notificó el error en esa celda.
+     */
 	public int detectarPuertoEnlace(int puertosRecolectados) {
 		int indexEsperado = ordenInverso ? (puertoE.getCantidad() - 1 - puertosRecolectados) : puertosRecolectados;
 
@@ -293,10 +377,14 @@ public class Fachada {
 		ultPuertoIncCol = -1;     
 		return 0;       
 	}
-
-	// LÓGICA DE MOVIMIENTO 
-
-
+	/**
+     * Procesa la solicitud de movimiento del jugador y gestiona la física de empuje del paquete de datos.
+     * Valida que el jugador no camine sobre celdas ocupadas. Si la celda de destino contiene el paquete de datos,
+     * intenta desplazarlo en la misma dirección (delta), validando que este no quede fuera del mapa ni en las bandas perimetrales.
+     * @param deltaX Desplazamiento en el eje de las filas.
+     * @param deltaY Desplazamiento en el eje de las columnas.
+     * @return true si el movimiento global pudo ser ejecutado con éxito; false si fue obstruido.
+     */
 	public boolean solicitarMovimiento(int deltaX, int deltaY) {
 		int proximaFilaJugador = movimiento.getInfiltradoX() + deltaX;
 		int proximaColumnaJugador = movimiento.getInfiltradoY() + deltaY;
@@ -324,8 +412,13 @@ public class Fachada {
 		}
 
 		return movimiento.mover(deltaX, deltaY, tablero.getFilas(), tablero.getColumnas());
+		
+		/**
+	     * Recrea desde cero la Matriz unificada del nivel para refrescar los gráficos tras cambios lógicos.
+	     * Implementa un mecanismo de respaldo y restauración de las matrices booleanas de rastro 
+	     * para asegurar que las casillas pisadas anteriormente por el paquete se mantengan pintadas.
+	     */
 	}  public void reconstruirMatriz() {
-		// === RESPALDAR LOS RASTROS DE CASILLAS ANTES DE RECREAR EL OBJETO ===
 		boolean[][] rastrosAnteriores = null;
 		if (matriz != null && matriz.getCasillas() != null) {
 			rastrosAnteriores = new boolean[tablero.getFilas()][tablero.getColumnas()];
@@ -372,7 +465,6 @@ public class Fachada {
 		matriz = new Matriz(tablero.getFilas(), tablero.getColumnas(), jugador, paquete, listaAntivirus, listaEscanerLatencia,
 				listaNodos, listaPuertoEnlace, listaFirewall);
 
-		// === RESTAURAR LOS RASTROS DE CASILLAS PISADAS ANTERIORMENTE ===
 		if (rastrosAnteriores != null) {
 			for (int i = 0; i < tablero.getFilas(); i++) {
 				for (int j = 0; j < tablero.getColumnas(); j++) {
@@ -382,10 +474,8 @@ public class Fachada {
 				}
 			}
 		}
-		// === MARCA EL RASTRO ÚNICAMENTE EN LA UBICACIÓN EN CALIENTE DEL PAQUETE DE DATOS ===
-		if (paquete != null) {
+   		if (paquete != null) {
 			matriz.getCasillas()[paquete.getFila()][paquete.getColumna()].setEsRastro(true);
-
 		}
 	}
 
