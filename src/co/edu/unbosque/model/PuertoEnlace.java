@@ -91,6 +91,7 @@ public class PuertoEnlace {
 	public void setnCasillas(int nCasillas) {
 		this.nCasillas = nCasillas;
 	}
+
 	public int[] getAorden() {
 		return aorden;
 	}

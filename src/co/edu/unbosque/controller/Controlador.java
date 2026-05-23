@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import co.edu.unbosque.model.Fachada;
-import co.edu.unbosque.view.PanelJuego;
 import co.edu.unbosque.view.VentanaEmergente;
 import co.edu.unbosque.view.VentanaPrincipal;
 
@@ -13,7 +12,6 @@ public class Controlador implements ActionListener {
 	private VentanaPrincipal ventana;
 	private VentanaEmergente ventanaE;
 	private Fachada fachada;
-	private PanelJuego panelJ;
 
 	private int movimientosRealizados;
 	private int nodosRecolectados;
@@ -24,7 +22,6 @@ public class Controlador implements ActionListener {
 		fachada = new Fachada();
 		ventana = new VentanaPrincipal();
 		ventanaE = new VentanaEmergente();
-		panelJ = new PanelJuego();
 
 		for (String elem : fachada.getDificultades()) {
 			ventana.getMenuPrincipal().getCbxDificultades().addItem(elem);
@@ -47,6 +44,7 @@ public class Controlador implements ActionListener {
 		ventana.getPanelJuego().actualizarPuertos(fachada.getMatriz().getListaPuertosEnlace().length - puertosRecolectados);
 		ventana.getPanelJuego().actualizarEscaneres(fachada.getMatriz().getListaEscaners().length);
 		ventana.getPanelJuego().actualizarAntivirus(fachada.getMatriz().getListaAntivirus().length);
+		ventana.getPanelJuego().actualizarSigilo(fachada.isModoSigiloActivo());
 	}
 
 	public void asignarOyentes() {
@@ -60,6 +58,7 @@ public class Controlador implements ActionListener {
 		nodosRecolectados = 0;
 		puertosRecolectados = 0;
 		maxMovimientos = 0;
+		fachada.setOrdenInverso(false);
 		ventana.mostrarMenu();
 	}
 
@@ -82,16 +81,20 @@ public class Controlador implements ActionListener {
 			return;
 		}
 
-		if (fachada.detectarAntivirus()) {
-			ventanaE.mostrarInformacion("¡Game Over!");
-			reiniciarPartida();
-			return;
-		}
-		if (fachada.detectarEscanerL()) {
-			int penalizacion = (int) (restantes * 0.05);
-			maxMovimientos -= penalizacion;
-			ventanaE.mostrarInformacion("¡Encontraste un Escáner de Latencia!\n  -" + penalizacion + " movimientos menos.");
-			return;
+		if (fachada.isModoSigiloActivo()) {
+			fachada.desactivarSigilo();
+		} else {
+			if (fachada.detectarAntivirus()) {
+				ventanaE.mostrarInformacion("¡Game Over!");
+				reiniciarPartida();
+				return;
+			}
+			if (fachada.detectarEscanerL()) {
+				int penalizacion = (int) (restantes * 0.05);
+				maxMovimientos -= penalizacion;
+				ventanaE.mostrarInformacion("¡Encontraste un Escáner de Latencia!\n  -" + penalizacion + " movimientos menos.");
+				return;
+			}
 		}
 
 		if (fachada.detectarNodoEnergia()) {
@@ -124,6 +127,20 @@ public class Controlador implements ActionListener {
 			ventana.getMenuPrincipal().getBtnJugar().setEnabled(true);
 
 		} else if (command.equals("JUGAR")) {
+			ventanaE.mostrarInformacion("- Instrucciones del Juego -\r\n"
+					+ "\r\n"
+					+ "- Debes mover el paquete de datos por el servidor.\r\n"
+					+ "- Recorre todos los puertos de enlace en el orden indicado.\r\n"
+					+ "- Evita los Antivirus Proactivos y los Escáneres de Latencia.\r\n"
+					+ "- Los Nodos de Energía restauran movimientos.\r\n"
+					+ "- Los Firewalls generan penalizaciones.\r\n"
+					+ "- Solo puedes moverte vertical y horizontalmente.\r\n"
+					+ "\r\n"
+					+ "- IMPORTANTE:\r\n"
+					+ "  Consultar los Protocolos de Red durante la partida\r\n"
+					+ "  descontará 10 movimientos automáticamente.\r\n"
+					+ "\r\n"
+					+ "¿Deseas continuar?");
 			String cSeleccionada = ventana.getMenuPrincipal().getCbxCasillas().getSelectedItem().toString();
 			String dSeleccionada = ventana.getMenuPrincipal().getCbxDificultades().getSelectedItem().toString();
 
@@ -134,6 +151,7 @@ public class Controlador implements ActionListener {
 
 			ventana.getPanelJuego().inicializar(this, fachada.getMatriz(), dSeleccionada, maxMovimientos,fachada.getCantidadAntivirus());
 			ventana.getPanelJuego().getBtnInstrucciones().addActionListener(this);
+			ventana.getPanelJuego().getBtnSigilo().addActionListener(this);
 
 			actualizarVista();
 			ventana.mostrarJuego();
@@ -154,6 +172,13 @@ public class Controlador implements ActionListener {
 					+ "Has perdido 10 movimientos por consultar los protocolos.");
 			maxMovimientos -= 10;
 			actualizarVista();
+		}
+		else if(command.equals("SIGILO")){
+			fachada.activarSigilo();
+			ventanaE.mostrarInformacion("\r\n"
+					+ "  Has activado el modo sigilo\r\n"
+					+ "\r\n"
+					+ "• Por el sigiente turno, ningun encuentro con amenaza te afectará.\r\n");
 		}
 	}
 }

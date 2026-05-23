@@ -31,7 +31,9 @@ public class PanelJuego extends JPanel {
     private JLabel lblPuertos;
     private JLabel lblEscaneres;
     private JLabel lblAntivirus;
+    private JLabel lblSigilo;
     private JButton btnInstrucciones;
+    private JButton btnSigilo;
     private JButton btnExit;
 
     private MatrizPanel matrizPanel;
@@ -53,6 +55,20 @@ public class PanelJuego extends JPanel {
 
         revalidate();
         repaint();
+    }
+    
+    
+    private void crearBotonSigilo(JPanel panelNorth) {
+        btnSigilo = new JButton("SIGILO");
+        btnSigilo.setActionCommand("SIGILO");
+        btnSigilo.setForeground(new Color(100, 200, 255));
+        btnSigilo.setBackground(new Color(10, 20, 40));
+        btnSigilo.setFont(new Font("Consolas", Font.BOLD, 16));
+        btnSigilo.setFocusPainted(false);
+        btnSigilo.setBorder(BorderFactory.createLineBorder(new Color(100, 200, 255), 2));
+        btnSigilo.setPreferredSize(new Dimension(0, 40));
+
+        panelNorth.add(btnSigilo, BorderLayout.SOUTH);
     }
 
     private void construirPanelStats(String dificultad, int maxMovimientos, int cantFirewalls) {
@@ -77,8 +93,11 @@ public class PanelJuego extends JPanel {
         btnInstrucciones.setPreferredSize(new Dimension(0, 40));
 
         panelNorth.add(btnInstrucciones, BorderLayout.NORTH);
+        
+        
+        crearBotonSigilo(panelNorth);
 
-        JPanel panelLabels = new JPanel(new GridLayout(8, 1, 0, 4));
+        JPanel panelLabels = new JPanel(new GridLayout(9, 1, 0, 4));
         panelLabels.setBackground(new Color(15, 30, 60));
 
         lblTituloStats = new JLabel("Datos Del Juego", SwingConstants.LEFT);
@@ -92,6 +111,7 @@ public class PanelJuego extends JPanel {
         lblPuertos = crearLabelStat("Puertos: 0");
         lblEscaneres = crearLabelStat("Escáneres: 0");
         lblAntivirus = crearLabelStat("Antivirus: 0");
+        lblSigilo = crearLabelStat("Sigilo: INACTIVO");
 
         panelLabels.add(lblTituloStats);
         panelLabels.add(lblNodos);
@@ -101,6 +121,7 @@ public class PanelJuego extends JPanel {
         panelLabels.add(lblPuertos);
         panelLabels.add(lblEscaneres);
         panelLabels.add(lblAntivirus);
+        panelLabels.add(lblSigilo);
 
         panelNorth.add(panelLabels, BorderLayout.CENTER);
         panelStats.add(panelNorth, BorderLayout.NORTH);
@@ -211,6 +232,10 @@ public class PanelJuego extends JPanel {
         lblAntivirus.setText("Antivirus: " + cantidad);
     }
 
+    public void actualizarSigilo(boolean activo) {
+        lblSigilo.setText("Sigilo: " + (activo ? "ACTIVO" : "INACTIVO"));
+    }
+
     public MatrizPanel getMatrizPanel() {
         return matrizPanel;
     }
@@ -226,6 +251,10 @@ public class PanelJuego extends JPanel {
 
     public JButton getBtnInstrucciones() {
         return btnInstrucciones;
+    }
+    
+    public JButton getBtnSigilo() {
+        return btnSigilo;
     }
 
     public JButton getBtnExit() {

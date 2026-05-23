@@ -27,7 +27,6 @@ public class CasillaPanel extends JPanel {
 	            casilla.setEsRastro(true); 
 	        }
 
-	        // Dibujamos el icono de la entidad encima (sea jugador, enemigo, nodo, etc.)
 	        String rutaImagen = casilla.getContenido().getRutaImagen();
 	        if (rutaImagen != null && !rutaImagen.isEmpty()) {
 	            ImageIcon icon = new ImageIcon(
@@ -35,12 +34,11 @@ public class CasillaPanel extends JPanel {
 	            add(new JLabel(icon), BorderLayout.CENTER);
 	        }
 	    } 
-	    // 2. SI NO ESTÁ OCUPADA ACTUALMENTE, VERIFICAMOS SI YA FUE PISADA ANTES
 	    else {
 	        if (casilla.isEsRastro()) {
-	            setBackground(new Color(20, 120, 80)); // Mantiene el verde si ya pasó por aquí
+	            setBackground(new Color(20, 120, 80));
 	        } else {
-	            setBackground(new Color(10, 20, 40)); // sino mantiene el antiguo 
+	            setBackground(new Color(10, 20, 40));
 	        }
 	    }
 
@@ -54,8 +52,6 @@ public class CasillaPanel extends JPanel {
 
 	public void setCasilla(Casilla casilla) {
 		this.casilla = casilla;
-
-
 		actualizarImagen(); 
 	}
 }
