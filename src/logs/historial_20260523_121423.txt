@@ -1,0 +1,49 @@
+========================================
+       CYBER INFILTRATOR — HISTORIAL    
+========================================
+Fecha:       23/05/2026 12:14:23
+Dificultad:  Facil
+Tablero:     10x10
+----------------------------------------
+
+Turno 1: Jugador se mueve a (0,1)
+Turno 2: Jugador se mueve a (0,2)
+Turno 3: Jugador se mueve a (0,3)
+Turno 4: Jugador se mueve a (0,4)
+Turno 5: Jugador se mueve a (0,5)
+Turno 6: Jugador se mueve a (1,5)
+Turno 7: Jugador se mueve a (2,5)
+Turno 8: Jugador se mueve a (2,4)
+Turno 9: Jugador se mueve a (2,3)
+Turno 10: Jugador se mueve a (2,2)
+Turno 11: Jugador se mueve a (2,1)
+Turno 12: Jugador se mueve a (2,0)
+Turno 13: Jugador se mueve a (3,0)
+Turno 14: Jugador se mueve a (4,0)
+Turno 15: Jugador se mueve a (5,0)
+Turno 16: Jugador se mueve a (6,0)
+Turno 17: Jugador se mueve a (7,0)
+Turno 18: Jugador se mueve a (8,0)
+Turno 19: Jugador se mueve a (8,1)
+Turno 20: Jugador se mueve a (8,2)
+Turno 21: Jugador se mueve a (8,3)
+Turno 22: Jugador se mueve a (8,4)
+Turno 23: Jugador se mueve a (8,3)
+Turno 24: Jugador se mueve a (7,3)
+Turno 25: Jugador se mueve a (6,3) — Escáner de Latencia — -3 movimientos
+Turno 26: Jugador se mueve a (5,3)
+Turno 27: Jugador se mueve a (4,3)
+Turno 28: Jugador se mueve a (4,2)
+Turno 29: Jugador se mueve a (4,1)
+Turno 30: Jugador se mueve a (3,1)
+Turno 31: Jugador se mueve a (2,1)
+Turno 32: Jugador se mueve a (2,2)
+Turno 33: Jugador se mueve a (1,2)
+Turno 34: Jugador se mueve a (1,1)
+Turno 35: Jugador se mueve a (2,1) — Contacto con Antivirus — Game Over
+
+----------------------------------------
+RESULTADO:           DERROTA — Antivirus
+Movimientos usados:  35
+Nodos recolectados:  0
+========================================

@@ -70,28 +70,38 @@ public class Controlador implements ActionListener {
 
 		movimientosRealizados++;
 		int restantes = maxMovimientos - movimientosRealizados;
+		String eventoTurno = "";
 
 		fachada.moverAntivirus();
 		fachada.moverEscanerL();
 		actualizarVista();
 
 		if (restantes <= 0) {
-			ventanaE.mostrarInformacion("¡Te quedaste sin movimientos!");
+			eventoTurno = "Sin movimientos — Derrota";
+			fachada.registrarMovimiento(movimientosRealizados, fachada.getInfiltradoX(), fachada.getInfiltradoY(), eventoTurno);
+			String rutaSinMov = fachada.exportarHistorial("DERROTA — Sin movimientos", movimientosRealizados, nodosRecolectados);
+			ventanaE.mostrarInformacion("¡Te quedaste sin movimientos!\n\nHistorial guardado en:\n" + rutaSinMov);
 			reiniciarPartida();
 			return;
 		}
 
 		if (fachada.isModoSigiloActivo()) {
+			eventoTurno = "Sigilo activo — amenazas ignoradas";
 			fachada.desactivarSigilo();
 		} else {
 			if (fachada.detectarAntivirus()) {
-				ventanaE.mostrarInformacion("¡Game Over!");
+				eventoTurno = "Contacto con Antivirus — Game Over";
+				fachada.registrarMovimiento(movimientosRealizados, fachada.getInfiltradoX(), fachada.getInfiltradoY(), eventoTurno);
+				String rutaAntivirus = fachada.exportarHistorial("DERROTA — Antivirus", movimientosRealizados, nodosRecolectados);
+				ventanaE.mostrarInformacion("¡Game Over!\n\nHistorial guardado en:\n" + rutaAntivirus);
 				reiniciarPartida();
 				return;
 			}
 			if (fachada.detectarEscanerL()) {
 				int penalizacion = (int) (restantes * 0.05);
 				maxMovimientos -= penalizacion;
+				eventoTurno = "Escáner de Latencia — -" + penalizacion + " movimientos";
+				fachada.registrarMovimiento(movimientosRealizados, fachada.getInfiltradoX(), fachada.getInfiltradoY(), eventoTurno);
 				ventanaE.mostrarInformacion("¡Encontraste un Escáner de Latencia!\n  -" + penalizacion + " movimientos menos.");
 				return;
 			}
@@ -101,22 +111,28 @@ public class Controlador implements ActionListener {
 			int bonus = (int) (restantes * 0.10);
 			maxMovimientos += bonus;
 			nodosRecolectados++;
-			ventanaE.mostrarInformacion("¡Encontraste un Nodo de Energía!\n  +"
-			+ bonus + " movimientos extra.");
+			eventoTurno = "Nodo de Energía recolectado — +" + bonus + " movimientos";
+			ventanaE.mostrarInformacion("¡Encontraste un Nodo de Energía!\n  +" + bonus + " movimientos extra.");
 		}
+
 		int estadoPuerto = fachada.detectarPuertoEnlace(puertosRecolectados);
 		if (estadoPuerto == 1) {
 			puertosRecolectados++;
+			eventoTurno += (eventoTurno.isEmpty() ? "" : " | ") + "Puerto de Enlace entregado (" + puertosRecolectados + ")";
 			ventanaE.mostrarInformacion("¡Llevaste un paquete al Puerto de Enlace!\n                               "
 					+ puertosRecolectados + "/" + fachada.getMatriz().getListaPuertosEnlace().length);
 			if (fachada.getMatriz().getListaPuertosEnlace().length == puertosRecolectados) {
-				ventanaE.mostrarInformacion("¡Encontraste Todos los Puertos de Enlace!");
+				fachada.registrarMovimiento(movimientosRealizados, fachada.getInfiltradoX(), fachada.getInfiltradoY(), eventoTurno);
+				String rutaVictoria = fachada.exportarHistorial("VICTORIA", movimientosRealizados, nodosRecolectados);
+				ventanaE.mostrarInformacion("¡Encontraste Todos los Puertos de Enlace!\n\nHistorial guardado en:\n" + rutaVictoria);
 				reiniciarPartida();
 			}
 			actualizarVista();
 		} else if (estadoPuerto == -1) {
 			ventanaE.mostrarInformacion("¡Este no es el orden correcto, sigue intentando!");
 		}
+
+		fachada.registrarMovimiento(movimientosRealizados, fachada.getInfiltradoX(), fachada.getInfiltradoY(), eventoTurno);
 	}
 	
 	@Override

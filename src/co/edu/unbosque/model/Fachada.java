@@ -2,23 +2,25 @@ package co.edu.unbosque.model;
 
 public class Fachada {
 
-	private Tablero tablero;
-	private Dificultad dificultad;
-	private Movimiento movimiento;
-	private AntivirusProactivo antivirusP;
-	private EscanerLatencia escanerL;
-	private NodoEnergia nodoE;
-	private PuertoEnlace puertoE;
-	private Firewall firewall;
-	private Matriz matriz;
-	private PaqueteDato paquete;
-	private int movimientos;
+    private Tablero tablero;
+    private Dificultad dificultad;
+    private Movimiento movimiento;
+    private AntivirusProactivo antivirusP;
+    private EscanerLatencia escanerL;
+    private NodoEnergia nodoE;
+    private PuertoEnlace puertoE;
+    private Firewall firewall;
+    private Matriz matriz;
+    private PaqueteDato paquete;
+    private int movimientos;
+    
+    // Variables para el control de los Puertos de Enlace
+    private boolean ordenInverso = false;
+    private int ultPuertoIncFila = -1;
+    private int ultPuertoIncCol = -1;
+    private boolean modoSigiloActivo = false;
+    private HistorialPartida historial;
 
-	// Variables para el control de los Puertos de Enlace
-	private boolean ordenInverso = false;
-	private int ultPuertoIncFila = -1;
-	private int ultPuertoIncCol = -1;
-	private boolean modoSigiloActivo = false;
 
 	public Fachada() {
 		dificultad = new Dificultad();
@@ -80,6 +82,7 @@ public class Fachada {
 		}
 
 		movimiento.resetPosicion();
+        historial = new HistorialPartida(dificultadSeleccionada, nCasillas);
 
 		Jugador jugador = new Jugador(0, 0, movimientos);
 		jugador.setRutaImagen("src/imagenes/jugador.png");
@@ -477,6 +480,19 @@ public class Fachada {
 		this.puertoE = puertoE;
 	}
 
+
+	public void registrarMovimiento(int turno, int fila, int columna, String evento) {
+		if (historial != null) {
+			historial.registrarMovimiento(turno, fila, columna, evento);
+		}
+	}
+
+	public String exportarHistorial(String resultado, int movimientosUsados, int nodosRecolectados) {
+		if (historial != null) {
+			return historial.exportar(resultado, movimientosUsados, nodosRecolectados);
+		}
+		return null;
+	}
 
 	public void activarSigilo() {
 		modoSigiloActivo = true;
