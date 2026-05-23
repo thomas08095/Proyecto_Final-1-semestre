@@ -1,16 +1,34 @@
 package co.edu.unbosque.model;
 
 import java.util.Random;
-
+/**
+ * Clase que representa el componente lógico de los Firewall dentro del modelo.
+ * Modela los obstáculos estáticos distribuidos en el servidor de archivos,
+ * cuya función principal consiste en bloquear el paso del script de infiltración, obligando 
+ * al jugador a recalcular sus rutas de movimiento por la red.
+ */
 public class Firewall {
-
+	/** Arreglo que almacena las coordenadas de las filas para todos los cortafuegos generados. */
 	private int[] fila;
+	/** Arreglo que almacena las coordenadas de las columnas para todos los cortafuegos generados. */
 	private int[] columna;
+	/** Cantidad total de cortafuegos que se instanciarán de forma física en el nivel.
+	  */
 	private int cantidad;
+	/** Generador de números aleatorios utilizado para calcular la dispersión en el tablero.
+	 */
 	private Random rand;
+	/** Dimensión o número de casillas por lado que posee el tablero de juego.
+	 */
 	private int nCasillas;
+	/** Ruta de almacenamiento local del recurso de imagen que identifica visualmente al firewall.
+	  */
 	private String rutaImagen;
-
+	/**
+	 * Metodo constructor por defecto de la clase Firewall.
+	 * Inicializa los arreglos de coordenadas posicionales con una longitud de cero e 
+	 * instancia el generador de números aleatorios para la posterior creación de obstáculos.
+	 */
 	public Firewall() {
 		this.cantidad = 0;
 		this.nCasillas = 0;
@@ -18,13 +36,24 @@ public class Firewall {
 		this.columna= new int[0];
 		this.rand = new Random();
 	}
-
-	// Constructor con parámetros (Actúa como un objeto individual para la Matriz)
-	public Firewall(int fila, int columna) {
+	/**
+	 * Metodo constructor parametrizado de la clase Firewall.
+	 * Actúa como un constructor especializado para crear una celda individual ocupada por un 
+	 * firewall en la Matriz, envolviendo las coordenadas fijas provistas en arreglos unitarios.
+	 * @param fila Coordenada de la fila fija para este obstáculo.
+	 * @param columna Coordenada de la columna fija para este obstáculo.
+	 */
+		public Firewall(int fila, int columna) {
 		this.fila = new int[] { fila };
 		this.columna = new int[] { columna };
 	}
-
+		/**
+		 * Distribuye de forma aleatoria los obstáculos Firewall a lo largo y ancho del servidor.
+		 * Inicializa los arreglos con la cantidad especificada y calcula posiciones cartesianas uniformes 
+		 * acotadas por el límite de casillas del mapa, imprimiendo las coordenadas en consola para auditoría.
+		 * @param cantidad Número total de obstáculos de tipo cortafuegos a generar en la partida.
+		 * @param nCasillas Cantidad total de casillas por lado en el tablero para delimitar la aleatoriedad.
+		 */
 	public void RandomFirewall(int cantidad, int nCasillas) {
 		this.cantidad = cantidad;
 		this.nCasillas = nCasillas;
