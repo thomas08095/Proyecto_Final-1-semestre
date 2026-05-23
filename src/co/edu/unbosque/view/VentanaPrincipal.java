@@ -74,44 +74,27 @@ public class VentanaPrincipal extends JFrame {
     public void mostrarJuego() {
         cardLayout.show(contenedor, "JUEGO");
     }
-    /**
-     * Obtiene el componente gráfico del menú principal.
-     * @return El objeto MenuPrincipal asociado actualmente a la ventana.
-     */
+    
     public MenuPrincipal getMenuPrincipal() {
         return menuPrincipal;
     }
-    /**
-     * Asigna un componente gráfico personalizado para el menú principal.
-     * @param menuPrincipal Instancia del menú principal a establecer.
-     */
+   
     public void setMenuPrincipal(MenuPrincipal menuPrincipal) {
         this.menuPrincipal = menuPrincipal;
     }
-    /**
-     * Obtiene el componente gráfico del área de juego interactiva.
-     * @return El objeto PanelJuego encargado del renderizado de la matriz.
-     */
+    
     public PanelJuego getPanelJuego() {
         return panelJuego;
     }
-    /**
-     * Asigna un componente gráfico personalizado para el área de juego interactiva.
-     * @param panelJuego Instancia de PanelJuego a establecer.
-     */
+    
     public void setPanelJuego(PanelJuego panelJuego) {
         this.panelJuego = panelJuego;
     }
-    /**
-     * Obtiene el contenedor intermedio que centraliza los paneles mutables del juego.
-     * @return El JPanel contenedor general controlado por el CardLayout.
-     */
+   
     public JPanel getContenedor() {
         return contenedor;
     }
-    /**
-     * @return El administrador CardLayout que orquesta el intercambio de pantallas.
-     */
+   
     public CardLayout getCardLayout() {
         return cardLayout;
     }

@@ -65,18 +65,11 @@ public class CasillaPanel extends JPanel {
 	    revalidate();
 	    repaint();
 	}
-	/**
-	 * Obtiene el objeto lógico Casilla asociado a este componente visual.
-	 * @return La casilla del modelo vinculada.
-	 */
+	
 	public Casilla getCasilla() {
 		return casilla;
 	}
-	/**
-	 * Actualiza la referencia del objeto lógico Casilla de este panel y fuerza 
-	 * de manera inmediata el refresco de sus componentes gráficos, colores e imágenes.
-	 * * @param casilla La nueva casilla lógica a asignar.
-	 */
+	
 	public void setCasilla(Casilla casilla) {
 		this.casilla = casilla;
 		actualizarImagen(); 

@@ -138,115 +138,67 @@ public class MenuPrincipal extends JPanel {
 		
 		
 	}
-	/**
-	 * Obtiene el componente desplegable de las dificultades.
-	 * @return El JComboBox encargado de listar las dificultades del sistema.
-	 */
+	
 	public JComboBox<String> getCbxDificultades() {
 		return cbxDificultades;
 	}
-	/**
-	 * Asigna un componente personalizado para el combo de dificultades.
-	 * @param cbxDificultades Instancia de JComboBox a establecer.
-	 */
+	
 	public void setCbxDificultades(JComboBox<String> cbxDificultades) {
 		this.cbxDificultades = cbxDificultades;
 	}
-	/**
-	 * Obtiene el componente desplegable de los tamaños del tablero.
-	 * @return El JComboBox encargado de listar las dimensiones de las casillas.
-	 */
+	
 	public JComboBox<String> getCbxCasillas() {
 		return cbxCasillas;
 	}
-	/**
-	 * Asigna un componente personalizado para el combo del tamaño del tablero.
-	 * @param cbxCasillas Instancia de JComboBox a establecer.
-	 */
+	
 	public void setCbxCasillas(JComboBox<String> cbxCasillas) {
 		this.cbxCasillas = cbxCasillas;
 	}
-	/**
-	 * Obtiene el botón de acción para iniciar el juego.
-	 * @return El objeto JButton que ejecuta la acción "JUGAR".
-	 */
+	
 	public JButton getBtnJugar() {
 		return btnJugar;
 	}
-	/**
-	 * Asigna o altera el estado del botón principal de juego.
-	 * @param btnJugar Instancia del botón de juego a establecer.
-	 */
+	
 	public void setBtnJugar(JButton btnJugar) {
 		this.btnJugar = btnJugar;
 	}
-	/**
-	 * Obtiene la etiqueta del título principal.
-	 * @return El JLabel del título del juego.
-	 */
+	
 	public JLabel getLblTitulo() {
 		return lblTitulo;
 	}
-	/**
-	 * Asigna una etiqueta de texto personalizada para el título.
-	 * @param lblTitulo Instancia de JLabel a establecer.
-	 */
+	
 	public void setLblTitulo(JLabel lblTitulo) {
 		this.lblTitulo = lblTitulo;
 	}
-	/**
-	 * Obtiene la etiqueta del subtítulo de la consola.
-	 * @return El JLabel correspondiente al subtítulo.
-	 */
+	
 	public JLabel getLblSubTitulo() {
 		return lblSubTitulo;
 	}
-	/**
-	 * Asigna una etiqueta de texto personalizada para el subtítulo.
-	 * @param lblSubTitulo Instancia de JLabel a establecer.
-	 */
+	
 	public void setLblSubTitulo(JLabel lblSubTitulo) {
 		this.lblSubTitulo = lblSubTitulo;
 	}
-	/**
-	 * Obtiene la etiqueta indicadora de la zona de dificultad.
-	 * @return El JLabel de la sección de dificultades.
-	 */
+	
 	public JLabel getLblDificultad() {
 		return lblDificultad;
 	}
-	/**
-	 * Asigna una etiqueta de texto personalizada para el texto de dificultad.
-	 * @param lblDificultad Instancia de JLabel a establecer.
-	 */
+	
 	public void setLblDificultad(JLabel lblDificultad) {
 		this.lblDificultad = lblDificultad;
 	}
-	/**
-	 * Obtiene el contenedor de la imagen del menú.
-	 * @return El JLabel que almacena el icono gráfico escalado.
-	 */
+	
 	public JLabel getLblImagen() {
 		return lblImagen;
 	}
-	/**
-	 * Asigna una imagen personalizada al menú principal.
-	 * @param lblImagen Instancia de JLabel con el icono a establecer.
-	 */
+	
 	public void setLblImagen(JLabel lblImagen) {
 		this.lblImagen = lblImagen;
 	}
-	/**
-	 * Obtiene el botón encargado de alternar la secuencia de los Puertos de Enlace.
-	 * @return El objeto JButton con el comando de acción "ORDEN_INVERSO".
-	 */
+
 	public JButton getBtnOrdenInverso() {
 		return btnOrdenInverso;
 	}
-	/**
-	 * Asigna un botón de control personalizado para la mecánica de inversión del orden.
-	 * @param btnOrdenInverso Instancia de JButton a establecer.
-	 */
+	
 	public void setBtnOrdenInverso(JButton btnOrdenInverso) {
 		this.btnOrdenInverso = btnOrdenInverso;
 	}

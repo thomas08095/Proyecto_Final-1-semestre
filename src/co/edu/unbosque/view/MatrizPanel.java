@@ -38,24 +38,12 @@ public class MatrizPanel extends JPanel {
         }
     }
 
-    /**
-     * Obtiene el arreglo bidimensional de los paneles gráficos de las casillas.
-     * @return Matriz bidimensional de objetos CasillaPanel actuales.
-     */
+   
     public CasillaPanel[][] getCasillaPanels() { return casillaPanels; }
-    /**
-     * Asigna un conjunto bidimensional personalizado de paneles gráficos para las casillas.
-     * @param casillaPanels Estructura bidimensional de CasillaPanel a establecer.
-     */
+  
     public void setCasillaPanels(CasillaPanel[][] casillaPanels) { this.casillaPanels = casillaPanels; }
-    /**
-     * Obtiene el objeto lógico Matriz asociado al renderizado de este panel.
-     * @return El objeto Matriz con la información posicional del modelo.
-     */
+   
     public Matriz getMatriz() { return matriz; }
-    /**
-     * Asigna un objeto lógico de tipo Matriz a este panel contenedor.
-     * @param matriz La nueva matriz lógica a vincular.
-     */
+   
     public void setMatriz(Matriz matriz) { this.matriz = matriz; }
 }

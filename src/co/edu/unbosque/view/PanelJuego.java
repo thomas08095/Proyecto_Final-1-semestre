@@ -349,24 +349,15 @@ public class PanelJuego extends JPanel {
         revalidate();
         repaint();
     }
-    /**
-     * Obtiene la referencia del botón de Instrucciones.
-     * @return El objeto JButton de instrucciones.
-     */
+   
     public JButton getBtnInstrucciones() {
         return btnInstrucciones;
     }
-    /**
-     * Obtiene la referencia del botón de activación de Sigilo.
-     * @return El objeto JButton de sigilo.
-     */
+    
     public JButton getBtnSigilo() {
         return btnSigilo;
     }
-    /**
-     * Obtiene la referencia del botón de Salida.
-     * @return El objeto JButton de salida rápida.
-     */
+    
     public JButton getBtnExit() {
         return btnExit;
     }
