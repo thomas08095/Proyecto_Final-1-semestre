@@ -44,6 +44,7 @@ public class Controlador implements ActionListener {
 		ventana.getPanelJuego().actualizarPuertos(fachada.getMatriz().getListaPuertosEnlace().length - puertosRecolectados);
 		ventana.getPanelJuego().actualizarEscaneres(fachada.getMatriz().getListaEscaners().length);
 		ventana.getPanelJuego().actualizarAntivirus(fachada.getMatriz().getListaAntivirus().length);
+		ventana.getPanelJuego().actualizarSigilo(fachada.isModoSigiloActivo());
 	}
 
 	public void asignarOyentes() {
@@ -80,16 +81,20 @@ public class Controlador implements ActionListener {
 			return;
 		}
 
-		if (fachada.detectarAntivirus()) {
-			ventanaE.mostrarInformacion("¡Game Over!");
-			reiniciarPartida();
-			return;
-		}
-		if (fachada.detectarEscanerL()) {
-			int penalizacion = (int) (restantes * 0.05);
-			maxMovimientos -= penalizacion;
-			ventanaE.mostrarInformacion("¡Encontraste un Escáner de Latencia!\n  -" + penalizacion + " movimientos menos.");
-			return;
+		if (fachada.isModoSigiloActivo()) {
+			fachada.desactivarSigilo();
+		} else {
+			if (fachada.detectarAntivirus()) {
+				ventanaE.mostrarInformacion("¡Game Over!");
+				reiniciarPartida();
+				return;
+			}
+			if (fachada.detectarEscanerL()) {
+				int penalizacion = (int) (restantes * 0.05);
+				maxMovimientos -= penalizacion;
+				ventanaE.mostrarInformacion("¡Encontraste un Escáner de Latencia!\n  -" + penalizacion + " movimientos menos.");
+				return;
+			}
 		}
 
 		if (fachada.detectarNodoEnergia()) {
@@ -146,6 +151,7 @@ public class Controlador implements ActionListener {
 
 			ventana.getPanelJuego().inicializar(this, fachada.getMatriz(), dSeleccionada, maxMovimientos,fachada.getCantidadAntivirus());
 			ventana.getPanelJuego().getBtnInstrucciones().addActionListener(this);
+			ventana.getPanelJuego().getBtnSigilo().addActionListener(this);
 
 			actualizarVista();
 			ventana.mostrarJuego();
@@ -166,6 +172,13 @@ public class Controlador implements ActionListener {
 					+ "Has perdido 10 movimientos por consultar los protocolos.");
 			maxMovimientos -= 10;
 			actualizarVista();
+		}
+		else if(command.equals("SIGILO")){
+			fachada.activarSigilo();
+			ventanaE.mostrarInformacion("\r\n"
+					+ "  Has activado el modo sigilo\r\n"
+					+ "\r\n"
+					+ "• Por el sigiente turno, ningun encuentro con amenaza te afectará.\r\n");
 		}
 	}
 }

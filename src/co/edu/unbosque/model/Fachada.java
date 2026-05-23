@@ -18,6 +18,7 @@ public class Fachada {
     private boolean ordenInverso = false;
     private int ultPuertoIncFila = -1;
     private int ultPuertoIncCol = -1;
+    private boolean modoSigiloActivo = false;
 
     public Fachada() {
         dificultad = new Dificultad();
@@ -29,6 +30,7 @@ public class Fachada {
         puertoE = new PuertoEnlace();
         firewall = new Firewall();
         movimientos = 0;
+        modoSigiloActivo = false;
         ordenInverso = false;
         ultPuertoIncFila = -1;
         ultPuertoIncCol = -1;
@@ -448,5 +450,17 @@ public class Fachada {
 	public void setOrdenInverso(boolean ordenInverso) {
 	    this.ordenInverso = ordenInverso;
 		puertoE.setOrdenInverso(ordenInverso);
+	}
+
+	public void activarSigilo() {
+		modoSigiloActivo = true;
+	}
+
+	public void desactivarSigilo() {
+		modoSigiloActivo = false;
+	}
+
+	public boolean isModoSigiloActivo() {
+		return modoSigiloActivo;
 	}
 }
