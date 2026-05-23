@@ -22,7 +22,7 @@ public class CasillaPanel extends JPanel {
 
 	    if (casilla.isEstaOcupada() && casilla.getContenido() != null) {
 	    
-	        if (casilla.getContenido().getRutaImagen().contains("jugador")) { 
+	        if (casilla.getContenido().getRutaImagen().contains("paquete")) { 
 	            setBackground(new Color(20, 120, 80)); 
 	            casilla.setEsRastro(true); 
 	        }

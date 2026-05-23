@@ -12,7 +12,6 @@ public class Matriz {
 	private EscanerLatencia[] listaEscaners;
 	private NodoEnergia[] listaNodos;
 	private PuertoEnlace[] listaPuertosEnlace;
-	private Movimiento mov;
 
 	public Matriz(int filas, int columnas, Jugador jugador, PaqueteDato paquete, AntivirusProactivo[] listaAntivirus,
 			EscanerLatencia[] listaEscaners, NodoEnergia[] listaNodos, PuertoEnlace[] listaPuertosEnlace,
@@ -27,19 +26,12 @@ public class Matriz {
 		this.listaPuertosEnlace = listaPuertosEnlace;
 		this.listaFirewall = listaFirewall;
 		this.casillas = new Casilla[filas][columnas];
-		this.mov = new Movimiento();
+	
 
 		for (int i = 0; i < filas; i++) {
 			for (int j = 0; j < columnas; j++) {
-				casillas[i][j] = new Casilla(i, j);
-
-				if (jugador != null) {
-				    if (i == mov.getInfiltradoX() && j == mov.getInfiltradoY()) {
-				        casillas[i][j].setEsRastro(true);
-				    }
+				casillas[i][j] = new Casilla(i, j);    
 				
-				    
-				}
 
 				// 1. Jugador
 				if (jugador != null && jugador.getFila() == i && jugador.getColumna() == j) {
