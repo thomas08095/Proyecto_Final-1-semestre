@@ -69,7 +69,15 @@ public class EscanerLatencia {
 			System.out.println("ESCANER DE LATENCIA " + (i + 1) + ": " + fila[i] + "," + columna[i]);
 		}
 	}
-
+	/**
+	 * Ejecuta el ciclo de desplazamiento automático para cada escáner en el tablero.
+	 * El algoritmo implementa un subbucle de resiliencia limitado a un máximo de 4 intentos;
+	 * si la dirección calculada colisiona con las 
+	 * fronteras físicas de la matriz (filas o columnas), se descarta el vector y se 
+	 * evalúa una nueva ruta para asegurar el movimiento efectivo.
+	 * @param filas Altura límite de la matriz bidimensional del juego.
+	 * @param columnas Anchura límite de la matriz bidimensional del juego.
+	 */
 	public void moverAleatoriamente(int filas, int columnas) {
 		for (int i = 0; i < cantidad; i++) {
 			boolean movido = false;
