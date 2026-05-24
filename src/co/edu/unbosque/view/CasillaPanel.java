@@ -43,7 +43,7 @@ public class CasillaPanel extends JPanel {
 	    if (casilla.isEstaOcupada() && casilla.getContenido() != null) {
 	    
 	        if (casilla.getContenido().getRutaImagen().contains("paquete")) { 
-	            setBackground(new Color(20, 120, 80)); 
+	            setBackground(new Color(128,0 ,255)); 
 	            casilla.setEsRastro(true); 
 	        }
 
@@ -56,7 +56,7 @@ public class CasillaPanel extends JPanel {
 	    } 
 	    else {
 	        if (casilla.isEsRastro()) {
-	            setBackground(new Color(20, 120, 80));
+	            setBackground(new Color(128,0 ,255));
 	        } else {
 	            setBackground(new Color(10, 20, 40));
 	        }
