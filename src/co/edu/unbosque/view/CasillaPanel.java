@@ -56,7 +56,7 @@ public class CasillaPanel extends JPanel {
 			String rutaImagen = casilla.getContenido().getRutaImagen();
 			if (rutaImagen != null && !rutaImagen.isEmpty()) {
 				ImageIcon icon = new ImageIcon(
-						new ImageIcon(rutaImagen).getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH));
+						new ImageIcon(getClass().getResource(rutaImagen)).getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH));
 				add(new JLabel(icon), BorderLayout.CENTER);
 			}
 		} else {

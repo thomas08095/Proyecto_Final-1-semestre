@@ -137,42 +137,42 @@ public class Fachada {
         historial = new HistorialPartida(dificultadSeleccionada, nCasillas);
 
 		Jugador jugador = new Jugador(0, 0, movimientos);
-		jugador.setRutaImagen("src/imagenes/jugador.png");
+		jugador.setRutaImagen("/imagenes/jugador.png");
 
 		// Inicializamos el paquete en la posición central del mapa
 
 		int centro = nCasillas / 2;
 		paquete = new PaqueteDato(centro, centro, movimientos);
-		paquete.setRutaImagen("src/imagenes/paquete_datos.png");
+		paquete.setRutaImagen("/imagenes/paquete_datos.png");
 
 		AntivirusProactivo[] listaAntivirus = new AntivirusProactivo[antivirusP.getCantidad()];
 		for (int i = 0; i < antivirusP.getCantidad(); i++) {
 			listaAntivirus[i] = new AntivirusProactivo(antivirusP.getFila()[i], antivirusP.getColumna()[i]);
-			listaAntivirus[i].setRutaImagen("src/imagenes/antivirus.png");
+			listaAntivirus[i].setRutaImagen("/imagenes/antivirus.png");
 		}
 
 		NodoEnergia[] listaNodos = new NodoEnergia[nodoE.getCantidad()];
 		for (int i = 0; i < nodoE.getCantidad(); i++) {
 			listaNodos[i] = new NodoEnergia(nodoE.getFilaNE()[i], nodoE.getColumnaNE()[i]);
-			listaNodos[i].setRutaImagen("src/imagenes/nodo_energia.png");
+			listaNodos[i].setRutaImagen("/imagenes/nodo_energia.png");
 		}
 
 		EscanerLatencia[] listaEscanerLatencia = new EscanerLatencia[escanerL.getCantidad()];
 		for (int i = 0; i < escanerL.getCantidad(); i++) {
 			listaEscanerLatencia[i] = new EscanerLatencia(escanerL.getFila()[i], escanerL.getColumna()[i]);
-			listaEscanerLatencia[i].setRutaImagen("src/imagenes/escaner_latencia.png"); 
+			listaEscanerLatencia[i].setRutaImagen("/imagenes/escaner_latencia.png");
 		}
 
 		PuertoEnlace[] listaPuertoEnlace = new PuertoEnlace[puertoE.getCantidad()];
 		for (int i = 0; i < puertoE.getCantidad(); i++) {
 			listaPuertoEnlace[i] = new PuertoEnlace(puertoE.getFila()[i], puertoE.getColumna()[i]);
-			listaPuertoEnlace[i].setRutaImagen("src/imagenes/puerto_enlace.png"); 
+			listaPuertoEnlace[i].setRutaImagen("/imagenes/puerto_enlace.png");
 		}
 
 		Firewall[] listaFirewall = new Firewall[firewall.getCantidad()];
 		for (int i = 0; i < firewall.getCantidad(); i++) {
 			listaFirewall[i] = new Firewall(firewall.getFila()[i], firewall.getColumna()[i]);
-			listaFirewall[i].setRutaImagen("src/imagenes/firewall.png"); 
+			listaFirewall[i].setRutaImagen("/imagenes/firewall.png");
 		}
 
 		matriz = new Matriz(tablero.getFilas(), tablero.getColumnas(), jugador, paquete, listaAntivirus, listaEscanerLatencia,
@@ -442,36 +442,36 @@ public class Fachada {
 		}
 
 		Jugador jugador = new Jugador(movimiento.getInfiltradoX(), movimiento.getInfiltradoY(), movimientos);
-		jugador.setRutaImagen("src/imagenes/jugador.png");
+		jugador.setRutaImagen("/imagenes/jugador.png");
 
 		AntivirusProactivo[] listaAntivirus = new AntivirusProactivo[antivirusP.getCantidad()];
 		for (int i = 0; i < antivirusP.getCantidad(); i++) {
 			listaAntivirus[i] = new AntivirusProactivo(antivirusP.getFila()[i], antivirusP.getColumna()[i]);
-			listaAntivirus[i].setRutaImagen("src/imagenes/antivirus.png");
+			listaAntivirus[i].setRutaImagen("/imagenes/antivirus.png");
 		}
 
 		NodoEnergia[] listaNodos = new NodoEnergia[nodoE.getCantidad()];
 		for (int i = 0; i < nodoE.getCantidad(); i++) {
 			listaNodos[i] = new NodoEnergia(nodoE.getFilaNE()[i], nodoE.getColumnaNE()[i]);
-			listaNodos[i].setRutaImagen("src/imagenes/nodo_energia.png");
+			listaNodos[i].setRutaImagen("/imagenes/nodo_energia.png");
 		}
 
 		EscanerLatencia[] listaEscanerLatencia = new EscanerLatencia[escanerL.getCantidad()];
 		for (int i = 0; i < escanerL.getCantidad(); i++) {
 			listaEscanerLatencia[i] = new EscanerLatencia(escanerL.getFila()[i], escanerL.getColumna()[i]);
-			listaEscanerLatencia[i].setRutaImagen("src/imagenes/escaner_latencia.png"); 
+			listaEscanerLatencia[i].setRutaImagen("/imagenes/escaner_latencia.png");
 		}
 
 		PuertoEnlace[] listaPuertoEnlace = new PuertoEnlace[puertoE.getCantidad()];
 		for (int i = 0; i < puertoE.getCantidad(); i++) {
 			listaPuertoEnlace[i] = new PuertoEnlace(puertoE.getFila()[i], puertoE.getColumna()[i]);
-			listaPuertoEnlace[i].setRutaImagen("src/imagenes/puerto_enlace.png"); 
+			listaPuertoEnlace[i].setRutaImagen("/imagenes/puerto_enlace.png");
 		}
 
 		Firewall[] listaFirewall = new Firewall[firewall.getCantidad()];
 		for (int i = 0; i < firewall.getCantidad(); i++) {
 			listaFirewall[i] = new Firewall(firewall.getFila()[i], firewall.getColumna()[i]);
-			listaFirewall[i].setRutaImagen("src/imagenes/firewall.png"); 
+			listaFirewall[i].setRutaImagen("/imagenes/firewall.png");
 		}
 
 		matriz = new Matriz(tablero.getFilas(), tablero.getColumnas(), jugador, paquete, listaAntivirus, listaEscanerLatencia,

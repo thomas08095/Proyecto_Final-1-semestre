@@ -23,7 +23,7 @@ public class PaqueteDato {
     public PaqueteDato(int fila, int columna, int movimientos) {
         this.fila = fila;
         this.columna = columna;
-        this.rutaImagen = "src/imagenes/paquete_datos.png"; 
+        this.rutaImagen = "/imagenes/paquete_datos.png";
     }
 
     public int getFila() { 

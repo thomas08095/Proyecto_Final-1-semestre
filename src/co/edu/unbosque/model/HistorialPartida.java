@@ -1,5 +1,6 @@
 package co.edu.unbosque.model;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -76,6 +77,7 @@ public class HistorialPartida {
         DateTimeFormatter formatterArchivo = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
         DateTimeFormatter formatterLegible = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
+        new File("src/logs").mkdirs();
         String nombreArchivo = "src/logs/historial_" + fechaInicio.format(formatterArchivo) + ".txt";
 
         try (FileWriter escritor = new FileWriter(nombreArchivo)) {

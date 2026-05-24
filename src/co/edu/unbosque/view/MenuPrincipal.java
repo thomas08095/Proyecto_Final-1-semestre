@@ -80,7 +80,7 @@ public class MenuPrincipal extends JPanel {
 		gbc.gridy = 2;
 		add(lblSubTitulo, gbc);
 
-		ImageIcon icon = new ImageIcon("src/imagenes/BugBusterIcon.png");
+		ImageIcon icon = new ImageIcon(getClass().getResource("/imagenes/BugBusterIcon.png"));
 		Image scaled = icon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
 		lblImagen = new JLabel(new ImageIcon(scaled));
 		gbc.gridy = 3;
