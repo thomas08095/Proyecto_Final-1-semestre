@@ -423,13 +423,14 @@ public class Fachada {
 		}
 
 		return movimiento.mover(deltaX, deltaY, tablero.getFilas(), tablero.getColumnas());
-		
-		/**
-	     * Recrea desde cero la Matriz unificada del nivel para refrescar los gráficos tras cambios lógicos.
-	     * Implementa un mecanismo de respaldo y restauración de las matrices booleanas de rastro 
-	     * para asegurar que las casillas pisadas anteriormente por el paquete se mantengan pintadas.
-	     */
-	}  public void reconstruirMatriz() {
+	}
+
+	/**
+	 * Recrea desde cero la Matriz unificada del nivel para refrescar los gráficos tras cambios lógicos.
+	 * Implementa un mecanismo de respaldo y restauración de las matrices booleanas de rastro 
+	 * para asegurar que las casillas pisadas anteriormente por el paquete se mantengan pintadas.
+	 */
+	public void reconstruirMatriz() {
 		boolean[][] rastrosAnteriores = null;
 		if (matriz != null && matriz.getCasillas() != null) {
 			rastrosAnteriores = new boolean[tablero.getFilas()][tablero.getColumnas()];
