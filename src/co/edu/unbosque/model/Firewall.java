@@ -66,6 +66,45 @@ public class Firewall {
 		}
 	}
 
+	/**
+	 * Verifica si la posición del Script de Infiltración (paquete) se encuentra entre dos
+	 * Firewalls en la misma fila o en la misma columna.
+	 * Si la casilla del paquete está en medio de dos firewalls (uno a cada lado, horizontal
+	 * o verticalmente), se aplica una penalización equivalente a la suma de las coordenadas
+	 * de la posición donde se encuentra el paquete (filaPaquete + columnaPaquete).
+	 * @param filaPaquete    Fila actual del Script de Infiltración en el tablero.
+	 * @param columnaPaquete Columna actual del Script de Infiltración en el tablero.
+	 * @return La penalización calculada (filaPaquete + columnaPaquete) si el paquete está
+	 *         entre dos Firewalls; 0 en caso contrario.
+	 */
+	public int calcularPenalizacionEntreFirewalls(int filaPaquete, int columnaPaquete) {
+		boolean firewallArriba    = false;
+		boolean firewallAbajo     = false;
+		boolean firewallIzquierda = false;
+		boolean firewallDerecha   = false;
+
+		for (int i = 0; i < cantidad; i++) {
+			// Firewalls en la misma columna (eje vertical)
+			if (columna[i] == columnaPaquete) {
+				if (fila[i] < filaPaquete) firewallArriba = true;
+				if (fila[i] > filaPaquete) firewallAbajo  = true;
+			}
+			// Firewalls en la misma fila (eje horizontal)
+			if (fila[i] == filaPaquete) {
+				if (columna[i] < columnaPaquete) firewallIzquierda = true;
+				if (columna[i] > columnaPaquete) firewallDerecha   = true;
+			}
+		}
+
+		boolean entreVertical   = firewallArriba && firewallAbajo;
+		boolean entreHorizontal = firewallIzquierda && firewallDerecha;
+
+		if (entreVertical || entreHorizontal) {
+			return filaPaquete + columnaPaquete;
+		}
+		return 0;
+	}
+
 	public int[] getFila() {
 		return fila;
 	}

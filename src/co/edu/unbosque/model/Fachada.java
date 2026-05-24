@@ -54,6 +54,9 @@ public class Fachada {
     /** Estado del modificador que altera la visibilidad frente a los escáneres de red.
      */
     private boolean modoSigiloActivo = false;
+    /** Indica si el modo sigilo ya fue utilizado en esta partida. Solo puede usarse una vez.
+     */
+    private boolean sigiloUsado = false;
     /** Registro estructurado interno encargado de transcribir los eventos del juego.
      */
     private HistorialPartida historial;
@@ -74,6 +77,7 @@ public class Fachada {
 		firewall = new Firewall();
 		movimientos = 0;
 		modoSigiloActivo = false;
+		sigiloUsado = false;
 		ordenInverso = false;
 		ultPuertoIncFila = -1;
 		ultPuertoIncCol = -1;
@@ -409,6 +413,13 @@ public class Fachada {
 
 					paquete.setFila(destinoFilaPaquete);
 					paquete.setColumna(destinoColumnaPaquete);
+
+					// Verificar penalización por pasar entre dos Firewalls
+					int penalizacion = firewall.calcularPenalizacionEntreFirewalls(paquete.getFila(), paquete.getColumna());
+					if (penalizacion > 0) {
+						movimientos -= penalizacion;
+						System.out.println("PENALIZACION entre Firewalls: -" + penalizacion + " movimientos. Fila=" + paquete.getFila() + " Col=" + paquete.getColumna());
+					}
 		}
 
 		return movimiento.mover(deltaX, deltaY, tablero.getFilas(), tablero.getColumnas());
@@ -584,8 +595,17 @@ public class Fachada {
 		return null;
 	}
 
-	public void activarSigilo() {
+	/**
+	 * Intenta activar el modo sigilo. Solo puede usarse una vez por partida.
+	 * @return true si el sigilo fue activado con éxito; false si ya fue usado anteriormente.
+	 */
+	public boolean activarSigilo() {
+		if (sigiloUsado) {
+			return false;
+		}
 		modoSigiloActivo = true;
+		sigiloUsado = true;
+		return true;
 	}
 
 	public void desactivarSigilo() {
