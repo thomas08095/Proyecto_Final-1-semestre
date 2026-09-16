@@ -255,6 +255,10 @@ public class Controlador implements ActionListener {
 			if (activado) {
 				ventanaE.mostrarInformacion("\r\n" + "  Has activado el modo sigilo\r\n" + "\r\n"
 						+ "• Por el siguiente turno, ningún encuentro con amenaza te afectará.\r\n");
+			} else {
+				ventanaE.mostrarInformacion("\r\n" + "  Sigilo no disponible\r\n" + "\r\n"
+						+ "• El modo sigilo solo puede usarse una vez por partida.\r\n");
+			}
 		}
-	}}
+	}
 }
